@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingTop="60dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+
+    android:background="@drawable/bg"
+    tools:context=".WelcomActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:text="Order Food"
+        android:textColor="@color/colorBlue"
+        android:textSize="40sp"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/btnLoginWelcom"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/duongvien_xanh"
+        android:text="@string/dangnhap"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/size20dp" />
+
+    <Button
+        android:id="@+id/btnRegisterWelcom"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
+        android:background="@drawable/duongvien_trang"
+        android:text="@string/dangky"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/size20dp" />
+
+
+
+</RelativeLayout>

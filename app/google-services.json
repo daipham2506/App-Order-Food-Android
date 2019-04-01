@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "674640061525",
+    "firebase_url": "https://databaseorderfood.firebaseio.com",
+    "project_id": "databaseorderfood",
+    "storage_bucket": "databaseorderfood.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674640061525:android:4d9232cf6d6a6f4a",
+        "android_client_info": {
+          "package_name": "com.tandai.orderfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674640061525-h4sf7kdfeodij54dus8cg0nq8ti3pq8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrGT8bem7hwWOnwzSdMe1kax6SW5z4E64"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

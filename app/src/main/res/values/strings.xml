@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Order Food</string>
+    <string name="tendangnhap">Email</string>
+    <string name="dangnhap">Đăng nhập</string>
+    <string name="dangky">Đăng ký</string>
+    <string name="pass">Mật khẩu ( >6 ký tự )</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="address">Địa chỉ</string>
+    <string name="name">Họ tên</string>
+</resources>

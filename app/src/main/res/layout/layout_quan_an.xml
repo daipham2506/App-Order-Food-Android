@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingTop="60dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:background="@drawable/bg"
+    tools:context=".WelcomActivity">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quán ăn"
+        android:layout_centerHorizontal="true"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="#F3F436BE"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp">
+
+        <Button
+            android:id="@+id/btnXemMon"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/size15dp"
+            android:background="@drawable/duongvien_xanh"
+            android:text="Xem danh sách món ăn"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnThemMon"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/size15dp"
+            android:background="@drawable/duongvien_xanh"
+            android:text="Thêm món ăn"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnSuaMon"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/size15dp"
+            android:background="@drawable/duongvien_xanh"
+            android:text="Sửa món ăn"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btnXoaMon"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/size15dp"
+            android:background="@drawable/duongvien_xanh"
+            android:text="Xóa món ăn"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>
