@@ -80,10 +80,9 @@ public class LoginActivity extends AppCompatActivity {
                                 else if(user.getUserType().equals("restaurent") && user.getEmail().equals(Email)){
                                     startActivity(new Intent(LoginActivity.this,QuanAnActivity.class));
                                 }
-//                                else{
-//                                    Intent screenCustomer = new Intent(LoginActivity.this,CustomerActivity.class);
-//                                    startActivity(screenCustomer);
-//                                }
+                                else if(user.getUserType().equals("customer") && user.getEmail().equals(Email)){
+                                    startActivity(new Intent(LoginActivity.this,KhachHangActivity.class));
+                                }
                             }
 
                             @Override

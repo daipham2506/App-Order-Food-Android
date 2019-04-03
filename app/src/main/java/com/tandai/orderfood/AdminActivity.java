@@ -1,5 +1,6 @@
 package com.tandai.orderfood;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,14 +9,15 @@ import android.widget.Button;
 
 public class AdminActivity extends AppCompatActivity {
 
-    Button ThemQuan;
-    Button XoaQuan;
+    private Button ThemQuan,XoaQuan,logOut;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_admin);
         ThemQuan    =(Button) findViewById(R.id.btnThemQuanKhungAdmin);
         XoaQuan     =(Button) findViewById(R.id.btnXoaQuanKhungAdmin);
+        logOut      =(Button) findViewById(R.id.btnLogOutAdmin);
 
         ThemQuan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,6 +31,34 @@ public class AdminActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent screenXoaQuan = new Intent(AdminActivity.this,XoaQuanActivity.class);
                 startActivity(screenXoaQuan);
+            }
+        });
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DangXuat();
+            }
+        });
+    }
+
+
+    private void DangXuat(){
+        final Dialog dialogLogOut = new Dialog(AdminActivity.this);
+        dialogLogOut.setContentView(R.layout.dialog_dang_xuat);
+        dialogLogOut.show();
+        Button khong=(Button) dialogLogOut.findViewById(R.id.btnKhongDialogDangXuat);
+        Button thoat=(Button) dialogLogOut.findViewById((R.id.btnDialogDangXuat));
+        khong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogLogOut.cancel();
+            }
+        });
+        thoat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogLogOut.cancel();
+                startActivity(new Intent(AdminActivity.this,WelcomActivity.class));
             }
         });
     }

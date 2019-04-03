@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="370dp"
+    android:layout_height="280dp"
+    android:paddingTop="@dimen/size10dp"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/size10dp"
+        android:text="Không có kết nối Internet"
+        android:textColor="#FF9100"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:textColor="#FF9100"
+        android:paddingLeft="10dp"
+        android:background="#E41D1B1A"
+        android:layout_marginTop="35dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="45dp"
+        android:paddingLeft="@dimen/size10dp"
+        android:text="Bạn cần có kết nối Internet để tiếp tục chương trình"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:textColor="#FF9100"
+        android:paddingLeft="10dp"
+        android:background="#E41D1B1A"
+        android:layout_marginTop="220dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="false"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:layout_marginTop="230dp">
+
+        <Button
+            android:id="@+id/btnBatWifi"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="#43A047"
+            android:text="Bật wifi"
+            android:textSize="15sp"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btnThoatDiaLogInternet"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="30dp"
+            android:background="#FF9100"
+            android:text="Thoát"
+            android:textSize="15sp"
+            android:textAllCaps="false"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
