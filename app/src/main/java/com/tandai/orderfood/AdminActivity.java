@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class AdminActivity extends AppCompatActivity {
 
-    private Button ThemQuan,XoaQuan,logOut;
+    private Button ThemQuan,XoaQuan,logOut,doiMK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +18,7 @@ public class AdminActivity extends AppCompatActivity {
         ThemQuan    =(Button) findViewById(R.id.btnThemQuanKhungAdmin);
         XoaQuan     =(Button) findViewById(R.id.btnXoaQuanKhungAdmin);
         logOut      =(Button) findViewById(R.id.btnLogOutAdmin);
+        doiMK       =(Button) findViewById(R.id.btnChangePassAdmin);
 
         ThemQuan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +38,12 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DangXuat();
+            }
+        });
+        doiMK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminActivity.this,ChangePassActivity.class));
             }
         });
     }
@@ -62,4 +69,6 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

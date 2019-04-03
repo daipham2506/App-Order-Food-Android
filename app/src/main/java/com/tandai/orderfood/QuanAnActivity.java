@@ -25,20 +25,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class QuanAnActivity extends AppCompatActivity {
-    Button LogOut;
+    Button LogOut,doiMK;
     TextView tenQuan;
-    DatabaseReference ref;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_quan_an);
         AnhXa();
-        //getName();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        tenQuan.setText("Quán "+user.getDisplayName());
         LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DangXuat();
+            }
+        });
+        doiMK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(QuanAnActivity.this,ChangePassActivity.class));
             }
         });
     }
@@ -46,6 +51,7 @@ public class QuanAnActivity extends AppCompatActivity {
 
     private void AnhXa(){
         LogOut=(Button) findViewById(R.id.btnLogOutQuan);
+        doiMK=(Button) findViewById(R.id.btnChangePassQuan);
         tenQuan=(TextView) findViewById(R.id.twTenQuan);
     }
 
@@ -70,38 +76,7 @@ public class QuanAnActivity extends AppCompatActivity {
         });
     }
 
-    private void getName(){
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String userID = firebaseUser.getUid();
-        ref =   FirebaseDatabase.getInstance().getReference();
 
 
-
-
-//        mData.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                for(DataSnapshot ds : dataSnapshot.getChildren() ){
-//                    uInfo.setName(ds.child(userID).getValue(User.class).getName()); //set the name
-//                    uInfo.setEmail(ds.child(userID).getValue(User.class).getEmail()); //set the email
-//                    uInfo.setUserType(ds.child(userID).getValue(User.class).getUserType()); //set the email
-//                    uInfo.setAddress(ds.child(userID).getValue(User.class).getAddress()); //set the email
-//                    uInfo.setPhone(ds.child(userID).getValue(User.class).getPhone()); //set the email
-//                    uInfo.setPass(ds.child(userID).getValue(User.class).getPass()); //set the email
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//        tenQuan.setText(uInfo.getName());
-
-
-    }
 
 }

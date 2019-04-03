@@ -8,7 +8,7 @@
     android:paddingBottom="16dp"
     android:paddingTop="0dp"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+
     android:background="@drawable/bg">
 
 
@@ -20,18 +20,18 @@
         android:text="Quán ăn"
         android:textColor="#F3F436BE"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="false"
         android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="false"
         android:layout_marginTop="80dp"
         android:orientation="vertical"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:paddingTop="@dimen/size30dp">
+        android:padding="45dp"
+        >
 
         <Button
             android:id="@+id/btnXemMon"
@@ -40,7 +40,8 @@
             android:layout_marginTop="@dimen/size15dp"
             android:background="@drawable/duongvien_xanh"
             android:text="Xem danh sách món ăn"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/btnThemMon"
@@ -49,7 +50,8 @@
             android:layout_marginTop="@dimen/size15dp"
             android:background="@drawable/duongvien_xanh"
             android:text="Thêm món ăn"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/btnSuaMon"
@@ -58,7 +60,8 @@
             android:layout_marginTop="@dimen/size15dp"
             android:background="@drawable/duongvien_xanh"
             android:text="Sửa món ăn"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/btnXoaMon"
@@ -67,16 +70,28 @@
             android:layout_marginTop="@dimen/size15dp"
             android:background="@drawable/duongvien_xanh"
             android:text="Xóa món ăn"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 
     <Button
         android:id="@+id/btnLogOutQuan"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/log"
+        android:background="@drawable/off"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="@dimen/size10dp"
+        />
+    <Button
+        android:id="@+id/btnChangePassQuan"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/key"
+        android:layout_marginTop="75dp"
+        android:layout_marginRight="10dp"
         />
 
 

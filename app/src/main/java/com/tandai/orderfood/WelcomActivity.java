@@ -55,7 +55,7 @@ public class WelcomActivity extends AppCompatActivity {
                 }
             });
         }
-        
+
 
     }
 

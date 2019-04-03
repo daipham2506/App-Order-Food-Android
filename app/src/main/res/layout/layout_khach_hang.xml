@@ -5,41 +5,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:paddingTop="10dp"
-    android:background="#dd2c00">
+    android:layout_height="50dp"
+    android:paddingTop="5dp"
+    android:background="#dd2c00"
+    android:orientation="vertical">
     <EditText
         android:id="@+id/edtTim"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="@color/colorWhite"
         android:drawableLeft="@drawable/search"
-        android:drawablePadding="@dimen/size10dp"
+        android:drawablePadding="5dp"
         android:hint="Tìm kiếm món ăn, quán ăn..."
         android:inputType="textEmailAddress"
-        android:padding="@dimen/size10dp"
+        android:padding="5dp"
         android:singleLine="true"
         android:textColor="@color/colorBlack"
         android:textColorHint="@color/colorGray"
         android:textSize="15sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         />
 </LinearLayout>
-
-
-
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="684dp"
+
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorWhite">
 
         <Button
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/home"
+            android:drawableLeft="@drawable/home3"
             android:paddingLeft="@dimen/size25dp" />
 
         <Button
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="73dp"
             android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/basket"
+            android:drawableLeft="@drawable/cart"
             android:paddingLeft="@dimen/size25dp" />
 
         <Button

@@ -43,9 +43,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="false"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="false"
         android:layout_marginTop="230dp">
 
         <Button

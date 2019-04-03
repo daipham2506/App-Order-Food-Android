@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/size30dp"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/size10dp"
+        android:text="Thay đổi mật khẩu"
+        android:textColor="#FF9100"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:textColor="#FF9100"
+        android:paddingLeft="10dp"
+        android:background="#E41D1B1A"
+        android:layout_marginTop="35dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF9100"
+        android:paddingLeft="10dp"
+        android:text="Lưu ý:"
+        android:layout_marginTop="60dp"/>
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="#424242"
+    android:paddingLeft="30dp"
+    android:text="Mật khẩu mới nên bao gồm chữ và số"
+    android:layout_marginTop="80dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#424242"
+        android:paddingLeft="30dp"
+        android:text="Mật khẩu tối thiểu 6 ký tự"
+        android:layout_marginTop="100dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:paddingLeft="20dp"
+        android:text="Mật khẩu mới"
+        android:layout_marginTop="150dp"
+        android:textSize="20sp"/>
+    <EditText
+        android:id="@+id/edtNhapPass"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginRight="15dp"
+        android:textColorHint="@color/colorGray"
+        android:layout_marginLeft="@dimen/size20dp"
+        android:textColor="@color/colorBlack"
+        android:inputType="textPassword"
+        android:background="@drawable/vienxanhla"
+        android:textSize="20sp"
+        android:paddingLeft="@dimen/size10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:paddingLeft="20dp"
+        android:text="Nhắc lại mật khẩu"
+        android:layout_marginTop="235dp"
+        android:textSize="20sp"/>
+    <EditText
+        android:id="@+id/edtNhaplaiPass"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="265dp"
+        android:textColorHint="@color/colorGray"
+        android:layout_marginLeft="@dimen/size20dp"
+        android:textColor="@color/colorBlack"
+        android:layout_marginRight="15dp"
+        android:inputType="textPassword"
+        android:background="@drawable/vienxanhla"
+        android:textSize="20sp"
+        android:paddingLeft="@dimen/size10dp"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="false"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:layout_marginTop="330dp">
+
+        <Button
+            android:id="@+id/btnDoiPass"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="#43A047"
+            android:text="Đổi"
+            android:textSize="15sp"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btnDongChangePass"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="@dimen/size40dp"
+            android:background="#FF9100"
+            android:text="Đóng"
+            android:textAllCaps="false"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
