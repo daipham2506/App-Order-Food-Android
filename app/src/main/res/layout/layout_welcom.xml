@@ -10,7 +10,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
 
-    android:background="@drawable/bg"
+    android:background="@drawable/bgfood"
     tools:context=".WelcomActivity">
 
     <TextView
@@ -19,16 +19,29 @@
         android:layout_centerHorizontal="true"
         android:orientation="vertical"
         android:text="Order Food"
-        android:textColor="@color/colorBlue"
-        android:textSize="40sp"
-        android:textStyle="bold"/>
+        android:textColor="@color/colorWhite"
+        android:textSize="50sp"
+        android:textStyle="bold"
+       android:fontFamily="@font/nabila"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:text="Chào mừng bạn đến với app đặt món ăn của chúng tôi. "
+        android:textColor="@color/colorWhite"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/nabila"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="20dp"/>
 
     <Button
         android:id="@+id/btnLoginWelcom"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="270dp"
         android:background="@drawable/duongvien_xanh"
         android:text="@string/dangnhap"
         android:textColor="@color/colorWhite"
@@ -39,7 +52,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="340dp"
         android:background="@drawable/duongvien_trang"
         android:text="@string/dangky"
         android:textColor="@color/colorBlack"

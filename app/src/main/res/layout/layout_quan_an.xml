@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="16dp"
-    android:paddingTop="0dp"
+    android:paddingTop="10dp"
     android:paddingLeft="16dp"
 
-    android:background="@drawable/bg">
+    android:background="@drawable/food2">
 
 
     <TextView
@@ -18,10 +18,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Quán ăn"
-        android:textColor="#F3F436BE"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"/>
+        android:textColor="@color/colorWhite"
+        android:textSize="32sp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/nabila"/>
 
     <LinearLayout
         android:layout_width="match_parent"

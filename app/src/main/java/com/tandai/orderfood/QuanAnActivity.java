@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class QuanAnActivity extends AppCompatActivity {
-    Button LogOut,doiMK;
+    Button LogOut,doiMK,themMon,xoaMon,xemDSMon,suaMon;
     TextView tenQuan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,25 @@ public class QuanAnActivity extends AppCompatActivity {
                 startActivity(new Intent(QuanAnActivity.this,ChangePassActivity.class));
             }
         });
+        themMon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(QuanAnActivity.this,ThemMonActivity.class));
+            }
+        });
+        suaMon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(QuanAnActivity.this,SuaMonActivity.class));
+            }
+        });
+        xoaMon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(QuanAnActivity.this,XoaMonActivity.class));
+            }
+        });
+
     }
 
 
@@ -53,6 +72,10 @@ public class QuanAnActivity extends AppCompatActivity {
         LogOut=(Button) findViewById(R.id.btnLogOutQuan);
         doiMK=(Button) findViewById(R.id.btnChangePassQuan);
         tenQuan=(TextView) findViewById(R.id.twTenQuan);
+        themMon=(Button) findViewById(R.id.btnThemMon);
+        xoaMon=(Button) findViewById(R.id.btnXoaMon);
+        suaMon=(Button) findViewById(R.id.btnSuaMon);
+        xemDSMon=(Button) findViewById(R.id.btnXemMon);
     }
 
     private void DangXuat(){
@@ -75,8 +98,6 @@ public class QuanAnActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
 
 }

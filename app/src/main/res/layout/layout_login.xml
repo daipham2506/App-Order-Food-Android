@@ -6,13 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="16dp"
-    android:paddingTop="60dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingTop="90dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
 
-    android:background="@color/colorPrimary"
-
-    tools:context=".WelcomActivity">
+    android:background="@drawable/food3">
 
 
 
@@ -24,6 +22,7 @@
         android:textSize="35sp"
         android:textStyle="bold"
         android:textColor="@color/colorWhite"
+        android:fontFamily="@font/nabila"
         />
 
     <LinearLayout
@@ -31,59 +30,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="120dp">
 
 
         <EditText
             android:id="@+id/edtEmailLog"
             android:inputType="textEmailAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/size15dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/user"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/mail1"
             android:drawablePadding="@dimen/size10dp"
             android:hint="@string/tendangnhap"
-            android:padding="@dimen/size10dp"
             android:singleLine="true"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorGray"
-            android:textSize="20sp" />
+            android:textSize="25sp" />
 
         <EditText
             android:id="@+id/edtPassLog"
             android:layout_width="match_parent"
             android:inputType="textPassword"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/size15dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/password"
+            android:layout_height="60dp"
+            android:drawableLeft="@drawable/pass1"
             android:drawablePadding="@dimen/size15dp"
             android:hint="@string/pass"
-            android:padding="@dimen/size10dp"
             android:textColorHint="@color/colorGray"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp"
             android:singleLine="true"
+            android:layout_marginTop="25dp"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/size10dp">
+            android:layout_marginTop="40dp">
 
             <Button
                 android:id="@+id/btnLog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/size10dp"
-
                 android:layout_weight="1"
                 android:background="@drawable/duongvien_xanh"
                 android:text="Đăng nhập"
-
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textAllCaps="false"/>
 
             <Button
                 android:id="@+id/btnThoatLog"
@@ -93,8 +86,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/duongvien_nau"
                 android:text="Thoát"
-
-                android:textSize="@dimen/size20dp" />
+                android:textSize="@dimen/size20dp"
+                android:textAllCaps="false"/>
 
         </LinearLayout>
 

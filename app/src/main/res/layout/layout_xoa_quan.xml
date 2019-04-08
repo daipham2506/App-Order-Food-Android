@@ -6,13 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="16dp"
-    android:paddingTop="40dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingTop="90dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
 
-    android:background="@color/colorPrimary"
-
-    tools:context=".WelcomActivity">
+    android:background="@drawable/food3"
+    >
 
 
     <TextView
@@ -21,8 +20,8 @@
         android:text="Xóa tài khoản Quán"
         android:layout_centerHorizontal="true"
         android:textSize="35sp"
-        android:textStyle="bold"
         android:textColor="@color/colorWhite"
+        android:fontFamily="@font/nabila"
 
 
         />
@@ -38,18 +37,16 @@
         <EditText
             android:id="@+id/edtEmailXoaQuan"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_margin="@dimen/size15dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/user"
+            android:drawableLeft="@drawable/mail1"
             android:drawablePadding="@dimen/size10dp"
             android:hint="Email cần xóa"
             android:inputType="textEmailAddress"
-            android:padding="@dimen/size10dp"
             android:singleLine="true"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorGray"
-            android:textSize="20sp" />
+            android:textSize="25sp" />
 
 
 
@@ -68,7 +65,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/duongvien_xanh"
                 android:text="Xóa"
-
+                android:textAllCaps="false"
                 android:textSize="20sp" />
 
 

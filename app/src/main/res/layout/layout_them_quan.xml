@@ -10,9 +10,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
 
-    android:background="@color/colorPrimary"
-
-    tools:context=".WelcomActivity">
+    android:background="@drawable/food3">
 
 
     <TextView
@@ -21,14 +19,11 @@
         android:text="Thêm tài khoản Quán"
         android:layout_centerHorizontal="true"
         android:textSize="35sp"
-        android:textStyle="bold"
         android:textColor="@color/colorWhite"
-
-
+        android:fontFamily="@font/nabila"
         />
 
     <LinearLayout
-        android:id="@+id/lnKhungDangNhap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -40,14 +35,12 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="@dimen/size15dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/user"
+            android:drawableLeft="@drawable/mail1"
             android:drawablePadding="@dimen/size10dp"
             android:hint="@string/tendangnhap"
             android:inputType="textEmailAddress"
-            android:padding="@dimen/size10dp"
             android:singleLine="true"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorGray"
             android:textSize="20sp" />
 
@@ -56,14 +49,12 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="@dimen/size15dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/password"
+            android:drawableLeft="@drawable/pass1"
             android:drawablePadding="@dimen/size15dp"
             android:hint="@string/pass"
             android:inputType="textPassword"
-            android:padding="@dimen/size10dp"
             android:singleLine="true"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorGray"
             android:textSize="20sp" />
 
@@ -72,14 +63,12 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="@dimen/size15dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/name"
+            android:drawableLeft="@drawable/name1"
             android:drawablePadding="5dp"
             android:hint="Tên quán"
             android:inputType="text"
-            android:padding="@dimen/size10dp"
             android:singleLine="true"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorGray"
             android:textSize="20sp" />
 
@@ -89,14 +78,12 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="@dimen/size15dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/phone"
+            android:drawableLeft="@drawable/phone1"
             android:drawablePadding="@dimen/size10dp"
             android:hint="@string/phone"
             android:inputType="phone"
-            android:padding="@dimen/size10dp"
             android:singleLine="true"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorGray"
             android:textSize="20sp" />
 
@@ -105,14 +92,12 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="@dimen/size15dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/address"
+            android:drawableLeft="@drawable/address1"
             android:drawablePadding="@dimen/size10dp"
             android:hint="Địa chỉ quán"
             android:inputType="text"
-            android:padding="@dimen/size10dp"
             android:singleLine="true"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorGray"
             android:textSize="20sp" />
 
@@ -132,7 +117,8 @@
                 android:background="@drawable/duongvien_xanh"
                 android:text="Thêm"
 
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textAllCaps="false"/>
 
 
         </LinearLayout>
