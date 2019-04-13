@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+
+
+    <ImageView
+        android:id="@+id/ivHinh1"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@color/colorBlack"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ivHinh1"
+        android:id="@+id/tvtenMon1"
+        android:text="Ten mon"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:paddingLeft="@dimen/size10dp"
+        />
+
+
+    <TextView
+        android:id="@+id/gach1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tvtenMon1"
+        android:text="-"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/gach1"
+        android:id="@+id/tvtenQuan1"
+        android:text="Ten quan"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvGiaMon1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ivHinh1"
+        android:layout_below="@+id/tvtenQuan1"
+        android:text="Gia"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp"
+        android:paddingLeft="@dimen/size10dp"
+        android:paddingRight="5dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tvGiaMon1"
+        android:layout_below="@+id/tvtenQuan1"
+        android:text="đ"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp"
+        />
+
+    <Button
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/ivHinh1"
+        android:layout_below="@+id/tvGiaMon1"
+        android:text="Thêm vào giỏ hàng"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:background="#00C853"
+        android:layout_marginLeft="@dimen/size10dp"
+        android:textAllCaps="false"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp">
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:textColor="#FF9100"
+            android:paddingLeft="10dp"
+            android:background="#E41D1B1A"
+            android:layout_marginTop="35dp"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

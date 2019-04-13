@@ -53,6 +53,7 @@ public class ChangePassActivity extends AppCompatActivity {
         dong=(Button) findViewById(R.id.btnDongChangePass);
     }
 
+
     private void changePass(){
 
 
@@ -67,7 +68,7 @@ public class ChangePassActivity extends AppCompatActivity {
                 else{
                     if(MK.equals(MK1)){
                         user = FirebaseAuth.getInstance().getCurrentUser();
-                        final String userID =user.getUid();
+                        final String userID = user.getUid();
                         final DatabaseReference mDatabase=FirebaseDatabase.getInstance().getReference();
                         user.updatePassword(MK)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -77,13 +78,8 @@ public class ChangePassActivity extends AppCompatActivity {
                                             Toast.makeText(ChangePassActivity.this, "Bạn đã đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
                                             // updata pass in database
                                             mDatabase.child("Users").child(userID).child("pass").setValue(MK);
-                                            //ve man hinh chinh
-                                            if(user.getEmail().equals("admin@gmail.com")){
-                                                startActivity(new Intent(ChangePassActivity.this,AdminActivity.class));
-                                            }
-                                            else {
-                                                startActivity(new Intent(ChangePassActivity.this, QuanAnActivity.class));
-                                            }
+                                            //ve man hinh login
+                                            startActivity(new Intent(ChangePassActivity.this,LoginActivity.class));
                                         }
                                         else{
                                             Toast.makeText(ChangePassActivity.this, "Đổi không thành công", Toast.LENGTH_SHORT).show();

@@ -10,11 +10,10 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
 
-    android:background="@drawable/bgfood"
-    tools:context=".WelcomActivity">
+    android:background="@drawable/bgfood">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:orientation="vertical"

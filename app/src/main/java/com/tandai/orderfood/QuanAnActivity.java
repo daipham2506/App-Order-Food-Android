@@ -64,6 +64,12 @@ public class QuanAnActivity extends AppCompatActivity {
                 startActivity(new Intent(QuanAnActivity.this,XoaMonActivity.class));
             }
         });
+        xemDSMon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(QuanAnActivity.this,XemDSMonActivity.class));
+            }
+        });
 
     }
 

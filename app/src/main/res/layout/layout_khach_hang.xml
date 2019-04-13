@@ -5,70 +5,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:paddingTop="5dp"
-    android:background="#dd2c00"
+    android:background="#2E7D32"
     android:orientation="vertical">
-    <EditText
-        android:id="@+id/edtTim"
+    <TextView
+        android:id="@+id/tvTim"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/colorWhite"
         android:drawableLeft="@drawable/search"
         android:drawablePadding="5dp"
-        android:hint="Tìm kiếm món ăn, quán ăn..."
-        android:inputType="textEmailAddress"
+        android:text="Tìm kiếm món ăn, quán ăn..."
         android:padding="5dp"
         android:singleLine="true"
-        android:textColor="@color/colorBlack"
-        android:textColorHint="@color/colorGray"
-        android:textSize="15sp"
+        android:textColor="@color/colorGray"
+        android:textSize="18sp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        />
+        android:layout_marginRight="5dp" />
 </LinearLayout>
-
+    <ListView
+        android:id="@+id/listviewQuanAn"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_alignWithParentIfMissing="false"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorWhite">
+        android:background="@color/colorWhite"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tvHome"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/home3"
+            android:layout_marginLeft="20dp"/>
 
-        <Button
-            android:id="@+id/btnHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/home3"
-            android:paddingLeft="@dimen/size25dp" />
 
-        <Button
-            android:id="@+id/btnBasket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="73dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/cart"
-            android:paddingLeft="@dimen/size25dp" />
+        <TextView
+            android:id="@+id/tvBasket"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:background="@drawable/cart"
+            android:layout_marginLeft="120dp"/>
 
-        <Button
-            android:id="@+id/btnPerson"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="73dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/person"
-            android:paddingLeft="@dimen/size25dp" />
+
+        <TextView
+            android:id="@+id/tvPerson"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/person"
+            android:layout_marginLeft="120dp"
+            android:layout_marginRight="20dp"/>
+
 
     </LinearLayout>
+
 
 </RelativeLayout>
 

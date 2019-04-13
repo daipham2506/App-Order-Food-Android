@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".XoaMonActivity"></activity>
+        <activity android:name=".SearchFood"></activity>
+        <activity android:name=".XemDSMonActivity" />
+        <activity android:name=".XoaMonActivity" />
         <activity android:name=".SuaMonActivity" />
         <activity android:name=".ThemMonActivity" />
         <activity android:name=".ChangePassActivity" />

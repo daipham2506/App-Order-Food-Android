@@ -19,42 +19,37 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class KhachHangActivity extends AppCompatActivity {
-    TextView home,basket,person;
-    TextView tim;
-    ListView lvQuan;
-    ArrayList<QuanAn> arrQuanAn;
-    QuanAnAdapter adapter = null;
-
+public class XemDSMonActivity extends AppCompatActivity {
+    Button back;
+    TextView tenquan;
+    ListView lvFood;
+    ArrayList<Food> arrFood;
+    FoodAdapter adapter = null;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
-    DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference().child("Users");
-
+    DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference().child("QuanAn").child(userID);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_khach_hang);
+        setContentView(R.layout.layout_xem_dsmon);
         AnhXa();
-        arrQuanAn = new ArrayList<>();
-        adapter= new QuanAnAdapter(this, R.layout.line_restaurent, arrQuanAn);
-        lvQuan.setAdapter(adapter);
+        tenquan.setText("Quán "+ user.getDisplayName());
+        arrFood = new ArrayList<>();
+        adapter= new FoodAdapter(this, R.layout.line_food_xemds, arrFood);
+        lvFood.setAdapter(adapter);
         LoadData();
-
-        tim.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(KhachHangActivity.this, SearchFood.class));
+                startActivity(new Intent(XemDSMonActivity.this, QuanAnActivity.class));
             }
         });
     }
 
-
     private void AnhXa(){
-        tim     =   (TextView) findViewById(R.id.tvTim);
-        lvQuan  =   (ListView) findViewById(R.id.listviewQuanAn);
-        home    =   (TextView) findViewById(R.id.tvHome);
-        basket  =   (TextView) findViewById(R.id.tvBasket);
-        person  =   (TextView) findViewById(R.id.tvPerson);
+        back = (Button) findViewById(R.id.btnback);
+        lvFood =(ListView) findViewById(R.id.listviewFood);
+        tenquan =(TextView) findViewById(R.id.tvtenQuanLayoutXemDSMon);
     }
 
     private void LoadData(){
@@ -62,20 +57,20 @@ public class KhachHangActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    User uInfo = ds.getValue(User.class);
-                    if(uInfo.getUserType().equals("restaurent")){
-                        arrQuanAn.add(new QuanAn(uInfo.getName(),uInfo.getAddress(),uInfo.getPhone()));
-                        adapter.notifyDataSetChanged();
-                    }
+                    MonAn mon = ds.getValue(MonAn.class);
+                    arrFood.add(new Food(mon.getTenMon(),mon.getTenQuan(),mon.getLinkAnh(),mon.getGiaMon(),mon.getTinhTrang()));
+                    //Toast.makeText(XemDSMonActivity.this, mon.getTenMon(), Toast.LENGTH_SHORT).show();
+                    adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(KhachHangActivity.this, "Not found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(XemDSMonActivity.this, "Not found", Toast.LENGTH_SHORT).show();
             }
         };
         mDatabase.addListenerForSingleValueEvent(eventListener);
     }
+
 
 }
