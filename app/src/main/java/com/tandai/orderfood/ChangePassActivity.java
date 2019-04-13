@@ -38,6 +38,7 @@ public class ChangePassActivity extends AppCompatActivity {
     private EditText NhapMK,NhapLaiMK;
     private Button doi,dong;
     private FirebaseUser user;
+    private String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +56,6 @@ public class ChangePassActivity extends AppCompatActivity {
 
 
     private void changePass(){
-
 
         doi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,10 +93,34 @@ public class ChangePassActivity extends AppCompatActivity {
                 }
             }
         });
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = user.getUid();
+        DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User uInfo = dataSnapshot.getValue(User.class);
+                type =uInfo.getUserType();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        mDatabase.addListenerForSingleValueEvent(eventListener);
+
         dong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChangePassActivity.this,QuanAnActivity.class));
+                if(type.equals("restaurent")) startActivity(new Intent(ChangePassActivity.this, QuanAnActivity.class));
+
+                else if(type.equals("admin")) startActivity(new Intent(ChangePassActivity.this,AdminActivity.class));
+
+                else startActivity(new Intent(ChangePassActivity.this,KhachHangActivity.class));
+
             }
         });
     }

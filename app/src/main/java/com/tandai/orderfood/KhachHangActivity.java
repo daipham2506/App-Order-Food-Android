@@ -46,6 +46,13 @@ public class KhachHangActivity extends AppCompatActivity {
                 startActivity(new Intent(KhachHangActivity.this, SearchFood.class));
             }
         });
+        person.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(KhachHangActivity.this,InfoPersonActivity.class));
+            }
+        });
+
     }
 
 
