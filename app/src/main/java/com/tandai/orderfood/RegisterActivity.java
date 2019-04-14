@@ -1,5 +1,6 @@
 package com.tandai.orderfood;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -24,11 +25,14 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth mAuthencation;
     DatabaseReference mData;
     FirebaseUser user;
+    ProgressDialog process;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_register);
         Button btnThoat =(Button) findViewById(R.id.btnThoatReg);
+        process = new ProgressDialog(RegisterActivity.this);
+        process.setMessage("Vui lòng đợi");
         btnThoat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                process.show();
                 DangKy();
             }
         });
@@ -76,8 +81,9 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        process.dismiss();
                         Toast.makeText(RegisterActivity.this, "Đăng ký thành công.", Toast.LENGTH_SHORT).show();
-                        user= mAuthencation.getCurrentUser();
+                        user = mAuthencation.getCurrentUser();
                         //set Name cho user
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(Name)
@@ -96,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                         startActivity(new Intent(RegisterActivity.this,WelcomActivity.class));
                     }
                     else {
+                        process.dismiss();
                         Toast.makeText(RegisterActivity.this, "Tài khoản đã tồn tại.", Toast.LENGTH_SHORT).show();
                     }
                 }

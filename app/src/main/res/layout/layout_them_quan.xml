@@ -30,76 +30,89 @@
         android:layout_marginTop="60dp">
 
 
-        <EditText
-            android:id="@+id/edtEmailQuan"
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_margin="@dimen/size15dp"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:textColorHint="#FAF8F8"
+            android:id="@+id/edtEmailQuan"
+            android:textColor="#FFFCFC"
+            android:textSize="20sp"
+            android:inputType="textEmailAddress"
+            app:met_baseColor="#FFFFFF"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="#FFFFFF"
+            app:met_singleLineEllipsis="true"
             android:drawableLeft="@drawable/mail1"
             android:drawablePadding="@dimen/size10dp"
-            android:hint="@string/tendangnhap"
-            android:inputType="textEmailAddress"
-            android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorGray"
-            android:textSize="20sp" />
-
-        <EditText
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mật khẩu"
+            android:textColorHint="#FAF8F8"
             android:id="@+id/edtPassQuan"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_margin="@dimen/size15dp"
-            android:drawableLeft="@drawable/pass1"
-            android:drawablePadding="@dimen/size15dp"
-            android:hint="@string/pass"
+            android:textColor="#FFFCFC"
+            android:textSize="20sp"
             android:inputType="textPassword"
-            android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorGray"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/edtTenQuan"
+            app:met_baseColor="#FFFFFF"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="#FFFFFF"
+            app:met_minCharacters="6"
+            app:met_singleLineEllipsis="true"
+            android:drawableLeft="@drawable/pass1"
+            android:drawablePadding="@dimen/size10dp"
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_margin="@dimen/size15dp"
-            android:drawableLeft="@drawable/name1"
-            android:drawablePadding="5dp"
+            android:layout_height="wrap_content"
             android:hint="Tên quán"
+            android:textColorHint="#FAF8F8"
+            android:id="@+id/edtTenQuan"
+            android:textColor="#FFFCFC"
+            android:textSize="20sp"
             android:inputType="text"
-            android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorGray"
-            android:textSize="20sp" />
-
-
-        <EditText
-            android:id="@+id/edtPhoneQuan"
+            app:met_baseColor="#FFFFFF"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="#FFFFFF"
+            app:met_singleLineEllipsis="true"
+            android:drawableLeft="@drawable/name1"
+            android:drawablePadding="@dimen/size10dp"
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_margin="@dimen/size15dp"
+            android:layout_height="wrap_content"
+            android:hint="Số điện thoại"
+            android:textColorHint="#FAF8F8"
+            android:id="@+id/edtPhoneQuan"
+            android:textColor="#FFFCFC"
+            android:textSize="20sp"
+            android:inputType="phone"
+            app:met_baseColor="#FFFFFF"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="#FFFFFF"
+            app:met_singleLineEllipsis="true"
             android:drawableLeft="@drawable/phone1"
             android:drawablePadding="@dimen/size10dp"
-            android:hint="@string/phone"
-            android:inputType="phone"
-            android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorGray"
-            android:textSize="20sp" />
+            app:met_maxCharacters="11"
+            />
 
-        <EditText
-            android:id="@+id/edtAddressQuan"
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_margin="@dimen/size15dp"
+            android:layout_height="wrap_content"
+            android:hint="Địa chỉ"
+            android:textColorHint="#FAF8F8"
+            android:id="@+id/edtAddressQuan"
+            android:textColor="#FFFCFC"
+            android:textSize="20sp"
+            android:inputType="text"
+            app:met_baseColor="#FFFFFF"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="#FFFFFF"
+            app:met_singleLineEllipsis="true"
             android:drawableLeft="@drawable/address1"
             android:drawablePadding="@dimen/size10dp"
-            android:hint="Địa chỉ quán"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorGray"
-            android:textSize="20sp" />
+            />
 
         <LinearLayout
             android:layout_width="250dp"

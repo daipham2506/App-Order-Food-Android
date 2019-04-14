@@ -1,5 +1,6 @@
 package com.tandai.orderfood;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,11 +28,15 @@ public class LoginActivity extends AppCompatActivity {
     EditText email;
     EditText pass;
     Button btnThoat;
+    ProgressDialog process;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_login);
         AnhXa();
+        process = new ProgressDialog(LoginActivity.this);
+        process.setMessage("Vui lòng đợi");
         mAuthencation = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
         btnThoat.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                process.show();
                 DangNhap();
             }
         });
@@ -68,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        //Toast.makeText(LoginActivity.this, "Đăng nhập thành công.", Toast.LENGTH_SHORT).show();
+                        process.dismiss();
                         mData.child("Users").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -81,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(new Intent(LoginActivity.this,QuanAnActivity.class));
                                 }
                                 else if(user.getUserType().equals("customer") && user.getEmail().equals(Email)){
-                                    startActivity(new Intent(LoginActivity.this,KhachHangActivity.class));
+                                    startActivity(new Intent(LoginActivity.this,TestActivity.class));
                                 }
                             }
 
@@ -106,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
                     } else {
+                        process.dismiss();
                         Toast.makeText(LoginActivity.this, "Tài khoản hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();
                     }
                 }

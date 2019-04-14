@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/dangnhap"
         android:layout_centerHorizontal="true"
-        android:textSize="35sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:textColor="@color/colorWhite"
         android:fontFamily="@font/nabila"
@@ -33,39 +33,50 @@
         android:layout_marginTop="120dp">
 
 
-        <EditText
-            android:id="@+id/edtEmailLog"
-            android:inputType="textEmailAddress"
+        <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:textColorHint="#FAF8F8"
+            android:id="@+id/edtEmailLog"
+            android:textColor="#FFFCFC"
+            android:textSize="30sp"
+            android:inputType="textEmailAddress"
+            app:met_baseColor="#FFFFFF"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="#FFFFFF"
+            app:met_singleLineEllipsis="true"
             android:drawableLeft="@drawable/mail1"
             android:drawablePadding="@dimen/size10dp"
-            android:hint="@string/tendangnhap"
-            android:singleLine="true"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorGray"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/edtPassLog"
-            android:layout_width="match_parent"
-            android:inputType="textPassword"
-            android:layout_height="60dp"
-            android:drawableLeft="@drawable/pass1"
-            android:drawablePadding="@dimen/size15dp"
-            android:hint="@string/pass"
-            android:textColorHint="@color/colorGray"
-            android:textColor="@color/colorWhite"
-            android:textSize="25sp"
-            android:singleLine="true"
-            android:layout_marginTop="25dp"
             />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mật khẩu"
+            android:textColorHint="#FAF8F8"
+            android:id="@+id/edtPassLog"
+            android:textColor="#FFFCFC"
+            android:textSize="30sp"
+            android:inputType="textPassword"
+            app:met_baseColor="#FFFFFF"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="#FFFFFF"
+            app:met_minCharacters="6"
+            app:met_singleLineEllipsis="true"
+            android:drawableLeft="@drawable/pass1"
+            android:drawablePadding="@dimen/size10dp"
+            />
+
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="20dp">
 
             <Button
                 android:id="@+id/btnLog"
