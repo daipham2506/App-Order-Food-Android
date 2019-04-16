@@ -4,16 +4,19 @@ public class Food {
     private String tenMon;
     private String tenQuan;
     private String linkAnh;
+    private String IDQuan;
     private long giaMon;
     private int tinhTrang;
+
     public Food() {
     }
 
-    public Food(String tenMon, String tenQuan, String linkAnh, long giaMon, int tinhTrang) {
+    public Food(String tenMon, String tenQuan, String linkAnh, String IDQuan, long giaMon, int tinhTrang) {
 
         this.tenMon = tenMon;
         this.tenQuan = tenQuan;
         this.linkAnh = linkAnh;
+        this.IDQuan = IDQuan;
         this.giaMon = giaMon;
         this.tinhTrang = tinhTrang;
     }
@@ -40,6 +43,14 @@ public class Food {
 
     public void setLinkAnh(String linkAnh) {
         this.linkAnh = linkAnh;
+    }
+
+    public String getIDQuan() {
+        return IDQuan;
+    }
+
+    public void setIDQuan(String IDQuan) {
+        this.IDQuan = IDQuan;
     }
 
     public long getGiaMon() {

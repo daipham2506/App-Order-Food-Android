@@ -21,6 +21,10 @@
             android:icon="@drawable/cartplus"
             android:title="Xem giỏ hàng" />
         <item
+            android:id="@+id/nav_doimk"
+            android:icon="@drawable/key"
+            android:title="Đổi mật khẩu" />
+        <item
             android:id="@+id/nav_dangxuat"
             android:icon="@drawable/dangxuat"
             android:title="Đăng xuất" />

@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".TestActivity"
-    tools:showIn="@layout/app_bar_test">
+    tools:context=".KhachHangActivity"
+    tools:showIn="@layout/app_bar_khachhang">
 
     <ListView
         android:id="@+id/lvFood"

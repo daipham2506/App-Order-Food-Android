@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(new Intent(LoginActivity.this,QuanAnActivity.class));
                                 }
                                 else if(user.getUserType().equals("customer") && user.getEmail().equals(Email)){
-                                    startActivity(new Intent(LoginActivity.this,TestActivity.class));
+                                    startActivity(new Intent(LoginActivity.this, KhachHangActivity.class));
                                 }
                             }
 

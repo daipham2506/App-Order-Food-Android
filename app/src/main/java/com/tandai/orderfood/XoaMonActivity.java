@@ -56,7 +56,6 @@ public class XoaMonActivity extends AppCompatActivity {
                                 Toast.makeText(XoaMonActivity.this, "Tên món ăn không chính xác", Toast.LENGTH_SHORT).show();
                             }
                             else{
-
                                 //set null Value
                                 mDatabase = FirebaseDatabase.getInstance().getReference().child("QuanAn").child(userID).child(ten);
                                 mDatabase.setValue(null);

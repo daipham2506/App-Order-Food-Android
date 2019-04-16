@@ -58,7 +58,7 @@ public class XemDSMonActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     MonAn mon = ds.getValue(MonAn.class);
-                    arrFood.add(new Food(mon.getTenMon(),mon.getTenQuan(),mon.getLinkAnh(),mon.getGiaMon(),mon.getTinhTrang()));
+                    arrFood.add(new Food(mon.getTenMon(),mon.getTenQuan(),mon.getLinkAnh(),mon.getIdQuan(),mon.getGiaMon(),mon.getTinhTrang()));
                     //Toast.makeText(XemDSMonActivity.this, mon.getTenMon(), Toast.LENGTH_SHORT).show();
                     adapter.notifyDataSetChanged();
                 }
