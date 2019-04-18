@@ -69,6 +69,14 @@
             />
 
 
+        <CheckBox
+            android:id="@+id/ckbRemember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nhớ mật khẩu"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"/>
+
 
 
 

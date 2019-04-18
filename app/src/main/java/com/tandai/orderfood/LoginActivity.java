@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,6 +21,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import io.paperdb.Paper;
 
 public class LoginActivity extends AppCompatActivity {
     DatabaseReference mData;
@@ -29,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText pass;
     Button btnThoat;
     ProgressDialog process;
+    CheckBox Remember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         process = new ProgressDialog(LoginActivity.this);
         process.setMessage("Vui lòng đợi");
         mAuthencation = FirebaseAuth.getInstance();
-        mData = FirebaseDatabase.getInstance().getReference();
+        mData = FirebaseDatabase.getInstance().getReference().child("Users");
         btnThoat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,10 +52,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        Paper.init(this);
+
+
+
         btnLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 process.show();
                 DangNhap();
             }
@@ -62,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         email= (EditText) findViewById(R.id.edtEmailLog);
         pass=(EditText) findViewById((R.id.edtPassLog));
         btnThoat =(Button) findViewById(R.id.btnThoatLog);
+        Remember =(CheckBox) findViewById(R.id.ckbRemember);
     }
 
     private void DangNhap(){
@@ -71,12 +80,17 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin. ", Toast.LENGTH_SHORT).show();
         }
         else {
+
+            if(Remember.isChecked()){
+                Paper.book().write(Common.USER_KEY,Email);
+                Paper.book().write(Common.PWD_KEY,Pass);
+            }
             mAuthencation.signInWithEmailAndPassword(Email, Pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         process.dismiss();
-                        mData.child("Users").addChildEventListener(new ChildEventListener() {
+                        mData.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                                 User user   =   dataSnapshot.getValue(User.class);

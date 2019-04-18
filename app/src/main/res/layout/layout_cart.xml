@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/food2"
+    tools:context=".CartActivity"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/listCart"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp">
+
+    </ListView>
+    <android.support.v7.widget.CardView
+        android:layout_alignParentBottom="true"
+        app:cardBackgroundColor="#1C521E"
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_margin="8dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                
+                <TextView
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="25sp"
+                    android:text="Tổng cộng: "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/total"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="25sp"
+                    android:text="đ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <info.hoang8f.widget.FButton
+                android:id="@+id/btnPlaceOrder"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:text="Đặt hàng"
+                android:textColor="#fff"
+                app:shadowHeight="20dp"
+                android:background="#fff"
+                android:textSize="17sp">
+            </info.hoang8f.widget.FButton>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

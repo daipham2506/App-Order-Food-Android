@@ -24,7 +24,7 @@
     <style name="ExpandedAppBar" parent="@android:style/TextAppearance.Material.Title">
         <item name="android:textColor">#4CAF50</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">35sp</item>
+        <item name="android:textSize">0sp</item>
     </style>
 
 </resources>

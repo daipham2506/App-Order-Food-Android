@@ -34,8 +34,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class KhachHangActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import io.paperdb.Paper;
 
+public class KhachHangActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     TextView ten, tenTK;
     ListView lvFood;
     ArrayList<Food> arrFood;
@@ -56,8 +57,8 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent Cart = new Intent(KhachHangActivity.this,CartActivity.class);
+                startActivity(Cart);
             }
         });
 
@@ -66,6 +67,9 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        //Init paper
+        Paper.init(this);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -80,18 +84,17 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         lvFood.setAdapter(adapter);
         LoadData_Food();
 
-           lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 //position là vi tri tren listview
                 Food food = arrFood.get(position);
                 Intent foodDetail = new Intent(KhachHangActivity.this,FoodDetailActivity.class);
-                //gửi FoodId (ten của Food) và id quán đến activity mới
+                //gửi FoodId (ten của Food) và id quán đến activity FoodDetail
                 foodDetail.putExtra("FoodId",food.getTenMon());
                 foodDetail.putExtra("RestaurentID",food.getIDQuan());
-                // mở activity  foođetail
+                // mở activity  foodDetail
                 startActivity(foodDetail);
-                //Toast.makeText(KhachHangActivity.this, food.getIDQuan(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -130,7 +133,6 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
                     for(DataSnapshot ds1: ds.getChildren()){
                         MonAn mon = ds1.getValue(MonAn.class);
                         arrFood.add(new Food(mon.getTenMon(),mon.getTenQuan(),mon.getLinkAnh(),mon.getIdQuan(),mon.getGiaMon(),mon.getTinhTrang()));
-                        //Toast.makeText(XemDSMonActivity.this, mon.getTenMon(), Toast.LENGTH_SHORT).show();
                         adapter.notifyDataSetChanged();
                         //++i;
                         //if(i==3) break; // moi quan 3 mon
@@ -200,6 +202,11 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             startActivity(new Intent(KhachHangActivity.this,ChangePassActivity.class));
         }
         else if(id == R.id.nav_dangxuat) {
+
+            //delete remember user and password
+            Paper.book().destroy();
+
+            // open dialog
             final Dialog dialogLogOut = new Dialog(KhachHangActivity.this);
             dialogLogOut.setContentView(R.layout.dialog_dang_xuat);
             dialogLogOut.show();
@@ -225,7 +232,6 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         else if (id == R.id.nav_send) {
 
         }
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
