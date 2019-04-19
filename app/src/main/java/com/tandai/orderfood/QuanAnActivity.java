@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class QuanAnActivity extends AppCompatActivity {
-    Button LogOut,doiMK,themMon,xoaMon,xemDSMon,suaMon;
+    Button LogOut,doiMK,themMon,xoaMon,xemDSMon,suaMon, xemDonDatHang;
     TextView tenQuan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,14 @@ public class QuanAnActivity extends AppCompatActivity {
             }
         });
 
+        xemDonDatHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(QuanAnActivity.this,QuanAnXemDSDonDatHang.class));
+            }
+        });
+
+
     }
 
 
@@ -82,6 +90,7 @@ public class QuanAnActivity extends AppCompatActivity {
         xoaMon=(Button) findViewById(R.id.btnXoaMon);
         suaMon=(Button) findViewById(R.id.btnSuaMon);
         xemDSMon=(Button) findViewById(R.id.btnXemMon);
+        xemDonDatHang= (Button) findViewById(R.id.btnXemDonHang);
     }
 
     private void DangXuat(){

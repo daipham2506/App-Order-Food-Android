@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="370dp" android:layout_height="200dp"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="@dimen/size20dp"
+    android:paddingTop="10dp"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/donhang"/>
+        <TextView
+            android:paddingLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xác nhận đơn hàng"
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nhập địa chỉ giao hàng"
+        android:textColor="@color/colorBlack"
+        android:textSize="17sp"
+        android:textStyle="italic"/>
+
+    <EditText
+        android:id="@+id/diachigiaohang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:textSize="20sp"
+        android:textColor="@color/colorBlack"/>
+
+
+    <TextView
+        android:id="@+id/confirmCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xác nhận"
+        android:textColor="#134934"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/cancelCart"
+        android:layout_toLeftOf="@+id/confirmCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="35dp"
+        android:layout_alignParentBottom="true"
+        android:text="Hủy"
+        android:textColor="#134934"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"
+        />
+
+</RelativeLayout>

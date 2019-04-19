@@ -73,6 +73,16 @@
             android:textSize="20sp"
             android:textAllCaps="false"/>
 
+        <Button
+            android:id="@+id/btnXemDonHang"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/size15dp"
+            android:background="@drawable/duongvien_xanh"
+            android:text="Xem các đơn đặt hàng"
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
+
     </LinearLayout>
 
     <Button

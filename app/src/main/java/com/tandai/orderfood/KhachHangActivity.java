@@ -196,7 +196,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
 
         }
         else if (id == R.id.nav_giohang) {
-
+            startActivity(new Intent(KhachHangActivity.this, CartActivity.class));
         }
         else if (id == R.id.nav_doimk) {
             startActivity(new Intent(KhachHangActivity.this,ChangePassActivity.class));
