@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import io.paperdb.Paper;
+
 public class AdminActivity extends AppCompatActivity {
 
     private Button ThemQuan,XoaQuan,logOut,doiMK;
@@ -15,6 +17,9 @@ public class AdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_admin);
+
+        Paper.init(this);
+
         ThemQuan    =(Button) findViewById(R.id.btnThemQuanKhungAdmin);
         XoaQuan     =(Button) findViewById(R.id.btnXoaQuanKhungAdmin);
         logOut      =(Button) findViewById(R.id.btnLogOutAdmin);
@@ -37,6 +42,8 @@ public class AdminActivity extends AppCompatActivity {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //delete remember user and password
+                Paper.book().destroy();
                 DangXuat();
             }
         });

@@ -20,7 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import info.hoang8f.widget.FButton;
 
@@ -35,7 +38,7 @@ public class CartActivity extends AppCompatActivity {
     String sdt ="",tenKH="";
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
-    DatabaseReference mDatabase;
+    DatabaseReference mDatabase, mDatabase1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +78,16 @@ public class CartActivity extends AppCompatActivity {
                 xacnhan.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //get date-time
+                        Calendar c = Calendar.getInstance();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy   hh:mm:ss aa");
+                        final String dateTime = dateFormat.format(c.getTime());
 
+                        // get address
                         final String diachigiaohang = diaChi.getText().toString().trim();
                         if(diachigiaohang.isEmpty())
                             Toast.makeText(CartActivity.this, "Vui lòng nhập địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
                         else{
-
                             mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
                             ValueEventListener eventListener = new ValueEventListener() {
                                 @Override
@@ -91,7 +98,7 @@ public class CartActivity extends AppCompatActivity {
                                     tenKH =uInfo.getName();
                                     // them vào mảng Order
                                     for(int i=0 ;i <arrCart.size();i++) {
-                                        arrOrder.add(new Order(diachigiaohang,sdt,userID,tenKH,arrCart.get(i).getTenQuan(),arrCart.get(i).getIDQuan(),arrCart.get(i).getTenMon(),arrCart.get(i).getGiaMon(),arrCart.get(i).getSoluong(),arrCart.get(i).getLinkAnh()));
+                                        arrOrder.add(new Order(dateTime,diachigiaohang,sdt,userID,tenKH,arrCart.get(i).getTenQuan(),arrCart.get(i).getIDQuan(),arrCart.get(i).getTenMon(),arrCart.get(i).getGiaMon(),arrCart.get(i).getSoluong(),arrCart.get(i).getLinkAnh()));
                                     }
                                 }
 
@@ -103,13 +110,13 @@ public class CartActivity extends AppCompatActivity {
                             mDatabase.addListenerForSingleValueEvent(eventListener);
 
 
-                            // ghi data vào Orders
+                            // ghi data vào db Orders
                             mDatabase = FirebaseDatabase.getInstance().getReference().child("Orders");
                             ValueEventListener eventListener1 = new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     for(int i=0 ; i<arrOrder.size();i++){
-                                        mDatabase.child(arrOrder.get(i).getQuanID()).child(arrOrder.get(i).getTenMon()).setValue(arrOrder.get(i));
+                                        mDatabase.child(arrOrder.get(i).getQuanID()).child(userID).child(arrOrder.get(i).getTenMon()).setValue(arrOrder.get(i));
                                     }
                                 }
 
@@ -120,8 +127,28 @@ public class CartActivity extends AppCompatActivity {
                             };
                             mDatabase.addListenerForSingleValueEvent(eventListener1);
 
+
+                            // đóng dialog
                             dialogConfirm.dismiss();
                             Toast.makeText(CartActivity.this, "Bạn đã đặt hàng thành công", Toast.LENGTH_SHORT).show();
+
+                            // xóa db Cart của user sau khi đặt hàng thành công
+                            mDatabase1 = FirebaseDatabase.getInstance().getReference().child("Carts").child(userID);
+                            ValueEventListener eventListener2 = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    dataSnapshot.getRef().setValue(null);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            };
+                            mDatabase1.addListenerForSingleValueEvent(eventListener2);
+
+
+
                         }
                     }
                 });

@@ -51,15 +51,15 @@ public class QuanAnXemDSDonDatHang extends AppCompatActivity {
 
     private void getInfoOrder(){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Orders").child(userID);
-
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    Order order = ds.getValue(Order.class);
-                    arrOrder.add(order);
-                    adapter.notifyDataSetChanged();
-
+                    for( DataSnapshot ds1 : ds.getChildren()){
+                        Order order = ds1.getValue(Order.class);
+                        arrOrder.add(order);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
             @Override

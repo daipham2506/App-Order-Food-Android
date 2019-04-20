@@ -24,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import io.paperdb.Paper;
+
 public class QuanAnActivity extends AppCompatActivity {
     Button LogOut,doiMK,themMon,xoaMon,xemDSMon,suaMon, xemDonDatHang;
     TextView tenQuan;
@@ -31,12 +33,19 @@ public class QuanAnActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_quan_an);
+
+        // Paper init
+        Paper.init(this);
+
+
         AnhXa();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         tenQuan.setText("Quán "+user.getDisplayName());
         LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //delete remember user and password
+                Paper.book().destroy();
                 DangXuat();
             }
         });

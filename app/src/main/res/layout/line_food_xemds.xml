@@ -18,8 +18,9 @@
         android:layout_marginTop="3dp"
         android:id="@+id/ivHinh"
         android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:src="@color/colorBlack"/>
+        android:layout_height="100dp"
+        android:src="@color/colorGray"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:layout_width="wrap_content"

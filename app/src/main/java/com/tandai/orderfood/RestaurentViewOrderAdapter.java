@@ -54,6 +54,7 @@ public class RestaurentViewOrderAdapter extends BaseAdapter {
         TextView diachi =(TextView) view.findViewById(R.id.res_vieworder_item_address_customer);
         ImageView hinh = (ImageView) view.findViewById(R.id.res_vieworder_item_image);
         TextView soluong= (TextView) view.findViewById(R.id.res_vieworder_item_count);
+        TextView dateTime = (TextView) view.findViewById(R.id.res_vieworder_item_date_time);
 
         //set value
         Order order = listOrder.get(position);
@@ -64,6 +65,7 @@ public class RestaurentViewOrderAdapter extends BaseAdapter {
         sdt.setText(order.getSdtKhachHang());
         diachi.setText(order.getDiachigiaohang());
         soluong.setText(String.valueOf(order.getSoluong()));
+        dateTime.setText(order.getDateTime());
         Picasso.with(context).load(order.getLinkAnh()).into(hinh);
 
         return view;

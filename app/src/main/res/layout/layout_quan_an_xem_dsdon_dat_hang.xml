@@ -12,7 +12,7 @@
     <ListView
         android:id="@+id/listRestaurent_viewOrder"
         android:layout_width="match_parent"
-        android:layout_height="605dp"
+        android:layout_height="620dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp">
     </ListView>

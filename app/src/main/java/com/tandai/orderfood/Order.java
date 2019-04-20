@@ -12,11 +12,13 @@ public class Order {
     private long giaMon;
     private long soluong;
     private String linkAnh;
+    private String dateTime;
 
     public Order() {
     }
 
-    public Order(String diachigiaohang, String sdtKhachHang, String userID, String tenkhachhang, String tenQuan, String quanID, String tenMon, long giaMon, long soluong, String linkAnh) {
+    public Order(String dateTime,String diachigiaohang, String sdtKhachHang, String userID, String tenkhachhang, String tenQuan, String quanID, String tenMon, long giaMon, long soluong, String linkAnh) {
+        this.dateTime =dateTime;
         this.diachigiaohang = diachigiaohang;
         this.sdtKhachHang = sdtKhachHang;
         UserID = userID;
@@ -27,6 +29,14 @@ public class Order {
         this.giaMon = giaMon;
         this.soluong = soluong;
         this.linkAnh = linkAnh;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getDiachigiaohang() {

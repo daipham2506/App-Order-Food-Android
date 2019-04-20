@@ -10,18 +10,18 @@
     android:background="@color/colorWhite">
 
     <LinearLayout
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="105dp"
+        android:layout_height="wrap_content"
         >
         <ImageView
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/res_vieworder_item_image"
-            android:layout_width="110dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="110dp"
             android:scaleType="centerCrop"/>
 
         <LinearLayout
@@ -84,6 +84,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
+
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:id="@+id/res_vieworder_item_date_time"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical|start"
+                android:textStyle="italic"
+                android:text="date time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+
 
         </LinearLayout>
         <TextView
