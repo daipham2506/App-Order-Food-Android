@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/colorWhite"
+    tools:context=".ForgotPassActivity">
+    <LinearLayout
+        android:layout_marginBottom="20dp"
+        android:id="@+id/linnearForgot"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quên mật khẩu"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            />
+
+    </LinearLayout>
+    <EditText
+        android:inputType="textEmailAddress"
+        android:padding="16dp"
+        android:background="@drawable/vienxanhla"
+        android:layout_margin="10dp"
+        android:drawableLeft="@drawable/mail1"
+        android:drawablePadding="@dimen/size10dp"
+        android:layout_below="@id/linnearForgot"
+        android:id="@+id/EmailForgotPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textColorHint="@color/colorGray"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        android:singleLine="true"/>
+    <info.hoang8f.widget.FButton
+        android:id="@+id/btnGetPass"
+        android:layout_margin="40dp"
+        android:layout_below="@id/EmailForgotPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lấy lại mật khẩu"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:textAllCaps="false"/>
+
+</RelativeLayout>

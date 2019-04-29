@@ -10,12 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,9 +33,9 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLog;
     EditText email;
     EditText pass;
-    Button btnThoat;
     ProgressDialog process;
     CheckBox Remember;
+    TextView forgotPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,43 +46,40 @@ public class LoginActivity extends AppCompatActivity {
         process.setMessage("Vui lòng đợi");
         mAuthencation = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference().child("Users");
-        btnThoat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent screenWel = new Intent(LoginActivity.this,WelcomActivity.class);
-                startActivity(screenWel);
-            }
-        });
 
         Paper.init(this);
-
-
 
         btnLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process.show();
                 DangNhap();
             }
         });
+
+       forgotPass.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+              startActivity(new Intent(LoginActivity.this,ForgotPassActivity.class));
+           }
+       });
     }
 
     private void AnhXa(){
         btnLog=(Button) findViewById(R.id.btnLog);
         email= (EditText) findViewById(R.id.edtEmailLog);
         pass=(EditText) findViewById((R.id.edtPassLog));
-        btnThoat =(Button) findViewById(R.id.btnThoatLog);
         Remember =(CheckBox) findViewById(R.id.ckbRemember);
+        forgotPass = (TextView) findViewById(R.id.forgotPass);
     }
 
     private void DangNhap(){
         final String Email = email.getText().toString().trim();
-        String Pass = pass.getText().toString().trim();
+        final String Pass = pass.getText().toString().trim();
         if (Email.isEmpty() || Pass.isEmpty() ) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin. ", Toast.LENGTH_SHORT).show();
         }
         else {
-
+            process.show();
             if(Remember.isChecked()){
                 Paper.book().write(Common.USER_KEY,Email);
                 Paper.book().write(Common.PWD_KEY,Pass);
@@ -126,6 +125,23 @@ public class LoginActivity extends AppCompatActivity {
 
                             }
                         });
+                        // ghi lai mk trong database neu quen mat kau sau khi lay lai
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String userID = user.getUid();
+                        DatabaseReference mDatabase =FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+                        ValueEventListener eventListener = new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                dataSnapshot.child("pass").getRef().setValue(Pass);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        };
+                        mDatabase.addListenerForSingleValueEvent(eventListener);
+
                     } else {
                         process.dismiss();
                         Toast.makeText(LoginActivity.this, "Tài khoản hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();

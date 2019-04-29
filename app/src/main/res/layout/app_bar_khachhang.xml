@@ -29,6 +29,10 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorWhite"
-        app:srcCompat="@drawable/cartplus" />
+        app:srcCompat="@drawable/cartplus"
+        app:pressedTranslationZ="12dp"
+        android:backgroundTint="@color/colorText"
+        app:elevation="5dp"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

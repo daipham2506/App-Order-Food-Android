@@ -2,10 +2,9 @@ package com.tandai.orderfood;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,12 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -50,7 +45,8 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khachhang);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Menu");
+        toolbar.setTitle("MENU");
+
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -80,7 +76,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
 
         lvFood  =   (ListView) findViewById(R.id.lvFood);
         arrFood = new ArrayList<>();
-        adapter = new FoodAdapter1(this, R.layout.line_food1, arrFood);
+        adapter = new FoodAdapter1(this, R.layout.line_food, arrFood);
         lvFood.setAdapter(adapter);
         LoadData_Food();
 
@@ -129,13 +125,13 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    //int i= 0;
+                    int i= 0;
                     for(DataSnapshot ds1: ds.getChildren()){
                         MonAn mon = ds1.getValue(MonAn.class);
                         arrFood.add(new Food(mon.getTenMon(),mon.getTenQuan(),mon.getLinkAnh(),mon.getIdQuan(),mon.getGiaMon(),mon.getTinhTrang()));
                         adapter.notifyDataSetChanged();
-                        //++i;
-                        //if(i==3) break; // moi quan 3 mon
+                        ++i;
+                        if(i==3) break; // moi quan 3 mon
                     }
                 }
             }
@@ -174,8 +170,8 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_search) {
+            startActivity(new Intent(KhachHangActivity.this,SearchFoodActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -190,7 +186,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             startActivity(new Intent(KhachHangActivity.this,InfoPersonActivity.class));
         }
         else if (id == R.id.nav_timkiem) {
-
+            startActivity(new Intent(KhachHangActivity.this, SearchFoodActivity.class));
         }
         else if (id == R.id.nav_donhang) {
 
@@ -225,12 +221,6 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
                     startActivity(new Intent(KhachHangActivity.this,WelcomActivity.class));
                 }
             });
-        }
-        else if (id == R.id.nav_share) {
-
-        }
-        else if (id == R.id.nav_send) {
-
         }
 
 

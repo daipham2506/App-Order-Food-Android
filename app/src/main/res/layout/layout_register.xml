@@ -131,6 +131,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/duongvien_xanh"
                 android:text="@string/dangky"
+                android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
                 android:textSize="20sp" />
 
@@ -141,6 +142,7 @@
                 android:layout_margin="@dimen/size10dp"
                 android:layout_weight="1"
                 android:text="Thoát"
+                android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
                 android:background="@drawable/duongvien_nau"
                 android:textSize="20sp" />

@@ -58,11 +58,9 @@ public class FoodDetailActivity extends AppCompatActivity {
             foodId       = intent.getStringExtra("FoodId");
             RestaurentID = intent.getStringExtra("RestaurentID");
         }
-
-        if(!foodId.isEmpty() && foodId != null && !RestaurentID.isEmpty() && RestaurentID != null){
+        if(!foodId.isEmpty() && foodId !=null && !RestaurentID.isEmpty() && RestaurentID!= null){
             getDetailFood(RestaurentID,foodId);
         }
-
 
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override

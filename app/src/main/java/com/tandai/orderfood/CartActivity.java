@@ -60,6 +60,7 @@ public class CartActivity extends AppCompatActivity {
         btnDatHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //open dialog_confirmCart
                 final Dialog dialogConfirm = new Dialog(CartActivity.this);
                 dialogConfirm.setContentView(R.layout.dialog_confirmcart);
@@ -85,9 +86,9 @@ public class CartActivity extends AppCompatActivity {
 
                         // get address
                         final String diachigiaohang = diaChi.getText().toString().trim();
-                        if(diachigiaohang.isEmpty())
+                        if (diachigiaohang.isEmpty())
                             Toast.makeText(CartActivity.this, "Vui lòng nhập địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
-                        else{
+                        else {
                             mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
                             ValueEventListener eventListener = new ValueEventListener() {
                                 @Override
@@ -95,10 +96,10 @@ public class CartActivity extends AppCompatActivity {
                                     User uInfo = dataSnapshot.getValue(User.class);
                                     // get sdt + ten khach hang
                                     sdt = uInfo.getPhone();
-                                    tenKH =uInfo.getName();
+                                    tenKH = uInfo.getName();
                                     // them vào mảng Order
-                                    for(int i=0 ;i <arrCart.size();i++) {
-                                        arrOrder.add(new Order(dateTime,diachigiaohang,sdt,userID,tenKH,arrCart.get(i).getTenQuan(),arrCart.get(i).getIDQuan(),arrCart.get(i).getTenMon(),arrCart.get(i).getGiaMon(),arrCart.get(i).getSoluong(),arrCart.get(i).getLinkAnh()));
+                                    for (int i = 0; i < arrCart.size(); i++) {
+                                        arrOrder.add(new Order(dateTime, diachigiaohang, sdt, userID, tenKH, arrCart.get(i).getTenQuan(), arrCart.get(i).getIDQuan(), arrCart.get(i).getTenMon(), arrCart.get(i).getGiaMon(), arrCart.get(i).getSoluong(), arrCart.get(i).getLinkAnh()));
                                     }
                                 }
 
@@ -115,7 +116,7 @@ public class CartActivity extends AppCompatActivity {
                             ValueEventListener eventListener1 = new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for(int i=0 ; i<arrOrder.size();i++){
+                                    for (int i = 0; i < arrOrder.size(); i++) {
                                         mDatabase.child(arrOrder.get(i).getQuanID()).child(userID).child(arrOrder.get(i).getTenMon()).setValue(arrOrder.get(i));
                                     }
                                 }
@@ -148,8 +149,8 @@ public class CartActivity extends AppCompatActivity {
                             mDatabase1.addListenerForSingleValueEvent(eventListener2);
 
 
-
                         }
+
                     }
                 });
 

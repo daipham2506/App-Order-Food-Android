@@ -34,21 +34,20 @@
 
 
         <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/edtEmailLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/mail1"
+            android:drawablePadding="@dimen/size10dp"
             android:hint="Email"
-            android:textColorHint="#FAF8F8"
-            android:id="@+id/edtEmailLog"
-            android:textColor="#FFFCFC"
-            android:textSize="30sp"
             android:inputType="textEmailAddress"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="#FAF8F8"
+            android:textSize="30sp"
             app:met_baseColor="#FFFFFF"
             app:met_floatingLabel="highlight"
             app:met_primaryColor="#FFFFFF"
-            app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/mail1"
-            android:drawablePadding="@dimen/size10dp"
-            />
+            app:met_singleLineEllipsis="true" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
@@ -56,7 +55,7 @@
             android:hint="Mật khẩu"
             android:textColorHint="#FAF8F8"
             android:id="@+id/edtPassLog"
-            android:textColor="#FFFCFC"
+            android:textColor="@color/colorWhite"
             android:textSize="30sp"
             android:inputType="textPassword"
             app:met_baseColor="#FFFFFF"
@@ -68,14 +67,30 @@
             android:drawablePadding="@dimen/size10dp"
             />
 
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <CheckBox
             android:id="@+id/ckbRemember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:outlineAmbientShadowColor="@color/colorWhite"
+            android:outlineSpotShadowColor="@color/colorWhite"
+            android:paddingLeft="10dp"
             android:text="Nhớ mật khẩu"
-            android:textSize="20sp"
-            android:paddingLeft="10dp"/>
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/forgotPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quên mật khẩu"
+            android:textColor="@color/colorWhite"
+            android:textIsSelectable="true"
+            android:textSize="18sp"
+            android:layout_marginLeft="60dp"/>
+    </LinearLayout>
 
 
 
@@ -84,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="30dp">
 
             <Button
                 android:id="@+id/btnLog"
@@ -94,19 +109,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/duongvien_xanh"
                 android:text="Đăng nhập"
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textAllCaps="false"/>
 
-            <Button
-                android:id="@+id/btnThoatLog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/size10dp"
-                android:layout_weight="1"
-                android:background="@drawable/duongvien_nau"
-                android:text="Thoát"
-                android:textSize="@dimen/size20dp"
-                android:textAllCaps="false"/>
+
 
         </LinearLayout>
 

@@ -54,6 +54,7 @@
             android:layout_height="30dp"
             android:background="#43A047"
             android:text="Không"
+            android:textColor="@color/colorWhite"
             android:textSize="15sp"
             android:textAllCaps="false"/>
 
@@ -64,6 +65,7 @@
             android:layout_marginLeft="30dp"
             android:background="#FF9100"
             android:text="Có"
+            android:textColor="@color/colorWhite"
             android:textSize="15sp"
             android:textAllCaps="false"/>
 

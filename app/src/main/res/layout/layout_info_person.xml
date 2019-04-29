@@ -127,6 +127,7 @@
         android:layout_marginTop="300dp"
         android:background="#43A047"
         android:text="Thay đổi mật khẩu"
+        android:textColor="@color/colorWhite"
         android:textAllCaps="false"
         android:textSize="15sp"/>
 

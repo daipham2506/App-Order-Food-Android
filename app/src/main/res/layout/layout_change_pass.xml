@@ -104,7 +104,8 @@
             android:background="#43A047"
             android:text="Đổi"
             android:textSize="15sp"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"/>
 
         <Button
             android:id="@+id/btnDongChangePass"
@@ -114,7 +115,8 @@
             android:background="#FF9100"
             android:text="Đóng"
             android:textAllCaps="false"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="@color/colorWhite"/>
 
 
     </LinearLayout>

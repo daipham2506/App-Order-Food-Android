@@ -1,40 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    android:orientation="vertical">
 
-    <LinearLayout
+    >
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/searchBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:paddingTop="5dp"
-        android:background="#2E7D32"
-        android:orientation="vertical">
-        <EditText
-            android:id="@+id/edtTim"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/colorWhite"
-            android:drawableLeft="@drawable/search"
-            android:drawablePadding="5dp"
-            android:hint="Tìm kiếm món ăn, quán ăn..."
-            android:inputType="text"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:textColor="@color/colorBlack"
-            android:textColorHint="@color/colorGray"
-            android:textSize="18sp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:clickable="true"
+        app:mt_hint="Nhập tên món ăn"
+        app:mt_speechMode="false">
 
+    </com.mancj.materialsearchbar.MaterialSearchBar>
 
-
-
+    <ListView
+        android:id="@+id/listview_food"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchBar"
+        android:layout_marginTop="0dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0sp">
+        android:scrollbars="vertical"></ListView>
 </RelativeLayout>
-

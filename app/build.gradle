@@ -43,5 +43,8 @@ dependencies {
 
     implementation 'io.paperdb:paperdb:2.1'
     implementation 'com.github.rey5137:material:1.2.4'
+
+    implementation 'com.github.mancj:materialSearchBar:0.7.1'
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 }
 apply plugin: 'com.google.gms.google-services'

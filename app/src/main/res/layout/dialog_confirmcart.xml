@@ -37,9 +37,11 @@
         android:id="@+id/diachigiaohang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="77dp"
         android:textSize="20sp"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/colorBlack"
+        android:singleLine="true"
+        />
 
 
     <TextView
