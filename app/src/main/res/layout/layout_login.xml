@@ -81,15 +81,7 @@
             android:textColor="@color/colorWhite"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/forgotPass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quên mật khẩu"
-            android:textColor="@color/colorWhite"
-            android:textIsSelectable="true"
-            android:textSize="18sp"
-            android:layout_marginLeft="60dp"/>
+
     </LinearLayout>
 
 
@@ -99,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="20dp">
 
             <Button
                 android:id="@+id/btnLog"
@@ -116,6 +108,20 @@
 
 
         </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/forgotPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quên mật khẩu?"
+            android:textColor="@color/colorWhite"
+            android:textIsSelectable="true"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            />
+
 
     </LinearLayout>
 

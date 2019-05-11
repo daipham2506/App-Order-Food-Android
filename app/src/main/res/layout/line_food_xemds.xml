@@ -86,18 +86,7 @@
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="85dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:textColor="#FF9100"
-            android:paddingLeft="10dp"
-            android:background="#E41D1B1A"
-            android:layout_marginTop="35dp"/>
-    </LinearLayout>
+
 
 
 

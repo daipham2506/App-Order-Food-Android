@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/colorGray">
 
@@ -17,6 +17,7 @@
         android:scaleType="centerCrop"/>
 
     <LinearLayout
+        android:weightSum="10"
         android:layout_marginTop="150dp"
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -24,7 +25,11 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         >
-
+    <LinearLayout
+        android:layout_marginLeft="15dp"
+        android:layout_weight="9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tvtenMon2"
             android:layout_width="wrap_content"
@@ -41,6 +46,16 @@
             android:text="Ten quan"
             android:textSize="20sp"
             android:textColor="@color/colorWhite"/>
+    </LinearLayout>
+
+        <ImageView
+            android:layout_weight="1"
+            android:paddingTop="2dp"
+            android:id="@+id/fav"
+            android:src="@drawable/ic_favorite_border_black_24dp"
+            android:layout_width="50dp"
+            android:tint="@color/colorWhite"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

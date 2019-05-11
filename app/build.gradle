@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:design:28.0.0'
@@ -28,23 +28,23 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-database:16.0.1'
-
     implementation 'com.google.firebase:firebase-auth:16.0.1'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.android.support:design:28.0.0'
-    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2' // button số lượng
+    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
+    // button số lượng
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'info.hoang8f:fbutton:1.0.5'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
-
     implementation 'io.paperdb:paperdb:2.1'
     implementation 'com.github.rey5137:material:1.2.4'
-
     implementation 'com.github.mancj:materialSearchBar:0.7.1'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+    implementation 'com.stepstone.apprating:app-rating:2.0.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

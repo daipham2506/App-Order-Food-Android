@@ -53,7 +53,8 @@
             android:background="#43A047"
             android:text="Bật wifi"
             android:textSize="15sp"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"/>
 
         <Button
             android:id="@+id/btnThoatDiaLogInternet"
@@ -63,7 +64,8 @@
             android:background="#FF9100"
             android:text="Thoát"
             android:textSize="15sp"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"/>
 
 
     </LinearLayout>

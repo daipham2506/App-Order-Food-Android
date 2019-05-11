@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:textStyle="normal"
                     android:id="@+id/total"
                     android:textColor="@color/colorWhite"
                     android:textSize="25sp"

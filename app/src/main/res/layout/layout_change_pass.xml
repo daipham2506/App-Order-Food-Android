@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/size10dp"
         android:text="Thay đổi mật khẩu"
-        android:textColor="#FF9100"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp" />
 
     <TextView
@@ -45,48 +45,61 @@
         android:paddingLeft="30dp"
         android:text="Mật khẩu tối thiểu 6 ký tự"
         android:layout_marginTop="100dp"/>
-    <TextView
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edtPassOld"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorBlack"
-        android:paddingLeft="20dp"
-        android:text="Mật khẩu mới"
         android:layout_marginTop="150dp"
-        android:textSize="20sp"/>
-    <EditText
+        android:hint="Mật khẩu cũ"
+        android:text=""
+        android:layout_marginLeft="@dimen/size20dp"
+        android:layout_marginRight="@dimen/size15dp"
+        android:inputType="textPassword"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:textSize="24dp"
+        app:met_baseColor="@color/colorPrimary"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/colorPrimary"
+        app:met_singleLineEllipsis="true"
+        />
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/edtNhapPass"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="180dp"
-        android:layout_marginRight="15dp"
-        android:textColorHint="@color/colorGray"
-        android:layout_marginLeft="@dimen/size20dp"
-        android:textColor="@color/colorBlack"
-        android:inputType="textPassword"
-        android:background="@drawable/vienxanhla"
-        android:textSize="20sp"
-        android:paddingLeft="@dimen/size10dp"/>
-    <TextView
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorBlack"
-        android:paddingLeft="20dp"
-        android:text="Nhắc lại mật khẩu"
-        android:layout_marginTop="235dp"
-        android:textSize="20sp"/>
-    <EditText
+        android:layout_marginTop="220dp"
+        android:hint="Mật khẩu mới"
+        android:text=""
+        android:layout_marginLeft="@dimen/size20dp"
+        android:layout_marginRight="@dimen/size15dp"
+        android:inputType="textPassword"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:textSize="24dp"
+        app:met_baseColor="@color/colorPrimary"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/colorPrimary"
+        app:met_singleLineEllipsis="true"
+        />
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/edtNhaplaiPass"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="265dp"
-        android:textColorHint="@color/colorGray"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="290dp"
+        android:hint="Xác nhận mật khẩu mới"
+        android:text=""
         android:layout_marginLeft="@dimen/size20dp"
-        android:textColor="@color/colorBlack"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="@dimen/size15dp"
         android:inputType="textPassword"
-        android:background="@drawable/vienxanhla"
-        android:textSize="20sp"
-        android:paddingLeft="@dimen/size10dp"/>
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:textSize="24dp"
+        app:met_baseColor="@color/colorPrimary"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/colorPrimary"
+        app:met_singleLineEllipsis="true"
+        />
 
 
     <LinearLayout
@@ -95,7 +108,7 @@
         android:layout_centerInParent="false"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="false"
-        android:layout_marginTop="330dp">
+        android:layout_marginTop="400dp">
 
         <Button
             android:id="@+id/btnDoiPass"

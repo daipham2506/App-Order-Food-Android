@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="70dp">
 
 
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -129,7 +129,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/duongvien_xanh"
                 android:text="Thêm"
-
+                android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textAllCaps="false"/>
 

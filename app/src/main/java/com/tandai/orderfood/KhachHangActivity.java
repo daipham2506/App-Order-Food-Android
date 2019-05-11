@@ -4,7 +4,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -36,6 +40,10 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     ListView lvFood;
     ArrayList<Food> arrFood;
     FoodAdapter1 adapter = null;
+    //   RecyclerView recyclerView;
+
+    //DatabaseReference database;
+
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
@@ -78,6 +86,8 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         arrFood = new ArrayList<>();
         adapter = new FoodAdapter1(this, R.layout.line_food, arrFood);
         lvFood.setAdapter(adapter);
+
+
         LoadData_Food();
 
         lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,9 +104,8 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
+
     }
-
-
 
 
     private void LoadData_User(){
@@ -228,4 +237,49 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+    //    private void initRecyclerView(final String foodID,final String RestaurentID){
+//        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewFood);
+//        arrFood = new ArrayList<>();
+//
+//        recyclerView.setHasFixedSize(true);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+//        recyclerView.setLayoutManager(layoutManager);
+//
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
+//        recyclerView.addItemDecoration(dividerItemDecoration);
+//
+//        mDatabase = FirebaseDatabase.getInstance().getReference().child("QuanAn");
+//        ValueEventListener eventListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+//                    int i= 0;
+//                    for(DataSnapshot ds1: ds.getChildren()){
+//                        MonAn mon = ds1.getValue(MonAn.class);
+//                        arrFood.add(new Food(mon.getTenMon(),mon.getTenQuan(),mon.getLinkAnh(),mon.getIdQuan(),mon.getGiaMon(),mon.getTinhTrang()));
+//
+//                        ++i;
+//                        if(i==3) break; // moi quan 3 mon
+//                    }
+//                }
+//                FoodAdapter1 foodAdapter1 = new FoodAdapter1(arrFood,getApplicationContext());
+//                recyclerView.setAdapter(foodAdapter1);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        };
+//        mDatabase.addListenerForSingleValueEvent(eventListener);
+//
+//
+//
+//
+//    }
+
+
 }

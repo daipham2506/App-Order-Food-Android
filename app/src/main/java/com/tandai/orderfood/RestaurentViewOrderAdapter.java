@@ -48,24 +48,24 @@ public class RestaurentViewOrderAdapter extends BaseAdapter {
 
         //anh xa view
         TextView tenMon = (TextView) view.findViewById(R.id.res_vieworder_item_name);
-        TextView giaMon =(TextView) view.findViewById(R.id.res_vieworder_item_price);
+        //TextView giaMon =(TextView) view.findViewById(R.id.res_vieworder_item_price);
         TextView tenKH = (TextView) view.findViewById(R.id.res_vieworder_item_name_customer);
         TextView sdt = (TextView) view.findViewById(R.id.res_vieworder_item_sdt_customer);
-        TextView diachi =(TextView) view.findViewById(R.id.res_vieworder_item_address_customer);
+       // TextView diachi =(TextView) view.findViewById(R.id.res_vieworder_item_address_customer);
         ImageView hinh = (ImageView) view.findViewById(R.id.res_vieworder_item_image);
-        TextView soluong= (TextView) view.findViewById(R.id.res_vieworder_item_count);
-        TextView dateTime = (TextView) view.findViewById(R.id.res_vieworder_item_date_time);
+        //TextView soluong= (TextView) view.findViewById(R.id.res_vieworder_item_count);
+        //TextView dateTime = (TextView) view.findViewById(R.id.res_vieworder_item_date_time);
 
         //set value
         Order order = listOrder.get(position);
 
         tenMon.setText(order.getTenMon());
-        giaMon.setText(String.valueOf(order.getGiaMon())+"đ");
+        //giaMon.setText(String.valueOf(order.getGiaMon())+"đ");
         tenKH.setText((order.getTenkhachhang()));
         sdt.setText(order.getSdtKhachHang());
-        diachi.setText(order.getDiachigiaohang());
-        soluong.setText(String.valueOf(order.getSoluong()));
-        dateTime.setText(order.getDateTime());
+        //diachi.setText(order.getDiachigiaohang());
+        //soluong.setText(String.valueOf(order.getSoluong()));
+        //dateTime.setText(order.getDateTime());
         Picasso.with(context).load(order.getLinkAnh()).into(hinh);
 
         return view;

@@ -53,6 +53,18 @@
         app:pressedTranslationZ="12dp"
         app:useCompatPadding="true" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_star_black_24dp"
+        android:backgroundTint="@color/colorText"
+        app:elevation="5dp"
+        app:layout_anchor="@id/bar_layout"
+        app:layout_anchorGravity="bottom|right|start"
+        app:pressedTranslationZ="12dp"
+        app:useCompatPadding="true" />
+
     <android.support.v4.widget.NestedScrollView
         android:background="@color/colorWhite"
         android:id="@+id/nestedScrollView"
@@ -62,8 +74,9 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/colorWhite"
             android:orientation="vertical">
 
@@ -79,8 +92,8 @@
                         android:id="@+id/food_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:padding="12dp"
+                        android:layout_marginTop="25dp"
+                        android:paddingLeft="12dp"
                         android:text="Food Name"
                         android:textColor="#1A554E"
                         android:textSize="30sp"
@@ -95,7 +108,7 @@
                         <ImageView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="15dp"
                             android:layout_weight="1"
                             android:src="@drawable/ic_attach_money_black_24dp" />
 
@@ -103,7 +116,7 @@
                             android:id="@+id/food_price"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:layout_weight="9"
                             android:padding="7dp"
                             android:text="15000đ"
@@ -134,19 +147,78 @@
                 app:cardElevation="5dp"
                 app:cardUseCompatPadding="true">
 
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ratingBar"
+                        android:rating="0"
+                        android:max="5"
+                        android:isIndicator="true"
+                        android:stepSize="0.5"
+                        />
+
+                    <TextView
+                        android:background="@color/colorWhite"
+                        android:id="@+id/food_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingMultiplier="1.5"
+                        android:paddingLeft="12dp"
+                        android:paddingBottom="12dp"
+                        android:text="Description"
+                        android:textColor="#000"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <TextView
-                    android:background="@color/colorWhite"
-                    android:id="@+id/food_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:lineSpacingMultiplier="1.5"
-                    android:padding="12dp"
-                    android:text="Description"
-                    android:textColor="#000"
-                    android:textSize="16sp" />
-            </android.support.v7.widget.CardView>
+                    android:paddingLeft="12dp"
+                    android:paddingBottom="12dp"
+                    android:text="Các đánh giá về món ăn"
+                    android:textColor="#1A554E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.RecyclerView
+
+                    android:id="@+id/recyclerViewRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+
+
+
 
         </LinearLayout>
+
+
     </android.support.v4.widget.NestedScrollView>
+
+
+
+
 </android.support.design.widget.CoordinatorLayout>

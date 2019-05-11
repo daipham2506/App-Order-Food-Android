@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,6 +45,21 @@ public class QuanAnXemDSDonDatHang extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(QuanAnXemDSDonDatHang.this, QuanAnActivity.class));
+            }
+        });
+
+
+        listOrder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Order order = arrOrder.get(position);
+
+                Intent OrderDetail = new Intent(QuanAnXemDSDonDatHang.this,DetailOrder.class);
+                //gửi FoodId (ten của Food) và id quán đến activity FoodDetail
+                OrderDetail.putExtra("FoodID",order.getTenMon());
+                OrderDetail.putExtra("CustomerID",order.getUserID());
+                // mở activity  foodDetail
+                startActivity(OrderDetail);
             }
         });
     }

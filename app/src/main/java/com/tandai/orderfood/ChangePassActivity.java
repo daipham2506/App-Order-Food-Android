@@ -21,10 +21,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class ChangePassActivity extends AppCompatActivity {
-    private EditText NhapMK,NhapLaiMK;
+    private EditText NhapMK,NhapLaiMK , MKCu;
     private Button doi,dong;
-    private FirebaseUser user;
-    private String type;
+    DatabaseReference mDatabase;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userID = user.getUid();
+    private String type, pass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,7 @@ public class ChangePassActivity extends AppCompatActivity {
     private void AnhXa(){
         NhapMK = (EditText) findViewById(R.id.edtNhapPass);
         NhapLaiMK=(EditText) findViewById(R.id.edtNhaplaiPass);
+        MKCu =(EditText) findViewById(R.id.edtPassOld);
         doi=(Button) findViewById(R.id.btnDoiPass);
         dong=(Button) findViewById(R.id.btnDongChangePass);
     }
@@ -43,52 +46,14 @@ public class ChangePassActivity extends AppCompatActivity {
 
     private void changePass(){
 
-        doi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String MK = NhapMK.getText().toString().trim();
-                final String MK1 = NhapLaiMK.getText().toString().trim();
-                if(MK1.isEmpty() || MK.isEmpty()){
-                    Toast.makeText(ChangePassActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    if(MK.equals(MK1)){
-                        user = FirebaseAuth.getInstance().getCurrentUser();
-                        final String userID = user.getUid();
-                        final DatabaseReference mDatabase=FirebaseDatabase.getInstance().getReference();
-                        user.updatePassword(MK)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(ChangePassActivity.this, "Bạn đã đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
-                                            // updata pass in database
-                                            mDatabase.child("Users").child(userID).child("pass").setValue(MK);
-                                            //ve man hinh login
-                                            startActivity(new Intent(ChangePassActivity.this,LoginActivity.class));
-                                        }
-                                        else{
-                                            Toast.makeText(ChangePassActivity.this, "Đổi không thành công", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                    }
-                    else{
-                        Toast.makeText(ChangePassActivity.this, "Mật khẩu nhập lại không đúng", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userID = user.getUid();
-        DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
-
+        //get data of User ( typeUser and pass )
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User uInfo = dataSnapshot.getValue(User.class);
-                type =uInfo.getUserType();
+                type = uInfo.getUserType();
+                pass = uInfo.getPass();
             }
 
             @Override
@@ -97,6 +62,49 @@ public class ChangePassActivity extends AppCompatActivity {
             }
         };
         mDatabase.addListenerForSingleValueEvent(eventListener);
+
+        doi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String MKcu = MKCu.getText().toString().trim();
+                final String MK = NhapMK.getText().toString().trim();
+                final String MK1 = NhapLaiMK.getText().toString().trim();
+                if(MK1.isEmpty() || MK.isEmpty() || MKcu.isEmpty()){
+                    Toast.makeText(ChangePassActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    if (MKcu.equals(pass) == false) {
+                        Toast.makeText(ChangePassActivity.this, "Mật khẩu cũ không đúng", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        if (MK.equals(MK1)) {
+                            user = FirebaseAuth.getInstance().getCurrentUser();
+                            final String userID = user.getUid();
+                            final DatabaseReference mDatabase=FirebaseDatabase.getInstance().getReference();
+                            user.updatePassword(MK)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(ChangePassActivity.this, "Bạn đã đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                                                // updata pass in database
+                                                mDatabase.child("Users").child(userID).child("pass").setValue(MK);
+                                                //ve man hinh login
+                                                startActivity(new Intent(ChangePassActivity.this, LoginActivity.class));
+                                            } else {
+                                                Toast.makeText(ChangePassActivity.this, "Đổi không thành công", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(ChangePassActivity.this, "Mật khẩu nhập lại không đúng", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        });
+
+
 
         dong.setOnClickListener(new View.OnClickListener() {
             @Override

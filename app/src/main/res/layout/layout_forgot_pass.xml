@@ -25,22 +25,27 @@
             />
 
     </LinearLayout>
-    <EditText
-        android:inputType="textEmailAddress"
-        android:padding="16dp"
-        android:background="@drawable/vienxanhla"
-        android:layout_margin="10dp"
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/EmailForgotPass"
         android:drawableLeft="@drawable/mail1"
         android:drawablePadding="@dimen/size10dp"
-        android:layout_below="@id/linnearForgot"
-        android:id="@+id/EmailForgotPass"
+        android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
-        android:textColorHint="@color/colorGray"
-        android:textColor="@color/colorBlack"
-        android:textSize="20sp"
-        android:singleLine="true"/>
+        android:text=""
+        android:layout_marginLeft="@dimen/size15dp"
+        android:layout_marginRight="@dimen/size15dp"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:textSize="24dp"
+        app:met_baseColor="@color/colorPrimary"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/colorPrimary"
+        app:met_singleLineEllipsis="true"
+        android:layout_marginTop="80dp"
+        />
     <info.hoang8f.widget.FButton
         android:id="@+id/btnGetPass"
         android:layout_margin="40dp"

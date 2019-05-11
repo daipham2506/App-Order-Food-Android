@@ -60,6 +60,7 @@
         android:layout_marginTop="250dp">
 
         <Button
+            android:textColor="@color/colorWhite"
             android:id="@+id/btnXoaMonLayoutXoa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

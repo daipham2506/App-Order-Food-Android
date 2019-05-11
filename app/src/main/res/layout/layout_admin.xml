@@ -34,6 +34,7 @@
         android:paddingRight="29dp">
 
         <Button
+            android:textColor="@color/colorWhite"
             android:id="@+id/btnThemQuanKhungAdmin"
             android:layout_width="320dp"
             android:layout_height="60dp"
@@ -43,6 +44,7 @@
             android:textAllCaps="false"/>
 
         <Button
+            android:textColor="@color/colorWhite"
             android:id="@+id/btnXoaQuanKhungAdmin"
             android:layout_width="320dp"
             android:layout_height="60dp"
