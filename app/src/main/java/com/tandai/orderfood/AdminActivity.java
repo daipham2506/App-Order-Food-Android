@@ -6,12 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import io.paperdb.Paper;
 
 public class AdminActivity extends AppCompatActivity {
 
-    private Button ThemQuan,XoaQuan,logOut,doiMK;
+    private Button ThemQuan,XoaQuan;
+    ImageView logOut,doiMK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +24,8 @@ public class AdminActivity extends AppCompatActivity {
 
         ThemQuan    =(Button) findViewById(R.id.btnThemQuanKhungAdmin);
         XoaQuan     =(Button) findViewById(R.id.btnXoaQuanKhungAdmin);
-        logOut      =(Button) findViewById(R.id.btnLogOutAdmin);
-        doiMK       =(Button) findViewById(R.id.btnChangePassAdmin);
+        logOut      =(ImageView) findViewById(R.id.btnLogOutAdmin);
+        doiMK       =(ImageView) findViewById(R.id.btnChangePassAdmin);
 
         ThemQuan.setOnClickListener(new View.OnClickListener() {
             @Override

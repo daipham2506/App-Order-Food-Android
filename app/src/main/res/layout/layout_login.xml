@@ -77,7 +77,7 @@
             android:outlineAmbientShadowColor="@color/colorWhite"
             android:outlineSpotShadowColor="@color/colorWhite"
             android:paddingLeft="10dp"
-            android:text="Nhớ mật khẩu"
+            android:text="Nhớ tài khoản"
             android:textColor="@color/colorWhite"
             android:textSize="18sp" />
 

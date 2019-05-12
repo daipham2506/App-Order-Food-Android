@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox Remember;
     TextView forgotPass;
 
+    FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,12 +90,11 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        process.dismiss();
                         mData.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                process.dismiss();
                                 User user   =   dataSnapshot.getValue(User.class);
-
                                 if(user.getUserType().equals("admin") && user.getEmail().equals(Email)){
                                     startActivity(new Intent(LoginActivity.this,AdminActivity.class));
                                 }
@@ -101,7 +102,14 @@ public class LoginActivity extends AppCompatActivity {
                                     startActivity(new Intent(LoginActivity.this,QuanAnActivity.class));
                                 }
                                 else if(user.getUserType().equals("customer") && user.getEmail().equals(Email)){
-                                    startActivity(new Intent(LoginActivity.this, KhachHangActivity.class));
+
+                                    if(USER.isEmailVerified()){
+                                        startActivity(new Intent(LoginActivity.this, KhachHangActivity.class));
+                                    }
+                                    else{
+                                        Toast.makeText(LoginActivity.this, "Vui lòng xác thực Email để đăng nhập", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
                             }
 
@@ -125,6 +133,9 @@ public class LoginActivity extends AppCompatActivity {
 
                             }
                         });
+
+
+
                         // ghi lai mk trong database neu quen mat kau sau khi lay lai
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         String userID = user.getUid();
@@ -142,7 +153,8 @@ public class LoginActivity extends AppCompatActivity {
                         };
                         mDatabase.addListenerForSingleValueEvent(eventListener);
 
-                    } else {
+                    }
+                    else {
                         process.dismiss();
                         Toast.makeText(LoginActivity.this, "Tài khoản hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();
                     }

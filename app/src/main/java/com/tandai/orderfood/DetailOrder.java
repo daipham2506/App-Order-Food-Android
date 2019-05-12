@@ -39,6 +39,8 @@ public class DetailOrder extends AppCompatActivity {
     Order order;
     long quantity;
     long gia1mon;
+
+    DatabaseReference database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,41 +51,45 @@ public class DetailOrder extends AppCompatActivity {
         //Nhận THông tin Order từ Intent gửi đến
         Intent intent = getIntent();
         if(intent != null){
-            foodID       = intent.getStringExtra("FoodID");
+            foodID     = intent.getStringExtra("FoodID");
             CustomerID = intent.getStringExtra("CustomerID");
         }
         if(!foodID.isEmpty() && foodID !=null && !CustomerID.isEmpty() && CustomerID!= null){
             getDataOrder(CustomerID,foodID);
+
+
+            xacnhan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(dagiao.isChecked()){
+
+                        Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
+                        //delOrderAfterConfirm(CustomerID,foodID);
+                    }
+                    else if(danggiao.isChecked()) {
+
+                        Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
+                        //delOrderAfterConfirm(CustomerID,foodID);
+                    }
+                    else if(hethang.isChecked()) {
+
+                        Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
+                        //delOrderAfterConfirm(CustomerID,foodID);
+                    }
+                    else{
+                        Toast.makeText(DetailOrder.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
         }
 
 
-        xacnhan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(dagiao.isChecked()){
 
-                    Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
-                    //delOrderAfterConfirm(CustomerID,foodID);
-                }
-                else if(danggiao.isChecked()) {
-
-                    Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
-                    //delOrderAfterConfirm(CustomerID,foodID);
-                }
-                else if(hethang.isChecked()) {
-
-                    Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
-                    //delOrderAfterConfirm(CustomerID,foodID);
-                }
-                else{
-                    Toast.makeText(DetailOrder.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
 
     }
 
@@ -133,14 +139,8 @@ public class DetailOrder extends AppCompatActivity {
     }
 
     private void delOrderAfterConfirm(String CustomerID,String foodID){
-        mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                dataSnapshot.getRef().setValue(null);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
+        database = FirebaseDatabase.getInstance().getReference();
+        database.child("Orders").child(userID).child(CustomerID).child(foodID).removeValue();
     }
 }

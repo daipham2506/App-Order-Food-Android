@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import io.paperdb.Paper;
 
 public class QuanAnActivity extends AppCompatActivity {
-    Button LogOut,doiMK,themMon,xoaMon,xemDSMon,suaMon, xemDonDatHang;
+    Button themMon,xoaMon,xemDSMon,suaMon, xemDonDatHang;
+    ImageView LogOut,doiMK;
     TextView tenQuan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +94,8 @@ public class QuanAnActivity extends AppCompatActivity {
 
 
     private void AnhXa(){
-        LogOut=(Button) findViewById(R.id.btnLogOutQuan);
-        doiMK=(Button) findViewById(R.id.btnChangePassQuan);
+        LogOut=(ImageView) findViewById(R.id.btnLogOutQuan);
+        doiMK=(ImageView) findViewById(R.id.btnChangePassQuan);
         tenQuan=(TextView) findViewById(R.id.twTenQuan);
         themMon=(Button) findViewById(R.id.btnThemMon);
         xoaMon=(Button) findViewById(R.id.btnXoaMon);

@@ -57,20 +57,22 @@
 
 
     </LinearLayout>
-    <Button
+    <ImageView
+        android:tint="@color/colorWhite"
         android:id="@+id/btnLogOutAdmin"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/off"
+        android:src="@drawable/off"
         android:layout_marginTop="48dp"
         android:layout_marginRight="@dimen/size15dp"/>
-    <Button
+    <ImageView
+        android:tint="@color/colorWhite"
         android:id="@+id/btnChangePassAdmin"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/key"
+        android:src="@drawable/key"
         android:layout_marginTop="110dp"
         android:layout_marginRight="15dp"
         />

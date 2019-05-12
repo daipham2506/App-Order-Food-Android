@@ -9,7 +9,7 @@
     android:paddingTop="10dp"
     android:paddingLeft="16dp"
 
-    android:background="@drawable/food2">
+    android:background="@drawable/anh_nen">
 
 
     <TextView
@@ -90,21 +90,23 @@
 
     </LinearLayout>
 
-    <Button
+    <ImageView
+        android:tint="@color/colorWhite"
         android:id="@+id/btnLogOutQuan"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/off"
+        android:src="@drawable/off"
         android:layout_marginRight="10dp"
         android:layout_marginTop="@dimen/size10dp"
         />
-    <Button
+    <ImageView
+        android:tint="@color/colorWhite"
         android:id="@+id/btnChangePassQuan"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/key"
+        android:src="@drawable/key"
         android:layout_marginTop="75dp"
         android:layout_marginRight="10dp"
         />

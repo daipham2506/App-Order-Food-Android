@@ -10,7 +10,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
 
-    android:background="@drawable/food3">
+    android:background="@drawable/anhnen">
 
 
     <TextView
@@ -36,8 +36,8 @@
             android:hint="Email"
             android:textColorHint="#FAF8F8"
             android:id="@+id/txtEmail"
-            android:textColor="#FFFCFC"
-            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp"
             android:inputType="textEmailAddress"
             app:met_baseColor="#FFFFFF"
             app:met_floatingLabel="highlight"
@@ -52,8 +52,8 @@
             android:hint="Mật khẩu"
             android:textColorHint="#FAF8F8"
             android:id="@+id/txtPass"
-            android:textColor="#FFFCFC"
-            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp"
             android:inputType="textPassword"
             app:met_baseColor="#FFFFFF"
             app:met_floatingLabel="highlight"
@@ -69,8 +69,8 @@
             android:hint="Họ tên"
             android:textColorHint="#FAF8F8"
             android:id="@+id/txtName"
-            android:textColor="#FFFCFC"
-            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp"
             android:inputType="text"
             app:met_baseColor="#FFFFFF"
             app:met_floatingLabel="highlight"
@@ -85,8 +85,8 @@
             android:hint="Số điện thoại"
             android:textColorHint="#FAF8F8"
             android:id="@+id/txtPhone"
-            android:textColor="#FFFCFC"
-            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp"
             android:inputType="phone"
             app:met_baseColor="#FFFFFF"
             app:met_floatingLabel="highlight"
@@ -103,8 +103,8 @@
             android:hint="Địa chỉ"
             android:textColorHint="#FAF8F8"
             android:id="@+id/txtAddress"
-            android:textColor="#FFFCFC"
-            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp"
             android:inputType="text"
             app:met_baseColor="#FFFFFF"
             app:met_floatingLabel="highlight"
@@ -118,7 +118,8 @@
 
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/size10dp">
@@ -135,17 +136,7 @@
                 android:textAllCaps="false"
                 android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/btnThoatReg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/size10dp"
-                android:layout_weight="1"
-                android:text="Thoát"
-                android:textColor="@color/colorWhite"
-                android:textAllCaps="false"
-                android:background="@drawable/duongvien_nau"
-                android:textSize="20sp" />
+
 
 
         </LinearLayout>

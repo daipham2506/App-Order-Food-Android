@@ -30,17 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_register);
-        Button btnThoat =(Button) findViewById(R.id.btnThoatReg);
         process = new ProgressDialog(RegisterActivity.this);
         process.setMessage("Vui lòng đợi");
-        btnThoat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent screenWel1 = new Intent(RegisterActivity.this,WelcomActivity.class);
-                startActivity(screenWel1);
-            }
-        });
-
         AnhXa();
         mAuthencation = FirebaseAuth.getInstance();
         btnDangKy.setOnClickListener(new View.OnClickListener() {
@@ -77,29 +68,48 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Vui lòng điền đầy đủ thông tin. ", Toast.LENGTH_SHORT).show();
         }
         else {
-            mAuthencation.createUserWithEmailAndPassword(Email, Pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            mAuthencation.createUserWithEmailAndPassword(Email, Pass)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        process.dismiss();
-                        Toast.makeText(RegisterActivity.this, "Đăng ký thành công.", Toast.LENGTH_SHORT).show();
+
                         user = mAuthencation.getCurrentUser();
-                        //set Name cho user
-                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(Name)
-                                .setPhotoUri(null)
-                                .build();
-                        user.updateProfile(profileUpdates)
+
+                        user.sendEmailVerification()
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            process.dismiss();
+                                            Toast.makeText(RegisterActivity.this, "Đăng ký thành công. Vui lòng xác thực Email", Toast.LENGTH_SHORT).show();
+
+                                            //set Name cho user
+                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                    .setDisplayName(Name)
+                                                    .setPhotoUri(null)
+                                                    .build();
+                                            user.updateProfile(profileUpdates)
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                        }
+                                                    });
+                                            //push data len realtime database
+                                            String userID= user.getUid();
+                                            mData.child("Users").child(userID).setValue(KhachHang);
+                                            //chuyen ve man hinh chinh
+                                            startActivity(new Intent(RegisterActivity.this,WelcomActivity.class));
+
+                                        }
+                                        else{
+                                            Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 });
-                        //push data len realtime database
-                        String userID= user.getUid();
-                        mData.child("Users").child(userID).setValue(KhachHang);
-                        //chuyen ve man hinh chinh
-                        startActivity(new Intent(RegisterActivity.this,WelcomActivity.class));
+
+
+
                     }
                     else {
                         process.dismiss();
