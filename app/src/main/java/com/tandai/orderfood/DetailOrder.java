@@ -56,36 +56,6 @@ public class DetailOrder extends AppCompatActivity {
         }
         if(!foodID.isEmpty() && foodID !=null && !CustomerID.isEmpty() && CustomerID!= null){
             getDataOrder(CustomerID,foodID);
-
-
-            xacnhan.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(dagiao.isChecked()){
-
-                        Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
-                        //delOrderAfterConfirm(CustomerID,foodID);
-                    }
-                    else if(danggiao.isChecked()) {
-
-                        Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
-                        //delOrderAfterConfirm(CustomerID,foodID);
-                    }
-                    else if(hethang.isChecked()) {
-
-                        Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
-                        //delOrderAfterConfirm(CustomerID,foodID);
-                    }
-                    else{
-                        Toast.makeText(DetailOrder.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            });
-
         }
 
 
@@ -112,11 +82,11 @@ public class DetailOrder extends AppCompatActivity {
         hethang = (RadioButton) findViewById(R.id.hethang);
     }
 
-    private void getDataOrder(String CustomerID,String foodID){
+    private void getDataOrder(final String CustomerID, final String foodID){
 
         mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 // đối tượng order lấy dữ liệu từ database
                 order = dataSnapshot.getValue(Order.class);
                 //THiết lập ảnh
@@ -131,6 +101,40 @@ public class DetailOrder extends AppCompatActivity {
                 ngaydathang.setText("Ngày đặt hàng: "+order.getDateTime());
                 soluong.setText("Số lượng: "+order.getSoluong());
                 tongtien.setText("Tổng tiền: "+gia1mon*quantity+"đ");
+
+
+                xacnhan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(dagiao.isChecked()){
+
+                            Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+
+                            //dataSnapshot.getRef().setValue(null);
+                            startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
+                            //delOrderAfterConfirm(CustomerID,foodID);
+                        }
+                        else if(danggiao.isChecked()) {
+
+                            Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+
+                            //dataSnapshot.getRef().setValue(null);
+                            startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
+                            //delOrderAfterConfirm(CustomerID,foodID);
+                        }
+                        else if(hethang.isChecked()) {
+
+                            Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+
+                            startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
+                            //delOrderAfterConfirm(CustomerID,foodID);
+                        }
+                        else{
+                            Toast.makeText(DetailOrder.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
             }
 
             @Override
@@ -142,5 +146,5 @@ public class DetailOrder extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance().getReference();
         database.child("Orders").child(userID).child(CustomerID).child(foodID).removeValue();
-    }
-}
+        }
+        }

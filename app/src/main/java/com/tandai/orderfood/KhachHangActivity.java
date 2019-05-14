@@ -2,7 +2,9 @@ package com.tandai.orderfood;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +25,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +36,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.rey.material.widget.ImageView;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 
@@ -45,6 +54,10 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     //DatabaseReference database;
 
 
+
+
+
+
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
     DatabaseReference mDatabase;
@@ -52,6 +65,8 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khachhang);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("MENU");
 
@@ -80,6 +95,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         View headerview = navigationView.getHeaderView(0);
         ten = (TextView) headerview.findViewById(R.id.ten);
         tenTK =( TextView) headerview.findViewById(R.id.tenTK);
+
         LoadData_User();
 
         lvFood  =   (ListView) findViewById(R.id.lvFood);

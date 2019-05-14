@@ -46,5 +46,7 @@ dependencies {
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     implementation 'com.stepstone.apprating:app-rating:2.0.0'
 
+
+    implementation ('com.facebook.android:facebook-share:[4,5)')
 }
 apply plugin: 'com.google.gms.google-services'

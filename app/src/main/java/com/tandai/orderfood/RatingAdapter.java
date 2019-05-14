@@ -42,6 +42,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
         viewHolder.comment.setText(rating.getComment());
         viewHolder.date.setText("("+rating.getDateTime()+")");
         viewHolder.ratingBar.setRating(Float.parseFloat(rating.getRateValue()));
+
     }
 
     @Override

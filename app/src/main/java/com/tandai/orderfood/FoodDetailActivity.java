@@ -2,6 +2,8 @@ package com.tandai.orderfood;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.facebook.CallbackManager;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.stepstone.apprating.AppRatingDialog;
 import com.stepstone.apprating.listener.RatingDialogListener;
 
@@ -45,10 +52,10 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
     String RestaurentID = "";
     FloatingActionButton btnCart,btnRating;
     ElegantNumberButton number;
-    ImageView hinh;
-    TextView tenmon,giamon,mota;
+    ImageView hinh,share,fav;
+    TextView tenmon,giamon,mota,cacdanhgia;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference database;
+    DatabaseReference database, databaseReference;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
     MonAn food;
@@ -62,10 +69,54 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
     ListView listView;
 
     DatabaseReference ratingTbl = FirebaseDatabase.getInstance().getReference();
+
+
+
+
+    //Facebook share
+    CallbackManager callbackManager;
+    ShareDialog shareDialog;
+
+    //Create Target from Picasso
+    Target target = new Target() {
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            //Create Phôt from Bitmap
+            SharePhoto photo = new SharePhoto.Builder()
+                    .setBitmap(bitmap)
+                    .build();
+            if(ShareDialog.canShow(SharePhotoContent.class)){
+                SharePhotoContent content = new SharePhotoContent.Builder()
+                        .addPhoto(photo)
+                        .build();
+                shareDialog.show(content);
+            }
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+        }
+    };
+
+    Favorite favorite;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_food_detail);
+
+
+
+        //Init Facebook
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+
 
 
         btnCart = (FloatingActionButton)findViewById(R.id.btnCart);
@@ -74,6 +125,9 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
         tenmon= (TextView) findViewById(R.id.food_name);
         giamon= (TextView) findViewById(R.id.food_price);
         mota =(TextView) findViewById(R.id.food_description);
+        cacdanhgia = (TextView) findViewById(R.id.cacdanhgia);
+        share = (ImageView) findViewById(R.id.share);
+        fav = (ImageView) findViewById(R.id.fav);
         collapsingToolbarLayout =(CollapsingToolbarLayout)findViewById(R.id.collapsing);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
@@ -90,6 +144,16 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
             getRatingFood(foodId);
             initRecyclerView(foodId,RestaurentID);
         }
+
+        // share food to facbook
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Picasso.with(getApplicationContext()).load(food.getLinkAnh()).into(target);
+            }
+        });
+
+
 
 
         btnRating.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +176,63 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
                     Toast.makeText(FoodDetailActivity.this, "Món ăn đã hết", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+        //favorite
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Favorite").child(userID).child(foodId);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getValue() == null){
+                    fav.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                }
+                else {
+                    Favorite favor = dataSnapshot.getValue(Favorite.class);
+                    if (favor.getCheck() == 0) {
+                        fav.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                    } else {
+                        fav.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    }
+                }
+
+                fav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (dataSnapshot.getValue() == null){
+                            fav.setImageResource(R.drawable.ic_favorite_black_24dp);
+                            Toast.makeText(FoodDetailActivity.this, foodId+" đã thêm vào món yêu thích", Toast.LENGTH_SHORT).show();
+                            favorite = new Favorite(foodId,userID,RestaurentID,1);
+                        }
+                        else{
+                            favorite = dataSnapshot.getValue(Favorite.class);
+                            if(favorite.getCheck()==1){
+                                fav.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                                Toast.makeText(FoodDetailActivity.this, foodId+" đã xóa khỏi món yêu thích", Toast.LENGTH_SHORT).show();
+                                favorite.setCheck(0);
+                            }
+                            else{
+                                fav.setImageResource(R.drawable.ic_favorite_black_24dp);
+                                Toast.makeText(FoodDetailActivity.this, foodId+" đã thêm vào món yêu thích", Toast.LENGTH_SHORT).show();
+                                favorite.setCheck(1);
+                            }
+                        }
+                        databaseReference.setValue(favorite);
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void getRatingFood(final String foodId) {
@@ -147,7 +268,7 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
                 .setPositiveButtonText("Gửi")
                 .setNegativeButtonText("Hủy")
                 .setNoteDescriptions(Arrays.asList("Very Bad","Not Good","Quite OK","Very Good","Exellent"))
-                .setDefaultRating(3)
+                .setDefaultRating(1)
                 .setTitle("Đánh giá món ăn")
                 .setDescription("Chọn mức độ hài lòng của bạn về món ăn này")
                 .setTitleTextColor(R.color.colorPrimary)
@@ -255,7 +376,7 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
         recyclerView.setLayoutManager(layoutManager);
         final ArrayList<Rating> arrRating = new ArrayList<>();
 
-
+        // divider item
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
@@ -268,6 +389,10 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
                     Rating rating = ds.getValue(Rating.class);
                     if(rating.getFoodID().equals(foodID) && rating.getRestaurentID().equals(RestaurentID))
                         arrRating.add(rating);
+                }
+                if(arrRating.size() == 0){
+                    cacdanhgia.setText("Món ăn chưa có đánh giá");
+                    cacdanhgia.setTextColor(getResources().getColor(R.color.colorGray));
                 }
                 RatingAdapter ratingAdapter = new RatingAdapter(arrRating,getApplicationContext());
                 recyclerView.setAdapter(ratingAdapter);
