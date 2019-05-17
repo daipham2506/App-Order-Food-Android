@@ -48,5 +48,14 @@ dependencies {
 
 
     implementation ('com.facebook.android:facebook-share:[4,5)')
+
+
+    //Slider
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.daimajia.slider:library:1.1.5@aar'
+
+    //Font
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

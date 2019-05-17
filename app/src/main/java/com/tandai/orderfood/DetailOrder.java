@@ -1,5 +1,6 @@
 package com.tandai.orderfood;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -23,16 +24,18 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import info.hoang8f.widget.FButton;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DetailOrder extends AppCompatActivity {
     String foodID = "";
     String CustomerID = "";
     RadioGroup radioGroup;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    TextView tenmon,gia,tenKh,sdt,diachi,soluong,ngaydathang,tongtien;
+    TextView tenmon, gia, tenKh, sdt, diachi, soluong, ngaydathang, tongtien;
     ImageView hinh;
     FButton xacnhan;
-    RadioButton dagiao, danggiao,hethang;
+    RadioButton dagiao, danggiao, hethang;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
@@ -41,35 +44,76 @@ public class DetailOrder extends AppCompatActivity {
     long gia1mon;
 
     DatabaseReference database;
+
+
+    @Override
+    protected void attachBaseContext(Context newBase){
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Note  add this code before setcontentView
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Rubik.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+
         setContentView(R.layout.layout_detail_order);
         AnhXa();
 
 
         //Nhận THông tin Order từ Intent gửi đến
         Intent intent = getIntent();
-        if(intent != null){
-            foodID     = intent.getStringExtra("FoodID");
+        if (intent != null) {
+            foodID = intent.getStringExtra("FoodID");
             CustomerID = intent.getStringExtra("CustomerID");
         }
-        if(!foodID.isEmpty() && foodID !=null && !CustomerID.isEmpty() && CustomerID!= null){
-            getDataOrder(CustomerID,foodID);
+        if (!foodID.isEmpty() && foodID != null && !CustomerID.isEmpty() && CustomerID != null) {
+            getDataOrder(CustomerID, foodID);
         }
 
+
+        xacnhan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dagiao.isChecked()) {
+                    Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
+                    //delOrderAfterConfirm(CustomerID,foodID);
+                }
+                else if (danggiao.isChecked()) {
+
+                    Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
+                    //delOrderAfterConfirm(CustomerID,foodID);
+                }
+                else if (hethang.isChecked()) {
+
+                    Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
+                    //delOrderAfterConfirm(CustomerID,foodID);
+                } else {
+                    Toast.makeText(DetailOrder.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
 
 
     }
 
 
-    private void AnhXa(){
+    private void AnhXa() {
         radioGroup = (RadioGroup) findViewById(R.id.radioGroupShip);
-        collapsingToolbarLayout =(CollapsingToolbarLayout)findViewById(R.id.collapsingOrder);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingOrder);
         tenmon = (TextView) findViewById(R.id.tenmon);
         gia = (TextView) findViewById(R.id.tien);
-        tenKh =(TextView) findViewById(R.id.ten);
+        tenKh = (TextView) findViewById(R.id.ten);
         sdt = (TextView) findViewById(R.id.sdt);
         diachi = (TextView) findViewById(R.id.diachi);
         soluong = (TextView) findViewById(R.id.soluong);
@@ -82,7 +126,7 @@ public class DetailOrder extends AppCompatActivity {
         hethang = (RadioButton) findViewById(R.id.hethang);
     }
 
-    private void getDataOrder(final String CustomerID, final String foodID){
+    private void getDataOrder(final String CustomerID, final String foodID) {
 
         mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -93,58 +137,27 @@ public class DetailOrder extends AppCompatActivity {
                 Picasso.with(getBaseContext()).load(order.getLinkAnh()).into(hinh);
                 quantity = order.getSoluong();
                 gia1mon = order.getGiaMon();
-                gia.setText(gia1mon+"đ");
+                gia.setText(gia1mon + "đ");
                 tenmon.setText(order.getTenMon());
-                tenKh.setText("Tên: "+order.getTenkhachhang());
-                sdt.setText("Sđt: "+order.getSdtKhachHang());
-                diachi.setText("Địa chỉ giao hàng: "+order.getDiachigiaohang());
-                ngaydathang.setText("Ngày đặt hàng: "+order.getDateTime());
-                soluong.setText("Số lượng: "+order.getSoluong());
-                tongtien.setText("Tổng tiền: "+gia1mon*quantity+"đ");
+                tenKh.setText("Tên: " + order.getTenkhachhang());
+                sdt.setText("Sđt: " + order.getSdtKhachHang());
+                diachi.setText("Địa chỉ giao hàng: " + order.getDiachigiaohang());
+                ngaydathang.setText("Ngày đặt hàng: " + order.getDateTime());
+                soluong.setText("Số lượng: " + order.getSoluong());
+                tongtien.setText("Tổng tiền: " + gia1mon * quantity + "đ");
 
 
-                xacnhan.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(dagiao.isChecked()){
 
-                            Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-
-                            //dataSnapshot.getRef().setValue(null);
-                            startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
-                            //delOrderAfterConfirm(CustomerID,foodID);
-                        }
-                        else if(danggiao.isChecked()) {
-
-                            Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-
-                            //dataSnapshot.getRef().setValue(null);
-                            startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
-                            //delOrderAfterConfirm(CustomerID,foodID);
-                        }
-                        else if(hethang.isChecked()) {
-
-                            Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-
-                            startActivity(new Intent(DetailOrder.this,QuanAnActivity.class));
-                            //delOrderAfterConfirm(CustomerID,foodID);
-                        }
-                        else{
-                            Toast.makeText(DetailOrder.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
         });
     }
 
-    private void delOrderAfterConfirm(String CustomerID,String foodID){
 
-        database = FirebaseDatabase.getInstance().getReference();
-        database.child("Orders").child(userID).child(CustomerID).child(foodID).removeValue();
-        }
-        }
+
+
+
+}

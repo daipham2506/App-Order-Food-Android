@@ -3,6 +3,7 @@ package com.tandai.orderfood;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -44,15 +45,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class FoodDetailActivity extends AppCompatActivity implements RatingDialogListener {
     User quanAn;
     CollapsingToolbarLayout collapsingToolbarLayout;
     String name;
     String foodId = "";
     String RestaurentID = "";
-    FloatingActionButton btnCart,btnRating;
+    FloatingActionButton btnCart,btnRating,btnShare;
     ElegantNumberButton number;
-    ImageView hinh,share,fav;
+    ImageView hinh,fav;
     TextView tenmon,giamon,mota,cacdanhgia;
     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     DatabaseReference database, databaseReference;
@@ -106,9 +110,22 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
 
     Favorite favorite;
 
+
+    @Override
+    protected void attachBaseContext(Context newBase){
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Note  add this code before setcontentView
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Rubik.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+
         setContentView(R.layout.layout_food_detail);
 
 
@@ -120,13 +137,13 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
 
 
         btnCart = (FloatingActionButton)findViewById(R.id.btnCart);
+        btnShare = (FloatingActionButton) findViewById(R.id.btnShare);
         number = (ElegantNumberButton) findViewById(R.id.number_button);
         hinh = (ImageView) findViewById(R.id.image_food);
         tenmon= (TextView) findViewById(R.id.food_name);
         giamon= (TextView) findViewById(R.id.food_price);
         mota =(TextView) findViewById(R.id.food_description);
         cacdanhgia = (TextView) findViewById(R.id.cacdanhgia);
-        share = (ImageView) findViewById(R.id.share);
         fav = (ImageView) findViewById(R.id.fav);
         collapsingToolbarLayout =(CollapsingToolbarLayout)findViewById(R.id.collapsing);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
@@ -146,7 +163,9 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
         }
 
         // share food to facbook
-        share.setOnClickListener(new View.OnClickListener() {
+
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Picasso.with(getApplicationContext()).load(food.getLinkAnh()).into(target);
@@ -285,50 +304,52 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
 
 
     //Hiển thông thông tin chi tiết món
-    private void getDetailFood(String restaurentID, String foodId) {
+    private void getDetailFood(final String restaurentID, final String foodId) {
         // get data quan
         mDatabase.child("Users").child(restaurentID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 quanAn = dataSnapshot.getValue(User.class);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
-
-        //set data
-        mDatabase.child("QuanAn").child(restaurentID).child(foodId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // đối tượng food lấy dữ liệu từ database
-                food = dataSnapshot.getValue(MonAn.class);
-                //THiết lập ảnh
-                Picasso.with(getBaseContext()).load(food.getLinkAnh()).into(hinh);
-                collapsingToolbarLayout.setTitle(food.getTenMon());
-
-                price = food.getGiaMon();
-                giamon.setText(price +" đ");
-                number.setOnClickListener(new ElegantNumberButton.OnClickListener() {
+                //set data
+                mDatabase.child("QuanAn").child(restaurentID).child(foodId).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onClick(View view) {
-                        quantity = Long.parseLong(number.getNumber());
-                        price = quantity * food.getGiaMon();
-                        giamon.setText(price+" đ");
-                    }
-                });
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        // đối tượng food lấy dữ liệu từ database
+                        food = dataSnapshot.getValue(MonAn.class);
+                        //THiết lập ảnh
+                        Picasso.with(getBaseContext()).load(food.getLinkAnh()).into(hinh);
+                        collapsingToolbarLayout.setTitle(food.getTenMon());
 
-                tenmon.setText(food.getTenMon());
-                if (food.getTinhTrang() == 1) {
-                    mota.setText("Tình trạng món ăn: Còn\nQuán "+food.getTenQuan()+"\nĐịa chỉ: "+quanAn.getAddress()+"\nLiên hệ: "+quanAn.getPhone());
-                } else {
-                    mota.setText("Tình trạng món ăn: Hết\nQuán "+food.getTenQuan()+"\nĐịa chỉ: "+quanAn.getAddress()+"\nLiên hệ: "+quanAn.getPhone());
-                }
+                        price = food.getGiaMon();
+                        giamon.setText(price +" đ");
+                        number.setOnClickListener(new ElegantNumberButton.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                quantity = Long.parseLong(number.getNumber());
+                                price = quantity * food.getGiaMon();
+                                giamon.setText(price+" đ");
+                            }
+                        });
+
+                        tenmon.setText(food.getTenMon());
+                        if (food.getTinhTrang() == 1) {
+                            mota.setText("Tình trạng món ăn: Còn\nQuán "+food.getTenQuan()+"\nĐịa chỉ: "+quanAn.getAddress()+"\nLiên hệ: "+quanAn.getPhone());
+                        } else {
+                            mota.setText("Tình trạng món ăn: Hết\nQuán "+food.getTenQuan()+"\nĐịa chỉ: "+quanAn.getAddress()+"\nLiên hệ: "+quanAn.getPhone());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+
+
     }
 
 
@@ -393,6 +414,10 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
                 if(arrRating.size() == 0){
                     cacdanhgia.setText("Món ăn chưa có đánh giá");
                     cacdanhgia.setTextColor(getResources().getColor(R.color.colorGray));
+                }
+                else{
+                    cacdanhgia.setText("Các đánh giá về món ăn");
+                    cacdanhgia.setTextColor(Color.parseColor("#1A554E"));
                 }
                 RatingAdapter ratingAdapter = new RatingAdapter(arrRating,getApplicationContext());
                 recyclerView.setAdapter(ratingAdapter);

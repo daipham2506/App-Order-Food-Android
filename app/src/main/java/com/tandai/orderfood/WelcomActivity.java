@@ -25,16 +25,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import io.paperdb.Paper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class WelcomActivity extends AppCompatActivity {
@@ -42,10 +46,18 @@ public class WelcomActivity extends AppCompatActivity {
     Button btnReg;
     DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
     FirebaseAuth mAuthencation =FirebaseAuth.getInstance();
+
     ProgressDialog process;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.layout_welcom);
 
@@ -156,36 +168,34 @@ public class WelcomActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        process.dismiss();
-                        mData.child("Users").addChildEventListener(new ChildEventListener() {
+
+                        final FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
+                        String userID = USER.getUid();
+
+                        mData = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+
+                        mData.addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                process.dismiss();
                                 User user   =   dataSnapshot.getValue(User.class);
 
-                                if(user.getUserType().equals("admin") && user.getEmail().equals(email)){
+                                if(user.getUserType().equals("admin")){
                                     startActivity(new Intent(WelcomActivity.this,AdminActivity.class));
                                 }
-                                else if(user.getUserType().equals("restaurent") && user.getEmail().equals(email)){
+                                else if(user.getUserType().equals("restaurent")){
                                     startActivity(new Intent(WelcomActivity.this,QuanAnActivity.class));
                                 }
-                                else if(user.getUserType().equals("customer") && user.getEmail().equals(email)){
-                                    startActivity(new Intent(WelcomActivity.this, KhachHangActivity.class));
+                                else if(user.getUserType().equals("customer")){
+
+                                    if(USER.isEmailVerified()){
+                                        startActivity(new Intent(WelcomActivity.this, KhachHangActivity.class));
+                                    }
+                                    else{
+                                        Toast.makeText(WelcomActivity.this, "Vui lòng xác thực Email để đăng nhập", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
-                            }
-
-                            @Override
-                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                             }
 
                             @Override
@@ -193,7 +203,10 @@ public class WelcomActivity extends AppCompatActivity {
 
                             }
                         });
-                    } else {
+
+                    }
+
+                    else {
                         process.dismiss();
                         Toast.makeText(WelcomActivity.this, "Tài khoản hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();
                     }

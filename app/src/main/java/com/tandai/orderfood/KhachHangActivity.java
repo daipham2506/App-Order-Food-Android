@@ -1,6 +1,7 @@
 package com.tandai.orderfood;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -20,11 +21,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.facebook.CallbackManager;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
@@ -36,13 +43,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.miguelcatalan.materialsearchview.utils.AnimationUtil;
 import com.rey.material.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.paperdb.Paper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class KhachHangActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     TextView ten, tenTK;
@@ -54,17 +65,39 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     //DatabaseReference database;
 
 
-
+    //Slider
+    HashMap<String,String> image_list;
+    SliderLayout mSlider;
 
 
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
     DatabaseReference mDatabase;
+
+
+    @Override
+    protected void attachBaseContext(Context newBase){
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Note  add this code before setcontentView
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Rubik.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+
         setContentView(R.layout.activity_khachhang);
+
+
+        //setup Slider
+        setupSlider();
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -104,7 +137,14 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         lvFood.setAdapter(adapter);
 
 
+
+
         LoadData_Food();
+
+//        LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(lvFood.getContext(),R.anim.layout_fall_down);
+//        lvFood.setLayoutAnimation(controller);
+
+
 
         lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -121,6 +161,70 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         });
 
 
+
+
+    }
+
+    private void setupSlider() {
+        mSlider = (SliderLayout) findViewById(R.id.slider);
+        image_list = new HashMap<>();
+
+        final DatabaseReference banners = FirebaseDatabase.getInstance().getReference().child("Banner");
+
+        banners.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Integer i = 0;
+                for(DataSnapshot postSnapShot: dataSnapshot.getChildren()){
+                    //i = i+1;
+                    Banner banner = postSnapShot.getValue(Banner.class);
+                    image_list.put(banner.getId()+"_"+banner.getIdQuan(),banner.getImage());
+
+                }
+                for(String key:image_list.keySet()){
+                    String[] keySplit = key.split("_");
+                    String nameOfFood = keySplit[0];
+                    String idOfRestaurent= keySplit[1];
+
+                    //Creative Slider
+                    final TextSliderView textSliderView = new TextSliderView(getBaseContext());
+                    textSliderView
+                            .description(nameOfFood)
+                            .image(image_list.get(key))
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                @Override
+                                public void onSliderClick(BaseSliderView slider) {
+                                    Intent intent = new Intent(KhachHangActivity.this,FoodDetailActivity.class);
+                                    intent.putExtras(textSliderView.getBundle());
+                                    startActivity(intent);
+                                }
+
+                            });
+
+                    //add extra bundle
+                    textSliderView.bundle(new Bundle());
+                    textSliderView.getBundle().putString("FoodId",nameOfFood);
+                    textSliderView.getBundle().putString("RestaurentID",idOfRestaurent);
+
+                    mSlider.addSlider(textSliderView);
+
+                    //Remove event after finish
+                    banners.removeEventListener(this);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        mSlider.setPresetTransformer(SliderLayout.Transformer.Background2Foreground);
+        mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mSlider.setCustomAnimation(new DescriptionAnimation());
+        mSlider.setDuration(4000);
     }
 
 
@@ -150,13 +254,13 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    int i= 0;
+                   // int i= 0;
                     for(DataSnapshot ds1: ds.getChildren()){
                         MonAn mon = ds1.getValue(MonAn.class);
                         arrFood.add(new Food(mon.getTenMon(),mon.getTenQuan(),mon.getLinkAnh(),mon.getIdQuan(),mon.getGiaMon(),mon.getTinhTrang()));
                         adapter.notifyDataSetChanged();
-                        ++i;
-                        if(i==3) break; // moi quan 3 mon
+                        //++i;
+                        //if(i==3) break; // moi quan 3 mon
                     }
                 }
             }
@@ -168,6 +272,13 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         };
         mDatabase.addListenerForSingleValueEvent(eventListener);
 
+    }
+
+    @Override
+    public void onStop() {
+
+        super.onStop();
+        //mSlider.stopAutoCycle();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.tandai.orderfood;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -28,8 +29,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import info.hoang8f.widget.FButton;
-
-
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class CartActivity extends AppCompatActivity {
@@ -45,9 +46,27 @@ public class CartActivity extends AppCompatActivity {
     String userID = user.getUid();
     DatabaseReference mDatabase, mDatabase1;
 
+
+
+    //Press Ctrl + O
+
+    @Override
+    protected void attachBaseContext(Context newBase){
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Note  add this code before setcontentView
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Rubik.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+
+
+
         setContentView(R.layout.layout_cart);
 
         total =(TextView) findViewById(R.id.total);

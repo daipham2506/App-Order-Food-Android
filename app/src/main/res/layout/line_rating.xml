@@ -15,22 +15,22 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/item_name_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tên"
-                android:textSize="17sp"
-                android:textStyle="bold"
                 android:textColor="@color/colorBlack"
-                />
+                android:textSize="15sp"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/item_date_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="date"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="italic"
                 android:textColor="#251F1F"
                 />

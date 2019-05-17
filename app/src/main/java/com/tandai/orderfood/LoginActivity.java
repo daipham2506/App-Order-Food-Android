@@ -1,6 +1,7 @@
 package com.tandai.orderfood;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import io.paperdb.Paper;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity {
     DatabaseReference mData;
@@ -37,17 +40,26 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox Remember;
     TextView forgotPass;
 
-    FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
+    @Override
+    protected void attachBaseContext(Context newBase){
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Note  add this code before setcontentView
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Rubik.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+
         setContentView(R.layout.layout_login);
         AnhXa();
         process = new ProgressDialog(LoginActivity.this);
         process.setMessage("Vui lòng đợi");
         mAuthencation = FirebaseAuth.getInstance();
-        mData = FirebaseDatabase.getInstance().getReference().child("Users");
 
         Paper.init(this);
 
@@ -90,18 +102,24 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        mData.addChildEventListener(new ChildEventListener() {
+                        final FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
+                        String userID = USER.getUid();
+
+
+                        mData = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+                        mData.addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 process.dismiss();
                                 User user   =   dataSnapshot.getValue(User.class);
-                                if(user.getUserType().equals("admin") && user.getEmail().equals(Email)){
+
+                                if(user.getUserType().equals("admin")){
                                     startActivity(new Intent(LoginActivity.this,AdminActivity.class));
                                 }
-                                else if(user.getUserType().equals("restaurent") && user.getEmail().equals(Email)){
+                                else if(user.getUserType().equals("restaurent") ){
                                     startActivity(new Intent(LoginActivity.this,QuanAnActivity.class));
                                 }
-                                else if(user.getUserType().equals("customer") && user.getEmail().equals(Email)){
+                                else if(user.getUserType().equals("customer") ){
 
                                     if(USER.isEmailVerified()){
                                         startActivity(new Intent(LoginActivity.this, KhachHangActivity.class));
@@ -114,31 +132,14 @@ public class LoginActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                            }
-
-                            @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             }
                         });
 
 
-
                         // ghi lai mk trong database neu quen mat kau sau khi lay lai
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String userID = user.getUid();
+
                         DatabaseReference mDatabase =FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
                         ValueEventListener eventListener = new ValueEventListener() {
                             @Override

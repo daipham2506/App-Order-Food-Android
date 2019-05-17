@@ -27,6 +27,9 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 import static android.graphics.Color.*;
 
 public class SearchFoodActivity extends AppCompatActivity {
@@ -42,8 +45,20 @@ public class SearchFoodActivity extends AppCompatActivity {
     ArrayList<String> suggestList = new ArrayList<>();
 
     @Override
+    protected void attachBaseContext(Context newBase){
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Note  add this code before setcontentView
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Rubik.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+
         setContentView(R.layout.layout_search_food);
         //Tìm kiếm
         materialSearchBar = (MaterialSearchBar)findViewById(R.id.searchBar);
@@ -89,8 +104,23 @@ public class SearchFoodActivity extends AppCompatActivity {
                 //Khi Search Bar bị đóng
                 //Khôi phục adapter ban đầu
                 if(!enabled) {
+                    //lvFood.setAdapter(adapter);
+                    lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                            //position là vi tri tren listview
+                            Food foodSearch = arrFood.get(position);
+                            Intent foodDetail = new Intent(SearchFoodActivity.this,FoodDetailActivity.class);
+                            //gửi FoodId (ten của Food) và id quán đến activity FoodDetail
+                            foodDetail.putExtra("FoodId",foodSearch.getTenMon());
+                            foodDetail.putExtra("RestaurentID",foodSearch.getIDQuan());
+                            // mở activity  foodDetail
+                            startActivity(foodDetail);
+                        }
+                    });
                     lvFood.setAdapter(adapter);
 
+                    arrFoodSearch.clear();
                 }
             }
 
@@ -125,6 +155,7 @@ public class SearchFoodActivity extends AppCompatActivity {
                         }
                     }
                 }
+
             }
 
             @Override
@@ -133,7 +164,6 @@ public class SearchFoodActivity extends AppCompatActivity {
             }
         };
         mDatabase.addListenerForSingleValueEvent(eventListener);
-
 
 
         lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -150,6 +180,8 @@ public class SearchFoodActivity extends AppCompatActivity {
             }
         });
         lvFood.setAdapter(adapterSearch);
+
+
     }
 
     private  void loadDataAllFood(){
@@ -166,6 +198,23 @@ public class SearchFoodActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     }
                 }
+
+
+                lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                        //position là vi tri tren listview
+                        Food food = arrFood.get(position);
+                        Intent foodDetail = new Intent(SearchFoodActivity.this,FoodDetailActivity.class);
+                        //gửi FoodId (ten của Food) và id quán đến activity FoodDetail
+                        foodDetail.putExtra("FoodId",food.getTenMon());
+                        foodDetail.putExtra("RestaurentID",food.getIDQuan());
+                        // mở activity  foodDetail
+                        startActivity(foodDetail);
+                    }
+                });
+                lvFood.setAdapter(adapter);
+
             }
 
             @Override
@@ -176,20 +225,7 @@ public class SearchFoodActivity extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(eventListener);
 
 
-        lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                //position là vi tri tren listview
-                Food food = arrFood.get(position);
-                Intent foodDetail = new Intent(SearchFoodActivity.this,FoodDetailActivity.class);
-                //gửi FoodId (ten của Food) và id quán đến activity FoodDetail
-                foodDetail.putExtra("FoodId",food.getTenMon());
-                foodDetail.putExtra("RestaurentID",food.getIDQuan());
-                // mở activity  foodDetail
-                startActivity(foodDetail);
-            }
-        });
-        lvFood.setAdapter(adapter);
+
 
     }
 
@@ -214,6 +250,9 @@ public class SearchFoodActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 
 

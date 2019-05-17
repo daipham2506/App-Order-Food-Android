@@ -1,6 +1,7 @@
 package com.tandai.orderfood;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class InfoPersonActivity extends AppCompatActivity {
     private Button doiMK;
     private ImageView logout, home;
@@ -24,9 +28,21 @@ public class InfoPersonActivity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
     DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+
+    @Override
+    protected void attachBaseContext(Context newBase){
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Note  add this code before setcontentView
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Rubik.otf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
         setContentView(R.layout.layout_info_person);
         AnhXa();
         LoadData();
