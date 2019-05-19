@@ -129,12 +129,11 @@ public class FoodAdapter1 extends BaseAdapter {
         tenQuan.setText(food.getTenQuan());
         Picasso.with(context).load(food.getLinkAnh()).into(hinh);
 
-        //set animation
-        Animation animation = AnimationUtils.loadAnimation(context,R.anim.item_animation_food);
+        // set anim
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.item_animation_from_left);
+
+        animation.setDuration(1500);
         view.startAnimation(animation);
-
-
-
 
         return view;
     }

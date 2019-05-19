@@ -1,6 +1,7 @@
 package com.tandai.orderfood;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import info.hoang8f.widget.FButton;
 
@@ -67,20 +70,46 @@ public class QuanAnXemDSDonDatHang extends AppCompatActivity {
 
     private void getInfoOrder(){
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Orders").child(userID);
-        ValueEventListener eventListener = new ValueEventListener() {
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //get date-time
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy   hh:mm:ss aa");
+                final String dateCurent = dateFormat.format(c.getTime());
+
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     for( DataSnapshot ds1 : ds.getChildren()){
-                        Order order = ds1.getValue(Order.class);
-                        arrOrder.add(order);
-                        adapter.notifyDataSetChanged();
+                        if( ds1.getValue() != null){
+                            Order order = ds1.getValue(Order.class);
+                            int dayOrder = getDayTime(order.getDateTime());
+                            int dayCurent = getDayTime(dateCurent);
+                            if (dayCurent == dayOrder) {
+                                if (order.getCheck() == 0) {  // if not confirm then add listview
+                                    arrOrder.add(order);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            } else {
+                                mDatabase.setValue(null);
+                            }
+                        }
                     }
                 }
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        };
-        mDatabase.addListenerForSingleValueEvent(eventListener);
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
+
+
+
+
+    private Integer getDayTime(String date){
+        return Integer.parseInt(date.substring(0,2));
+    }
+
 }

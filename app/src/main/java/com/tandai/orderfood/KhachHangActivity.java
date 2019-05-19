@@ -141,11 +141,6 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
 
         LoadData_Food();
 
-//        LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(lvFood.getContext(),R.anim.layout_fall_down);
-//        lvFood.setLayoutAnimation(controller);
-
-
-
         lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -278,7 +273,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     public void onStop() {
 
         super.onStop();
-        //mSlider.stopAutoCycle();
+        mSlider.stopAutoCycle();
     }
 
     @Override
@@ -325,10 +320,14 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             startActivity(new Intent(KhachHangActivity.this, SearchFoodActivity.class));
         }
         else if (id == R.id.nav_donhang) {
+            startActivity(new Intent(KhachHangActivity.this,OrderActivity.class));
 
         }
         else if (id == R.id.nav_giohang) {
             startActivity(new Intent(KhachHangActivity.this, CartActivity.class));
+        }
+        else if(id == R.id.nav_fav){
+            startActivity(new Intent(KhachHangActivity.this, FavoriteActivity.class));
         }
         else if (id == R.id.nav_doimk) {
             startActivity(new Intent(KhachHangActivity.this,ChangePassActivity.class));

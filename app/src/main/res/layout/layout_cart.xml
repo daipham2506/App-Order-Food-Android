@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutCart"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,14 +10,14 @@
     tools:context=".CartActivity"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/listCart"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_cart"
         android:layout_width="match_parent"
         android:layout_height="600dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp">
 
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
     <android.support.v7.widget.CardView
         android:layout_alignParentBottom="true"
         app:cardBackgroundColor="#1C521E"

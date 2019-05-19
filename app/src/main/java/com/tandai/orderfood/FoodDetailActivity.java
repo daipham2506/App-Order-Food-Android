@@ -63,8 +63,8 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
     MonAn food;
-    long quantity = 1 , price;
-
+    long quantity = 1 , price = 0;
+    String image="";
     RatingBar ratingBar;
 
 
@@ -111,20 +111,11 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
     Favorite favorite;
 
 
-    @Override
-    protected void attachBaseContext(Context newBase){
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Note  add this code before setcontentView
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Rubik.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build());
 
         setContentView(R.layout.layout_food_detail);
 
@@ -224,7 +215,7 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
                         if (dataSnapshot.getValue() == null){
                             fav.setImageResource(R.drawable.ic_favorite_black_24dp);
                             Toast.makeText(FoodDetailActivity.this, foodId+" đã thêm vào món yêu thích", Toast.LENGTH_SHORT).show();
-                            favorite = new Favorite(foodId,userID,RestaurentID,1);
+                            favorite = new Favorite(foodId,userID,RestaurentID,price,image,1);
                         }
                         else{
                             favorite = dataSnapshot.getValue(Favorite.class);
@@ -255,8 +246,6 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
     }
 
     private void getRatingFood(final String foodId) {
-
-        //Query foodRating = ratingTbl.child("Rating").orderByChild("foodID").equalTo(foodId);
 
         ratingTbl.child("Rating").child(foodId).addValueEventListener(new ValueEventListener() {
             float count = 0,sum=0;
@@ -322,6 +311,7 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
                         collapsingToolbarLayout.setTitle(food.getTenMon());
 
                         price = food.getGiaMon();
+                        image = food.getLinkAnh();
                         giamon.setText(price +" đ");
                         number.setOnClickListener(new ElegantNumberButton.OnClickListener() {
                             @Override

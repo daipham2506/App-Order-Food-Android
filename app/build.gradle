@@ -47,8 +47,7 @@ dependencies {
     implementation 'com.stepstone.apprating:app-rating:2.0.0'
 
 
-    implementation ('com.facebook.android:facebook-share:[4,5)')
-
+    implementation('com.facebook.android:facebook-share:[4,5)')
 
     //Slider
     implementation 'com.nineoldandroids:library:2.4.0'

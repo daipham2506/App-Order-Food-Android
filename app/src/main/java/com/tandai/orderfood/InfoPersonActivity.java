@@ -30,19 +30,10 @@ public class InfoPersonActivity extends AppCompatActivity {
     DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
 
     @Override
-    protected void attachBaseContext(Context newBase){
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Note  add this code before setcontentView
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Rubik.otf")
-                .setFontAttrId(R.attr.fontPath)
-                .build());
+
         setContentView(R.layout.layout_info_person);
         AnhXa();
         LoadData();

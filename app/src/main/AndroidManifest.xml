@@ -14,12 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".OrderActivity"></activity>
+        <activity android:name=".FavoriteActivity" />
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-
-        <activity android:name=".DetailOrder"></activity>
+        <activity android:name=".DetailOrder" />
         <activity
             android:name=".RestaurentActivity"
             android:label="@string/title_activity_restaurent"
@@ -54,10 +56,9 @@
         </activity>
 
         <provider
-            android:authorities="com.facebook.app.FacebookContentProvider659139777865159"
             android:name="com.facebook.FacebookContentProvider"
-            android:exported="true"/>
-
+            android:authorities="com.facebook.app.FacebookContentProvider659139777865159"
+            android:exported="true" />
     </application>
 
 </manifest>

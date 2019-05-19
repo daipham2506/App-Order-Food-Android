@@ -22,6 +22,11 @@
             android:icon="@drawable/cartplus"
             android:title="Xem giỏ hàng" />
         <item
+            android:id="@+id/nav_fav"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:title="Món ăn yêu thích" />
+
+        <item
             android:id="@+id/nav_doimk"
             android:icon="@drawable/key"
             android:title="Đổi mật khẩu" />

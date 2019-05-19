@@ -5,13 +5,29 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +50,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class CartActivity extends AppCompatActivity {
-    ListView lvCart;
     ArrayList<Cart> arrCart;
     ArrayList<Order> arrOrder;
     CartAdapter adapter = null;
@@ -46,47 +61,25 @@ public class CartActivity extends AppCompatActivity {
     String userID = user.getUid();
     DatabaseReference mDatabase, mDatabase1;
 
+    RecyclerView recyclerView;
+    RelativeLayout relativeLayout;
 
 
-    //Press Ctrl + O
-
-    @Override
-    protected void attachBaseContext(Context newBase){
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Note  add this code before setcontentView
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Rubik.otf")
-                .setFontAttrId(R.attr.fontPath)
-                .build());
-
-
-
         setContentView(R.layout.layout_cart);
 
-        total =(TextView) findViewById(R.id.total);
-        btnDatHang =(FButton) findViewById(R.id.btnPlaceOrder);
-
-        lvCart  =   (ListView) findViewById(R.id.listCart);
-
+        total       = (TextView) findViewById(R.id.total);
+        btnDatHang  = (FButton) findViewById(R.id.btnPlaceOrder);
         arrCart = new ArrayList<>();
         arrOrder = new ArrayList<>();
-        adapter = new CartAdapter(this, R.layout.line_cart, arrCart);
+        //adapter = new CartAdapter(this, R.layout.line_cart, arrCart);
 
 
-        getDataCart();
-        lvCart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                finish();
-                startActivity(getIntent());
-            }
-        });
+
+        initRecyclerView();
 
 
         btnDatHang.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +126,10 @@ public class CartActivity extends AppCompatActivity {
                                         tenKH = uInfo.getName();
                                         // them vào mảng Order
                                         for (int i = 0; i < arrCart.size(); i++) {
-                                            arrOrder.add(new Order(dateTime, diachigiaohang, sdt, userID, tenKH, arrCart.get(i).getTenQuan(), arrCart.get(i).getIDQuan(), arrCart.get(i).getTenMon(), arrCart.get(i).getGiaMon(), arrCart.get(i).getSoluong(), arrCart.get(i).getLinkAnh()));
+                                            arrOrder.add(new Order(dateTime, diachigiaohang, sdt, userID,
+                                                    tenKH, arrCart.get(i).getTenQuan(), arrCart.get(i).getIDQuan(),
+                                                    arrCart.get(i).getTenMon(), arrCart.get(i).getGiaMon(),
+                                                    arrCart.get(i).getSoluong(), arrCart.get(i).getLinkAnh(),0));
                                         }
                                     }
 
@@ -203,26 +199,154 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
-    private void getDataCart(){
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Carts").child(userID);
 
-        ValueEventListener eventListener = new ValueEventListener() {
+
+    private void initRecyclerView(){
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_cart);
+        relativeLayout = (RelativeLayout) findViewById(R.id.layoutCart);
+
+
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Carts").child(userID);
+        mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     Cart cart = ds.getValue(Cart.class);
                     arrCart.add(cart);
                     tongTien = tongTien + cart.getTongTien();
-                    adapter.notifyDataSetChanged();
                 }
                 total.setText(String.valueOf(tongTien)+ "đ");
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        };
-        mDatabase.addListenerForSingleValueEvent(eventListener);
 
-        lvCart.setAdapter(adapter);
+                final CartAdapter cartAdapter = new CartAdapter(arrCart,getApplicationContext());
+                cartAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(cartAdapter);
+
+
+                // set animation
+                runAnimation(recyclerView);
+
+
+
+                //swipe to delete food or UNDO
+                ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
+
+                    Drawable background;
+                    Drawable xMark;
+                    int xMarkMargin;
+                    boolean initiated;
+
+                    private void init() {
+                        background = new ColorDrawable(Color.RED);
+                        xMark = ContextCompat.getDrawable(CartActivity.this, R.drawable.ic_delete_white_36);
+                        xMark.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                        initiated = true;
+                    }
+
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        Toast.makeText(CartActivity.this, "on Move", Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+
+                        //Remove swiped item from list and notify the RecyclerView
+                        final int position = viewHolder.getAdapterPosition();
+
+                        final Cart mRecentlyDeletedItem = arrCart.get(position);
+                        final int mRecentlyDeletedItemPosition = position;
+                        arrCart.remove(position);
+                        cartAdapter.notifyDataSetChanged();
+                        tongTien = tongTien - mRecentlyDeletedItem.getTongTien();
+                        total.setText(String.valueOf(tongTien)+ "đ");
+
+
+                        Snackbar snackbar = Snackbar
+                                .make(relativeLayout, "Đã xóa "+mRecentlyDeletedItem.getTenMon(), Snackbar.LENGTH_LONG)
+                                .setAction("Quay lại", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Snackbar snackbar1 = Snackbar.make(relativeLayout, "Đã khôi phục "+mRecentlyDeletedItem.getTenMon(), Snackbar.LENGTH_LONG);
+                                        arrCart.add(mRecentlyDeletedItemPosition,mRecentlyDeletedItem);
+                                        cartAdapter.notifyDataSetChanged();
+                                        tongTien = tongTien + mRecentlyDeletedItem.getTongTien();
+                                        total.setText(String.valueOf(tongTien)+ "đ");
+                                        snackbar1.show();
+                                    }
+                                });
+
+                        snackbar.show();
+
+                    }
+
+                    @Override
+                    public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                        View itemView = viewHolder.itemView;
+
+                        // not sure why, but this method get's called for viewholder that are already swiped away
+                        if (viewHolder.getAdapterPosition() == -1) {
+                            // not interested in those
+                            return;
+                        }
+
+                        if (!initiated) {
+                            init();
+                        }
+
+                        // draw red background
+                        background.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                        background.draw(c);
+
+                        int xMarkLeft = 0;
+                        int xMarkRight = 0;
+                        int xMarkTop = itemView.getTop() + (itemView.getHeight() - xMark.getIntrinsicHeight()) / 2;
+                        int xMarkBottom = xMarkTop + xMark.getIntrinsicHeight();
+                        if (dX < 0) {
+                            xMarkLeft = itemView.getRight() - xMarkMargin - xMark.getIntrinsicWidth();
+                            xMarkRight = itemView.getRight() - xMarkMargin;
+                        }
+                        else {
+                            xMarkLeft = itemView.getLeft() + xMarkMargin;
+                            xMarkRight = itemView.getLeft() + xMarkMargin + xMark.getIntrinsicWidth();
+                        }
+                        xMark.setBounds(xMarkLeft, xMarkTop, xMarkRight, xMarkBottom);
+                        xMark.draw(c);
+
+                        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                    }
+
+                };
+
+                ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+                itemTouchHelper.attachToRecyclerView(recyclerView);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void runAnimation(RecyclerView recyclerView) {
+        LayoutAnimationController controller = null;
+
+        controller = AnimationUtils.loadLayoutAnimation(recyclerView.getContext(),R.anim.layout_slide_from_left);
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+
     }
 
 

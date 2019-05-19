@@ -7,6 +7,6 @@
     <dimen name="size30dp">30dp</dimen>
     <dimen name="size40dp">40dp</dimen>
     
-    <integer name="animation_duration_medium">1000</integer>
+    <integer name="animation_duration_medium">2300</integer>
 
 </resources>

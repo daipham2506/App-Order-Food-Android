@@ -1,15 +1,20 @@
+
+
 package com.tandai.orderfood;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,86 +24,66 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
 import java.util.List;
 
-import info.hoang8f.widget.FButton;
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
+    ArrayList<Cart> arrCart;
+    Context context;
 
-public class CartAdapter extends BaseAdapter {
-
-    private Context context;
-    private int layout;
-    private List<Cart> listCart;
+    DatabaseReference databaseReference;
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
-    DatabaseReference mDatabase;
 
-    public CartAdapter(Context context, int layout, List<Cart> listCart) {
+
+
+    public CartAdapter(ArrayList<Cart> arrCart, Context context) {
+        this.arrCart = arrCart;
         this.context = context;
-        this.layout = layout;
-        this.listCart = listCart;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        View itemView = layoutInflater.inflate(R.layout.line_cart,viewGroup,false);
+
+        return new ViewHolder(itemView);
     }
 
     @Override
-    public int getCount() {
-        return listCart.size();
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        final Cart cart = arrCart.get(i);
+        viewHolder.nameOfFood.setText(cart.getTenMon());
+        viewHolder.price.setText(String.valueOf(cart.getGiaMon())+"Đ");
+        viewHolder.nameOfRes.setText(cart.getTenQuan());
+        viewHolder.quantity.setText(String.valueOf(cart.getSoluong()));
+        Picasso.with(context).load(cart.getLinkAnh()).into(viewHolder.image);
+
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public int getItemCount() {
+        return arrCart.size();
     }
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
+
+    public class ViewHolder extends  RecyclerView.ViewHolder{
+        TextView nameOfFood,price,nameOfRes,quantity;
+        ImageView image;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            nameOfFood = (TextView) itemView.findViewById(R.id.cart_item_name);
+            price = (TextView) itemView.findViewById(R.id.cart_item_price);
+            nameOfRes = (TextView) itemView.findViewById(R.id.cart_item_name_res);
+            quantity = (TextView) itemView.findViewById(R.id.cart_item_count);
+            image = (ImageView) itemView.findViewById(R.id.cart_item_image);
+        }
     }
 
-    @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(layout, null);
-        //anh xa view
-
-        TextView tenMon = (TextView) view.findViewById(R.id.cart_item_name);
-        TextView giaMon = (TextView) view.findViewById(R.id.cart_item_price);
-        TextView tenQuan = (TextView) view.findViewById(R.id.cart_item_name_res);
-        TextView soluong = (TextView) view.findViewById(R.id.cart_item_count);
-        ImageView image = (ImageView) view.findViewById(R.id.cart_item_image);
-        ImageView cancelItemFood = (ImageView) view.findViewById(R.id.cart_item_cancel_food);
-
-        //set value
-
-        final Cart cart = listCart.get(position);
-
-        tenMon.setText(cart.getTenMon());
-        giaMon.setText(cart.getGiaMon()+" đ");
-        tenQuan.setText("Quán "+cart.getTenQuan());
-        soluong.setText(String.valueOf(cart.getSoluong()));
-        Picasso.with(context).load(cart.getLinkAnh()).into(image);
-        cancelItemFood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDatabase = FirebaseDatabase.getInstance().getReference().child("Carts").child(userID);
-                ValueEventListener eventListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        mDatabase.child(cart.getTenMon()).getRef().setValue(null);
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                };
-                mDatabase.addListenerForSingleValueEvent(eventListener);
-                Toast.makeText(context, "Đã xóa "+cart.getTenMon(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-
-        return view;
-    }
 }
+

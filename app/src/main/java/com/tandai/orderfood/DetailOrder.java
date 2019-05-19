@@ -46,20 +46,11 @@ public class DetailOrder extends AppCompatActivity {
     DatabaseReference database;
 
 
-    @Override
-    protected void attachBaseContext(Context newBase){
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Note  add this code before setcontentView
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Rubik.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build());
 
         setContentView(R.layout.layout_detail_order);
         AnhXa();
@@ -82,20 +73,20 @@ public class DetailOrder extends AppCompatActivity {
                 if (dagiao.isChecked()) {
                     Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
-                    //delOrderAfterConfirm(CustomerID,foodID);
+                    mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(1);
                 }
                 else if (danggiao.isChecked()) {
 
                     Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
-                    //delOrderAfterConfirm(CustomerID,foodID);
+                    mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(2);
                 }
                 else if (hethang.isChecked()) {
 
                     Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-
                     startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
-                    //delOrderAfterConfirm(CustomerID,foodID);
+                    mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(3);
+
                 } else {
                     Toast.makeText(DetailOrder.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
                 }
@@ -132,21 +123,21 @@ public class DetailOrder extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 // đối tượng order lấy dữ liệu từ database
-                order = dataSnapshot.getValue(Order.class);
-                //THiết lập ảnh
-                Picasso.with(getBaseContext()).load(order.getLinkAnh()).into(hinh);
-                quantity = order.getSoluong();
-                gia1mon = order.getGiaMon();
-                gia.setText(gia1mon + "đ");
-                tenmon.setText(order.getTenMon());
-                tenKh.setText("Tên: " + order.getTenkhachhang());
-                sdt.setText("Sđt: " + order.getSdtKhachHang());
-                diachi.setText("Địa chỉ giao hàng: " + order.getDiachigiaohang());
-                ngaydathang.setText("Ngày đặt hàng: " + order.getDateTime());
-                soluong.setText("Số lượng: " + order.getSoluong());
-                tongtien.setText("Tổng tiền: " + gia1mon * quantity + "đ");
-
-
+                if(dataSnapshot.getValue() != null) {
+                    order = dataSnapshot.getValue(Order.class);
+                    //THiết lập ảnh
+                    Picasso.with(getBaseContext()).load(order.getLinkAnh()).into(hinh);
+                    quantity = order.getSoluong();
+                    gia1mon = order.getGiaMon();
+                    gia.setText(gia1mon + "đ");
+                    tenmon.setText(order.getTenMon());
+                    tenKh.setText("Tên: " + order.getTenkhachhang());
+                    sdt.setText("Sđt: " + order.getSdtKhachHang());
+                    diachi.setText("Địa chỉ giao hàng: " + order.getDiachigiaohang());
+                    ngaydathang.setText("Ngày đặt hàng: " + order.getDateTime());
+                    soluong.setText("Số lượng: " + order.getSoluong());
+                    tongtien.setText("Tổng tiền: " + gia1mon * quantity + "đ");
+                }
 
             }
 
