@@ -34,9 +34,10 @@
         android:paddingRight="29dp">
 
         <Button
+            android:layout_gravity="center"
             android:textColor="@color/colorWhite"
             android:id="@+id/btnThemQuanKhungAdmin"
-            android:layout_width="320dp"
+            android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/duongvien_xanh"
             android:text="Thêm tài khoản Quán ăn"
@@ -44,9 +45,10 @@
             android:textAllCaps="false"/>
 
         <Button
+            android:layout_gravity="center"
             android:textColor="@color/colorWhite"
             android:id="@+id/btnXoaQuanKhungAdmin"
-            android:layout_width="320dp"
+            android:layout_width="280dp"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/size25dp"
             android:background="@drawable/duongvien_xanh"

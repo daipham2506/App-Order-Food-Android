@@ -19,8 +19,8 @@
         android:layout_centerHorizontal="true"
         android:text="Quán ăn"
         android:textColor="@color/colorWhite"
-        android:textSize="32sp"
-        android:layout_marginTop="10dp"
+        android:textSize="25sp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/nabila"/>
 
     <LinearLayout
@@ -34,9 +34,10 @@
         >
 
         <Button
+            android:layout_gravity="center"
             android:textColor="@color/colorWhite"
             android:id="@+id/btnXemMon"
-            android:layout_width="300dp"
+            android:layout_width="270dp"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/size15dp"
             android:background="@drawable/duongvien_xanh"
@@ -45,9 +46,10 @@
             android:textAllCaps="false"/>
 
         <Button
+            android:layout_gravity="center"
             android:textColor="@color/colorWhite"
             android:id="@+id/btnThemMon"
-            android:layout_width="300dp"
+            android:layout_width="270dp"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/size15dp"
             android:background="@drawable/duongvien_xanh"
@@ -56,9 +58,10 @@
             android:textAllCaps="false"/>
 
         <Button
+            android:layout_gravity="center"
             android:textColor="@color/colorWhite"
             android:id="@+id/btnSuaMon"
-            android:layout_width="300dp"
+            android:layout_width="270dp"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/size15dp"
             android:background="@drawable/duongvien_xanh"
@@ -67,9 +70,10 @@
             android:textAllCaps="false"/>
 
         <Button
+            android:layout_gravity="center"
             android:textColor="@color/colorWhite"
             android:id="@+id/btnXoaMon"
-            android:layout_width="300dp"
+            android:layout_width="270dp"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/size15dp"
             android:background="@drawable/duongvien_xanh"
@@ -78,16 +82,16 @@
             android:textAllCaps="false"/>
 
         <Button
+            android:layout_gravity="center"
             android:textColor="@color/colorWhite"
             android:id="@+id/btnXemDonHang"
-            android:layout_width="300dp"
+            android:layout_width="270dp"
             android:layout_height="60dp"
             android:layout_marginTop="@dimen/size15dp"
             android:background="@drawable/duongvien_xanh"
             android:text="Xem các đơn đặt hàng"
             android:textSize="20sp"
             android:textAllCaps="false"/>
-
     </LinearLayout>
 
     <ImageView

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="370dp" android:layout_height="200dp"
+    android:layout_width="345dp" android:layout_height="200dp"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     android:paddingLeft="20dp"

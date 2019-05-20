@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:text="Thêm tài khoản Quán"
         android:layout_centerHorizontal="true"
-        android:textSize="35sp"
+        android:textSize="30sp"
         android:textColor="@color/colorWhite"
         android:fontFamily="@font/nabila"
         />
@@ -118,10 +118,11 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/size10dp"
+            android:padding="5dp"
             android:layout_marginLeft="65dp">
 
             <Button
+                android:layout_gravity="center"
                 android:id="@+id/btnThemQuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

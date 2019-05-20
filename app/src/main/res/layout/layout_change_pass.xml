@@ -103,6 +103,7 @@
 
 
     <LinearLayout
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="false"
@@ -111,6 +112,7 @@
         android:layout_marginTop="400dp">
 
         <Button
+            android:layout_gravity="center"
             android:id="@+id/btnDoiPass"
             android:layout_width="100dp"
             android:layout_height="30dp"
@@ -121,6 +123,7 @@
             android:textColor="@color/colorWhite"/>
 
         <Button
+            android:layout_gravity="center"
             android:id="@+id/btnDongChangePass"
             android:layout_width="100dp"
             android:layout_height="30dp"

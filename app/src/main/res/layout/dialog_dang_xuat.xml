@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="370dp"
+    android:layout_width="345dp"
     android:layout_height="280dp"
     android:paddingTop="@dimen/size10dp"
     android:background="@color/colorWhite"
@@ -41,6 +41,7 @@
         android:layout_marginTop="220dp"/>
 
     <LinearLayout
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="false"
@@ -49,6 +50,7 @@
         android:layout_marginTop="230dp">
 
         <Button
+            android:layout_gravity="center"
             android:id="@+id/btnKhongDialogDangXuat"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
@@ -59,6 +61,7 @@
             android:textAllCaps="false"/>
 
         <Button
+            android:layout_gravity="center"
             android:id="@+id/btnDialogDangXuat"
             android:layout_width="wrap_content"
             android:layout_height="30dp"

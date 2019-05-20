@@ -82,7 +82,7 @@
         android:layout_height="80dp"
         android:background="@drawable/folder"
         android:layout_marginTop="300dp"
-        android:layout_marginLeft="270dp"/>
+        android:layout_marginLeft="250dp"/>
 
     <LinearLayout
         android:layout_width="200dp"
@@ -92,6 +92,7 @@
         android:layout_marginTop="480dp">
 
         <Button
+            android:layout_gravity="center"
             android:textColor="@color/colorWhite"
             android:id="@+id/btnThemMonLayoutThemMon"
             android:layout_width="wrap_content"
