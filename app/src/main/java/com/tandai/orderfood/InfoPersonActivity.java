@@ -32,11 +32,11 @@ public class InfoPersonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.layout_info_person);
+
         AnhXa();
         LoadData();
+
         doiMK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,12 +44,6 @@ public class InfoPersonActivity extends AppCompatActivity {
             }
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DangXuat();
-            }
-        });
 
         home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +60,6 @@ public class InfoPersonActivity extends AppCompatActivity {
         tenTK     = (TextView) findViewById(R.id.tvtentaikhoan);
         diachi     = (TextView) findViewById(R.id.tvdiachikhachhang);
         sdt     = (TextView) findViewById(R.id.tvsdtkhachhang);
-        logout    =(ImageView) findViewById(R.id.ivlogout);
         home    =(ImageView) findViewById(R.id.ivhome);
     }
 
@@ -89,24 +82,5 @@ public class InfoPersonActivity extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(eventListener);
     }
 
-    private void DangXuat(){
-        final Dialog dialogLogOut = new Dialog(InfoPersonActivity.this);
-        dialogLogOut.setContentView(R.layout.dialog_dang_xuat);
-        dialogLogOut.show();
-        Button khong=(Button) dialogLogOut.findViewById(R.id.btnKhongDialogDangXuat);
-        Button thoat=(Button) dialogLogOut.findViewById((R.id.btnDialogDangXuat));
-        khong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogLogOut.cancel();
-            }
-        });
-        thoat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogLogOut.cancel();
-                startActivity(new Intent(InfoPersonActivity.this,WelcomActivity.class));
-            }
-        });
-    }
+
 }

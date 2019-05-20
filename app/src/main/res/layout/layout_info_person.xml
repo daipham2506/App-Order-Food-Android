@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:weightSum="10"
         android:id="@+id/khung"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -19,30 +20,25 @@
 
 
         <ImageView
-            android:layout_marginLeft="10dp"
             android:id="@+id/ivhome"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/trontrang"
-            android:src="@drawable/home2" />
+            android:paddingLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_backspace_black_24dp"
+            android:tint="@color/colorWhite"/>
 
         <TextView
-
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
+            android:layout_marginRight="34dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Xin chào quý khách"
             android:textSize="22sp"
             android:textColor="@color/colorWhite"/>
 
-        <ImageView
-            android:layout_marginLeft="50dp"
-            android:id="@+id/ivlogout"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/trontrang"
-            android:src="@drawable/off" />
+
 
 
     </LinearLayout>
@@ -57,13 +53,13 @@
             android:layout_height="30dp"
             android:background="@drawable/user2"/>
         <TextView
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="3dp"
             android:layout_marginLeft="@dimen/size10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Thông tin khách hàng"
             android:textColor="#FF9100"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
 
     </LinearLayout>
 

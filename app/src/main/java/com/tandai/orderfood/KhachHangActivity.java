@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.andremion.counterfab.CounterFab;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -54,6 +55,8 @@ import java.util.HashMap;
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static android.graphics.Color.*;
 
 public class KhachHangActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     TextView ten, tenTK;
@@ -105,7 +108,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
 
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final CounterFab fab = (CounterFab) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,6 +116,28 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
                 startActivity(Cart);
             }
         });
+
+        //set count for counterFab
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Carts").child(userID);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int count = 0;
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    if( ds.getValue() != null) count++;
+                }
+                fab.setCount(count);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        fab.setColorFilter(Color.parseColor("#00C853"));
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -363,6 +388,11 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+
+
 
 
 
