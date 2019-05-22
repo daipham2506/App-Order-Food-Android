@@ -1,5 +1,6 @@
 package com.tandai.orderfood;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.content.pm.Signature;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -36,9 +38,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import dmax.dialog.SpotsDialog;
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static java.lang.Thread.sleep;
 
 
 public class WelcomActivity extends AppCompatActivity {
@@ -47,7 +52,8 @@ public class WelcomActivity extends AppCompatActivity {
     DatabaseReference mData = FirebaseDatabase.getInstance().getReference();
     FirebaseAuth mAuthencation =FirebaseAuth.getInstance();
 
-    ProgressDialog process;
+    AlertDialog waiting;
+
 
 
 
@@ -55,27 +61,40 @@ public class WelcomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.layout_welcom);
 
-
         printKeyHash();
 
+        waiting =  new SpotsDialog.Builder().setContext(this).setMessage("Vui lòng đợi...").setCancelable(false).build();
 
-        process = new ProgressDialog(WelcomActivity.this);
-        process.setMessage("Vui lòng đợi");
+        //Anh xa
+        btnLog = (Button) findViewById(R.id.btnLoginWelcom);
+        btnReg = (Button) findViewById(R.id.btnRegisterWelcom);
+
+        btnLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WelcomActivity.this, LoginActivity.class));
+            }
+        });
+        btnReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WelcomActivity.this, RegisterActivity.class));
+            }
+        });
+
 
         //Paper init
         Paper.init(this);
+
 
         //kiểm tra kết nối
         if(isNetworkAvailable()){
             Xuli();
         }
-        else{
+        else {
             final Dialog dialog   = new Dialog(this);
             dialog.setContentView(R.layout.layout_internet);
             Button btnThoat =   (Button) dialog.findViewById(R.id.btnThoatDiaLogInternet);
@@ -96,10 +115,24 @@ public class WelcomActivity extends AppCompatActivity {
                     dialog.cancel();
                     WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                     wifi.setWifiEnabled(true);
-                    Xuli();
+
+                    // wait turn on wifi done
+                    Handler setDelay = new Handler();
+                    Runnable startDelay;
+
+                    startDelay = new Runnable() {
+                        @Override
+                        public void run() {
+                            Xuli();
+                        }
+                    };
+                    setDelay.postDelayed(startDelay,3000);
+
                 }
             });
         }
+
+
 
     }
 
@@ -133,24 +166,9 @@ public class WelcomActivity extends AppCompatActivity {
     }
 
     private void Xuli(){
-        //Anh xa
-        btnLog = (Button) findViewById(R.id.btnLoginWelcom);
-        btnReg = (Button) findViewById(R.id.btnRegisterWelcom);
-
-        btnLog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WelcomActivity.this, LoginActivity.class));
-            }
-        });
-        btnReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WelcomActivity.this, RegisterActivity.class));
-            }
-        });
         String user = Paper.book().read(Common.USER_KEY);
         String pass = Paper.book().read(Common.PWD_KEY);
+
         if(user != null && pass != null){
             if(!user.isEmpty() && !pass.isEmpty()){
                 login(user,pass);
@@ -159,59 +177,58 @@ public class WelcomActivity extends AppCompatActivity {
     }
 
     private void login(final String email, String pass) {
-        process.show();
-        if (email.isEmpty() || pass.isEmpty() ) {
-            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin. ", Toast.LENGTH_SHORT).show();
+        if (isNetworkAvailable()) {
+            waiting.show();
+            if (email.isEmpty() || pass.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin. ", Toast.LENGTH_SHORT).show();
+            } else {
+                mAuthencation.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            final FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
+                            String userID = USER.getUid();
+
+                            mData = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+
+                            mData.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    waiting.dismiss();
+                                    User user = dataSnapshot.getValue(User.class);
+
+                                    if (user.getUserType().equals("admin")) {
+                                        startActivity(new Intent(WelcomActivity.this, AdminActivity.class));
+                                    } else if (user.getUserType().equals("restaurent")) {
+                                        startActivity(new Intent(WelcomActivity.this, QuanAnActivity.class));
+                                    } else if (user.getUserType().equals("customer")) {
+
+                                        if (USER.isEmailVerified()) {
+                                            startActivity(new Intent(WelcomActivity.this, KhachHangActivity.class));
+                                        } else {
+                                            Toast.makeText(WelcomActivity.this, "Vui lòng xác thực Email để đăng nhập", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        } else {
+                            waiting.dismiss();
+                            Toast.makeText(WelcomActivity.this, "Tài khoản hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
         }
-        else {
-            mAuthencation.signInWithEmailAndPassword(email, pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-
-                        final FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
-                        String userID = USER.getUid();
-
-                        mData = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
-
-                        mData.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                process.dismiss();
-                                User user   =   dataSnapshot.getValue(User.class);
-
-                                if(user.getUserType().equals("admin")){
-                                    startActivity(new Intent(WelcomActivity.this,AdminActivity.class));
-                                }
-                                else if(user.getUserType().equals("restaurent")){
-                                    startActivity(new Intent(WelcomActivity.this,QuanAnActivity.class));
-                                }
-                                else if(user.getUserType().equals("customer")){
-
-                                    if(USER.isEmailVerified()){
-                                        startActivity(new Intent(WelcomActivity.this, KhachHangActivity.class));
-                                    }
-                                    else{
-                                        Toast.makeText(WelcomActivity.this, "Vui lòng xác thực Email để đăng nhập", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-                    }
-
-                    else {
-                        process.dismiss();
-                        Toast.makeText(WelcomActivity.this, "Tài khoản hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+        else{
+            Toast.makeText(this, "Bạn chưa kết nối Internet", Toast.LENGTH_SHORT).show();
         }
     }
 

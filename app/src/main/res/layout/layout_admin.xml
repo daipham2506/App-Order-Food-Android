@@ -30,15 +30,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"
         android:orientation="vertical"
-        android:paddingLeft="40dp"
-        android:paddingRight="29dp">
+        android:padding="20dp">
 
         <Button
             android:layout_gravity="center"
             android:textColor="@color/colorWhite"
             android:id="@+id/btnThemQuanKhungAdmin"
-            android:layout_width="280dp"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
             android:background="@drawable/duongvien_xanh"
             android:text="Thêm tài khoản Quán ăn"
             android:textSize="20sp"
@@ -48,9 +47,9 @@
             android:layout_gravity="center"
             android:textColor="@color/colorWhite"
             android:id="@+id/btnXoaQuanKhungAdmin"
-            android:layout_width="280dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="@dimen/size25dp"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/duongvien_xanh"
             android:text="Xóa tài khoản quán ăn"
             android:textSize="20sp"

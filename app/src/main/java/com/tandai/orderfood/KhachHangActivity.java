@@ -6,9 +6,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andremion.counterfab.CounterFab;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -49,8 +54,11 @@ import com.rey.material.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Random;
 
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -72,6 +80,9 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     HashMap<String,String> image_list;
     SliderLayout mSlider;
 
+    // Refresh Layout
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -79,10 +90,13 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     DatabaseReference mDatabase;
 
 
+
     @Override
     protected void attachBaseContext(Context newBase){
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
+
 
 
     @Override
@@ -96,6 +110,32 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
                 .build());
 
         setContentView(R.layout.activity_khachhang);
+
+
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.pDarkGreen, R.color.Orange, R.color.Red, R.color.colorBlue);
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(isNetworkAvailable()){
+                    LoadData_Food();
+                }else{
+                    Toast.makeText(KhachHangActivity.this, "Vui lòng kiểm tra kết nối Internet", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 1500);
+
+
+            }
+        });
 
 
         //setup Slider
@@ -294,6 +334,14 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
 
     }
 
+    // kiểm tra kết nối internet
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     @Override
     public void onStop() {
 
@@ -345,6 +393,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             startActivity(new Intent(KhachHangActivity.this, SearchFoodActivity.class));
         }
         else if (id == R.id.nav_donhang) {
+
             startActivity(new Intent(KhachHangActivity.this,OrderActivity.class));
 
         }
@@ -358,10 +407,6 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             startActivity(new Intent(KhachHangActivity.this,ChangePassActivity.class));
         }
         else if(id == R.id.nav_dangxuat) {
-
-            //delete remember user and password
-            Paper.book().destroy();
-
             // open dialog
             final Dialog dialogLogOut = new Dialog(KhachHangActivity.this);
             dialogLogOut.setContentView(R.layout.dialog_dang_xuat);
@@ -378,10 +423,15 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
                 @Override
                 public void onClick(View v) {
                     dialogLogOut.cancel();
+                    //delete remember user and password
+                    Paper.book().destroy();
+
                     startActivity(new Intent(KhachHangActivity.this,WelcomActivity.class));
                 }
             });
         }
+
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -389,10 +439,9 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         return true;
     }
 
-
-
-
-
+    private Integer getDayTime(String date){
+        return Integer.parseInt(date.substring(0,2));
+    }
 
 
 

@@ -12,16 +12,16 @@
     <ImageView
         android:id="@+id/ivHinh2"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="180dp"
         android:src="@color/colorWhite"
         android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:gravity="center"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="150dp"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="#630E0D0E"
+        android:background="#7A0E0D0E"
         android:orientation="horizontal"
         >
 

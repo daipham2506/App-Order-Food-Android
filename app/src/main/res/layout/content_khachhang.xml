@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/refreshLayout"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".KhachHangActivity"
     tools:showIn="@layout/app_bar_khachhang">
@@ -16,7 +17,7 @@
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/slider"
             android:layout_width="match_parent"
-            android:layout_height="170dp">
+            android:layout_height="160dp">
 
         </com.daimajia.slider.library.SliderLayout>
 
@@ -28,4 +29,4 @@
             android:dividerHeight="0sp"></ListView>
     </LinearLayout>
 
-</RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -37,8 +37,9 @@
         android:layout_marginLeft="20dp"/>
 
     <Button
+        android:gravity="center"
         android:id="@+id/btnLoginWelcom"
-        android:layout_width="200dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="270dp"
@@ -49,7 +50,7 @@
 
     <Button
         android:id="@+id/btnRegisterWelcom"
-        android:layout_width="200dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="340dp"

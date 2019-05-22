@@ -22,10 +22,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".DetailOrder" />
-        <activity
-            android:name=".RestaurentActivity"
-            android:label="@string/title_activity_restaurent"
-            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".ForgotPassActivity" />
         <activity android:name=".QuanAnXemDSDonDatHang" />
         <activity android:name=".CartActivity" />

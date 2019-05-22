@@ -1,8 +1,11 @@
 package com.tandai.orderfood;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import dmax.dialog.SpotsDialog;
 import io.paperdb.Paper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -36,29 +40,22 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLog;
     EditText email;
     EditText pass;
-    ProgressDialog process;
+
     CheckBox Remember;
     TextView forgotPass;
 
-    @Override
-    protected void attachBaseContext(Context newBase){
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+    AlertDialog waiting;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Note  add this code before setcontentView
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Rubik.otf")
-                .setFontAttrId(R.attr.fontPath)
-                .build());
 
         setContentView(R.layout.layout_login);
         AnhXa();
-        process = new ProgressDialog(LoginActivity.this);
-        process.setMessage("Vui lòng đợi");
+        waiting =  new SpotsDialog.Builder().setContext(this).setMessage("Vui lòng đợi...").setCancelable(false).build();
         mAuthencation = FirebaseAuth.getInstance();
 
         Paper.init(this);
@@ -93,75 +90,85 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin. ", Toast.LENGTH_SHORT).show();
         }
         else {
-            process.show();
-            if(Remember.isChecked()){
-                Paper.book().write(Common.USER_KEY,Email);
-                Paper.book().write(Common.PWD_KEY,Pass);
-            }
-            mAuthencation.signInWithEmailAndPassword(Email, Pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        final FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
-                        String userID = USER.getUid();
-
-
-                        mData = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
-                        mData.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                process.dismiss();
-                                User user   =   dataSnapshot.getValue(User.class);
-
-                                if(user.getUserType().equals("admin")){
-                                    startActivity(new Intent(LoginActivity.this,AdminActivity.class));
-                                }
-                                else if(user.getUserType().equals("restaurent") ){
-                                    startActivity(new Intent(LoginActivity.this,QuanAnActivity.class));
-                                }
-                                else if(user.getUserType().equals("customer") ){
-
-                                    if(USER.isEmailVerified()){
-                                        startActivity(new Intent(LoginActivity.this, KhachHangActivity.class));
-                                    }
-                                    else{
-                                        Toast.makeText(LoginActivity.this, "Vui lòng xác thực Email để đăng nhập", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-                        // ghi lai mk trong database neu quen mat kau sau khi lay lai
-
-                        DatabaseReference mDatabase =FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
-                        ValueEventListener eventListener = new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                dataSnapshot.child("pass").getRef().setValue(Pass);
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        };
-                        mDatabase.addListenerForSingleValueEvent(eventListener);
-
-                    }
-                    else {
-                        process.dismiss();
-                        Toast.makeText(LoginActivity.this, "Tài khoản hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();
-                    }
+            if(isNetworkAvailable()) {
+                waiting.show();
+                if (Remember.isChecked()) {
+                    Paper.book().write(Common.USER_KEY, Email);
+                    Paper.book().write(Common.PWD_KEY, Pass);
                 }
-            });
+                mAuthencation.signInWithEmailAndPassword(Email, Pass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            final FirebaseUser USER = FirebaseAuth.getInstance().getCurrentUser();
+                            String userID = USER.getUid();
+
+
+                            mData = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+                            mData.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    waiting.dismiss();
+                                    User user = dataSnapshot.getValue(User.class);
+
+                                    if (user.getUserType().equals("admin")) {
+                                        startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+                                    } else if (user.getUserType().equals("restaurent")) {
+                                        startActivity(new Intent(LoginActivity.this, QuanAnActivity.class));
+                                    } else if (user.getUserType().equals("customer")) {
+
+                                        if (USER.isEmailVerified()) {
+                                            startActivity(new Intent(LoginActivity.this, KhachHangActivity.class));
+                                        } else {
+                                            Toast.makeText(LoginActivity.this, "Vui lòng xác thực Email để đăng nhập", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+                            // ghi lai mk trong database neu quen mat kau sau khi lay lai
+
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+                            ValueEventListener eventListener = new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    dataSnapshot.child("pass").getRef().setValue(Pass);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            };
+                            mDatabase.addListenerForSingleValueEvent(eventListener);
+
+                        } else {
+                            waiting.dismiss();
+                            Toast.makeText(LoginActivity.this, "Tài khoản hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+            else{
+                Toast.makeText(this, "Bạn chưa kết nối Internet", Toast.LENGTH_SHORT).show();
+            }
         }
+    }
+
+
+    // kiểm tra kết nối internet
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 
