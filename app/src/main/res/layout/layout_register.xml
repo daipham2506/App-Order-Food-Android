@@ -9,8 +9,8 @@
     android:paddingTop="30dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-
-    android:background="@drawable/anhnen">
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
 
 
     <TextView
@@ -20,7 +20,7 @@
         android:layout_centerHorizontal="true"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlue"
         android:fontFamily="@font/nabila"
         />
 
@@ -34,14 +34,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
-            android:textColorHint="#FAF8F8"
+            android:textColorHint="@color/colorPrimary"
             android:id="@+id/txtEmail"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:inputType="textEmailAddress"
-            app:met_baseColor="#FFFFFF"
+            app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            app:met_primaryColor="#FFFFFF"
+            app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
             android:drawableLeft="@drawable/mail1"
             android:drawablePadding="@dimen/size10dp"
@@ -52,12 +52,12 @@
             android:hint="Mật khẩu"
             android:textColorHint="#FAF8F8"
             android:id="@+id/txtPass"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:inputType="textPassword"
-            app:met_baseColor="#FFFFFF"
+            app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            app:met_primaryColor="#FFFFFF"
+            app:met_primaryColor="@color/colorPrimary"
             app:met_minCharacters="6"
             app:met_singleLineEllipsis="true"
             android:drawableLeft="@drawable/pass1"
@@ -67,14 +67,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Họ tên"
-            android:textColorHint="#FAF8F8"
+            android:textColorHint="@color/colorPrimary"
             android:id="@+id/txtName"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:inputType="text"
-            app:met_baseColor="#FFFFFF"
+            app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            app:met_primaryColor="#FFFFFF"
+            app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
             android:drawableLeft="@drawable/name1"
             android:drawablePadding="@dimen/size10dp"
@@ -83,14 +83,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Số điện thoại"
-            android:textColorHint="#FAF8F8"
+            android:textColorHint="@color/colorPrimary"
             android:id="@+id/txtPhone"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:inputType="phone"
-            app:met_baseColor="#FFFFFF"
+            app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            app:met_primaryColor="#FFFFFF"
+            app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
             android:drawableLeft="@drawable/phone1"
             android:drawablePadding="@dimen/size10dp"
@@ -101,14 +101,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Địa chỉ"
-            android:textColorHint="#FAF8F8"
+            android:textColorHint="@color/colorPrimary"
             android:id="@+id/txtAddress"
             android:textColor="@color/colorWhite"
             android:textSize="25sp"
             android:inputType="text"
-            app:met_baseColor="#FFFFFF"
+            app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            app:met_primaryColor="#FFFFFF"
+            app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
             android:drawableLeft="@drawable/address1"
             android:drawablePadding="@dimen/size10dp"
@@ -118,25 +118,24 @@
 
 
         <LinearLayout
+            android:layout_marginTop="15dp"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/size10dp">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnReg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/size10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/duongvien_xanh"
                 android:text="@string/dangky"
                 android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
-                android:textSize="20sp" />
-
-
+                android:textSize="25sp" />
 
 
         </LinearLayout>

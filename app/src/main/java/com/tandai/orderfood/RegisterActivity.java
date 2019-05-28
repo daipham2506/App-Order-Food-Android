@@ -65,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
         final User KhachHang    = new User(Email,Pass,Name,Phone,Address,"customer");
 
         if (Email.isEmpty() || Pass.isEmpty() || Name.isEmpty() || Phone.isEmpty() || Address.isEmpty()) {
+            process.dismiss();
             Toast.makeText(this, "Vui lòng điền đầy đủ thông tin. ", Toast.LENGTH_SHORT).show();
         }
         else {

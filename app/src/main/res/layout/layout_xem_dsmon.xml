@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,47 +9,41 @@
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingBottom="10dp">
-
-    <Button
-        android:layout_marginTop="@dimen/size15dp"
-        android:id="@+id/btnback"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-
-        android:background="@drawable/back1"/>
-
-    <TextView
-        android:layout_marginTop="@dimen/size10dp"
-        android:id="@+id/tvtenQuanLayoutXemDSMon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ten Quan"
-        android:layout_centerHorizontal="true"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="#2979FF"
-        android:fontFamily="@font/nabila"
-        />
+    android:paddingBottom="10dp"
+    >
     <LinearLayout
-        android:paddingTop="@dimen/size10dp"
-        android:layout_marginLeft="@dimen/size10dp"
-        android:layout_marginRight="@dimen/size10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp">
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginTop="17dp"
+            android:id="@+id/btnback"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_keyboard_backspace_black_24dp"
+            android:tint="@color/colorBlue"/>
+
+
         <TextView
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/size10dp"
+            android:id="@+id/tvtenQuanLayoutXemDSMon"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:textColor="#FF9100"
-            android:paddingLeft="10dp"
-            android:background="#E41D1B1A"
-            android:layout_marginTop="35dp"/>
+            android:layout_height="wrap_content"
+            android:text="Ten Quan"
+            android:layout_centerHorizontal="true"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlue"
+            android:fontFamily="@font/nabila"
+            />
     </LinearLayout>
+
     <ListView
         android:layout_marginTop="@dimen/size10dp"
         android:layout_below="@+id/tvtenQuanLayoutXemDSMon"
         android:id="@+id/listviewFood"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</RelativeLayout>
+</LinearLayout>

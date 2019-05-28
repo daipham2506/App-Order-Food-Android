@@ -112,35 +112,34 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         setContentView(R.layout.activity_khachhang);
 
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-        swipeRefreshLayout.setColorSchemeResources(R.color.pDarkGreen, R.color.Orange, R.color.Red, R.color.colorBlue);
-
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if(isNetworkAvailable()){
-                    LoadData_Food();
-                }else{
-                    Toast.makeText(KhachHangActivity.this, "Vui lòng kiểm tra kết nối Internet", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 1500);
-
-
-            }
-        });
+//        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+//        swipeRefreshLayout.setColorSchemeResources(R.color.pDarkGreen, R.color.Orange, R.color.Red, R.color.colorBlue);
+//
+//
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                if(isNetworkAvailable()){
+//                    LoadData_Food();
+//                }else{
+//                    Toast.makeText(KhachHangActivity.this, "Vui lòng kiểm tra kết nối Internet", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        swipeRefreshLayout.setRefreshing(false);
+//                    }
+//                }, 1500);
+//
+//
+//            }
+//        });
 
 
         //setup Slider
         setupSlider();
-
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

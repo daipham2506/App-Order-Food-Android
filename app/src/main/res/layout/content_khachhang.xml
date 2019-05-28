@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/refreshLayout"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".KhachHangActivity"
     tools:showIn="@layout/app_bar_khachhang">
@@ -29,4 +29,4 @@
             android:dividerHeight="0sp"></ListView>
     </LinearLayout>
 
-</android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>

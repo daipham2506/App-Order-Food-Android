@@ -1,5 +1,6 @@
 package com.tandai.orderfood;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +34,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Calendar;
 
+import dmax.dialog.SpotsDialog;
+
 public class ThemMonActivity extends AppCompatActivity {
     private Button themMon,folder;
     private EditText tenMon,giaMon;
@@ -40,12 +43,16 @@ public class ThemMonActivity extends AppCompatActivity {
     private int REQUEST_CODE_FOLDER = 123;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private String link ;
+    AlertDialog waiting;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_them_mon);
         final StorageReference storageRef = storage.getReferenceFromUrl("gs://databaseorderfood.appspot.com");
         AnhXa();
+        waiting =  new SpotsDialog.Builder().setContext(this).setMessage("Vui lòng đợi").setCancelable(false).build();
+
         folder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,10 +65,12 @@ public class ThemMonActivity extends AppCompatActivity {
         themMon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                waiting.show();
                 final String ten  =   tenMon.getText().toString().trim();
                 final String stringGia = giaMon.getText().toString().trim();
                 final long gia    =   Long.parseLong(stringGia);
                 if(ten.isEmpty()|| stringGia.isEmpty()){
+                    waiting.dismiss();
                     Toast.makeText(ThemMonActivity.this, "Vui lòng nhập đầy đủ thông tin ", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -100,6 +109,7 @@ public class ThemMonActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     if (task.isSuccessful()) {
+                                        waiting.dismiss();
                                         link = task.getResult().toString();
                                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                         String IDQuan = user.getUid();
@@ -110,7 +120,7 @@ public class ThemMonActivity extends AppCompatActivity {
                                         startActivity(new Intent(ThemMonActivity.this,QuanAnActivity.class));
 
                                     } else {
-                                        Toast.makeText(ThemMonActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ThemMonActivity.this, "Thêm không thành công", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });

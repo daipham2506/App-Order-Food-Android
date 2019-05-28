@@ -47,6 +47,7 @@
         android:layout_marginTop="80dp"
         />
     <info.hoang8f.widget.FButton
+        app:buttonColor="@color/colorPrimary"
         android:id="@+id/btnGetPass"
         android:layout_margin="40dp"
         android:layout_below="@id/EmailForgotPass"

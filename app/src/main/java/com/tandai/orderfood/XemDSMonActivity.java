@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class XemDSMonActivity extends AppCompatActivity {
-    Button back;
+    ImageView back;
     TextView tenquan;
     ListView lvFood;
     ArrayList<Food> arrFood;
@@ -47,7 +48,7 @@ public class XemDSMonActivity extends AppCompatActivity {
     }
 
     private void AnhXa(){
-        back = (Button) findViewById(R.id.btnback);
+        back = (ImageView) findViewById(R.id.btnback);
         lvFood =(ListView) findViewById(R.id.listviewFood);
         tenquan =(TextView) findViewById(R.id.tvtenQuanLayoutXemDSMon);
     }

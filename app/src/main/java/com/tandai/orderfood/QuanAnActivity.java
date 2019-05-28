@@ -46,8 +46,6 @@ public class QuanAnActivity extends AppCompatActivity {
         LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //delete remember user and password
-                Paper.book().destroy();
                 DangXuat();
             }
         });
@@ -119,6 +117,8 @@ public class QuanAnActivity extends AppCompatActivity {
         thoat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //delete remember user and password
+                Paper.book().destroy();
                 dialogLogOut.cancel();
                 startActivity(new Intent(QuanAnActivity.this,WelcomActivity.class));
             }

@@ -66,6 +66,7 @@
         app:useCompatPadding="true" />
 
     <android.support.design.widget.FloatingActionButton
+
         android:id="@+id/btnShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,7 +168,7 @@
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <RatingBar
                         android:layout_width="wrap_content"
@@ -178,15 +179,20 @@
                         android:isIndicator="true"
                         android:stepSize="0.5"
                         />
-                    <ImageView
-                        android:padding="5dp"
-                        android:id="@+id/fav"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginLeft="100dp"
-                        android:tint="#D50000"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:src="@drawable/ic_favorite_border_black_24dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right">
+
+                        <ImageView
+                            android:id="@+id/fav"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_favorite_border_black_24dp"
+                            android:tint="#D50000" />
+                    </LinearLayout>
                 </LinearLayout>
 
                     <LinearLayout
