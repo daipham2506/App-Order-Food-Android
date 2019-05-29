@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Order Food</string>
+    <string name="app_name">OrderFood</string>
     <string name="tendangnhap">Email</string>
     <string name="dangnhap">Đăng nhập</string>
     <string name="dangky">Đăng ký</string>

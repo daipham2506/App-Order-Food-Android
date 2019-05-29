@@ -1,5 +1,6 @@
 package com.tandai.orderfood;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -18,17 +19,22 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import dmax.dialog.SpotsDialog;
+
 public class ThemQuanActivity extends AppCompatActivity {
     EditText email,pass,name,phone,address;
     Button btnThem;
     FirebaseAuth mAuthencation;
     DatabaseReference mData;
     FirebaseUser user;
+    AlertDialog waiting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_them_quan);
         AnhXa();
+        waiting =  new SpotsDialog.Builder().setContext(this).setMessage("Vui lòng đợi...").setCancelable(false).build();
         mAuthencation = FirebaseAuth.getInstance();
         mData = FirebaseDatabase.getInstance().getReference();
         btnThem.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +55,7 @@ public class ThemQuanActivity extends AppCompatActivity {
     }
 
     private void ThemQuan(){
+        waiting.show();
         String Email = email.getText().toString().trim();
         String Pass = pass.getText().toString().trim();
         final String Name = name.getText().toString().trim();
@@ -56,6 +63,7 @@ public class ThemQuanActivity extends AppCompatActivity {
         String Address = address.getText().toString().trim();
         final User QuanAn    = new User(Email,Pass,Name,Phone,Address,"restaurent");
         if (Email.isEmpty() || Pass.isEmpty() || Name.isEmpty() || Phone.isEmpty() || Address.isEmpty()) {
+            waiting.dismiss();
             Toast.makeText(this, "Vui lòng điền đầy đủ thông tin. ", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -63,6 +71,7 @@ public class ThemQuanActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        waiting.dismiss();
                         Toast.makeText(ThemQuanActivity.this, "Thêm tài khoản Quán ăn thành công.", Toast.LENGTH_SHORT).show();
                         user    =   mAuthencation.getCurrentUser();
                         //set Name cho user
@@ -82,6 +91,7 @@ public class ThemQuanActivity extends AppCompatActivity {
                         //chuyen ve man hinh Admin
                         startActivity(new Intent(ThemQuanActivity.this,AdminActivity.class));
                     } else {
+                        waiting.dismiss();
                         Toast.makeText(ThemQuanActivity.this, "Tài khoản đã tồn tại.", Toast.LENGTH_SHORT).show();
                     }
                 }

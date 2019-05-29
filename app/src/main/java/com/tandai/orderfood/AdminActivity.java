@@ -44,8 +44,6 @@ public class AdminActivity extends AppCompatActivity {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //delete remember user and password
-                Paper.book().destroy();
                 DangXuat();
             }
         });
@@ -73,6 +71,8 @@ public class AdminActivity extends AppCompatActivity {
         thoat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //delete remember user and password
+                Paper.book().destroy();
                 dialogLogOut.cancel();
                 startActivity(new Intent(AdminActivity.this,WelcomActivity.class));
             }

@@ -21,10 +21,11 @@
             android:layout_height="150dp"
             android:id="@+id/item_fav_image"
             android:scaleType="centerCrop"
-            android:src="@color/colorBlue"
+            android:src="@color/colorWhite"
             />
 
         <LinearLayout
+            android:weightSum="10"
             android:layout_marginBottom="12dp"
             android:paddingLeft="12dp"
             android:orientation="horizontal"
@@ -32,9 +33,10 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:layout_weight="9"
                 android:layout_marginLeft="5dp"
                 android:orientation="vertical"
-                android:layout_width="310dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content">
 
 

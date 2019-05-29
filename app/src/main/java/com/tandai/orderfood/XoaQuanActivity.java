@@ -1,6 +1,7 @@
 package com.tandai.orderfood;
 
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,23 +23,27 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import dmax.dialog.SpotsDialog;
 
 public class XoaQuanActivity extends AppCompatActivity {
-    DatabaseReference mData;
-    FirebaseAuth mAuthencation;
+    DatabaseReference mData, database;
     Button xoaQuan;
     EditText emailXoa;
     String Pass;
+    String userID = "";
+    AlertDialog waiting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_xoa_quan);
         AnhXa();
-        mAuthencation = FirebaseAuth.getInstance();
-        mData = FirebaseDatabase.getInstance().getReference();
+        waiting =  new SpotsDialog.Builder().setContext(this).setMessage("Vui lòng đợi").setCancelable(false).build();
         xoaQuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                waiting.show();
                 XoaQuan();
             }
         });
@@ -50,45 +55,36 @@ public class XoaQuanActivity extends AppCompatActivity {
         emailXoa=   (EditText) findViewById(R.id.edtEmailXoaQuan);
     }
 
-    private void XoaQuan(){
+    private void XoaQuan() {
         final String Email = emailXoa.getText().toString().trim();
 
         // lay data của realtime bd từ email
-        mData.child("Users").addChildEventListener(new ChildEventListener() {
+        mData = FirebaseDatabase.getInstance().getReference().child("Users");
+        mData.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                User user   =   dataSnapshot.getValue(User.class);
-                final String pass;
-                if(user.getEmail().equals(Email) && user.getUserType().equals("retaurent")){
-
-                    // xoa trong realtime db
-                    dataSnapshot.getRef().setValue(null);
-                    //xoa trong Auth ( chịu )
-                    //Pass= user.getPass();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    if (ds.getValue() != null){
+                        User user = ds.getValue(User.class);
+                        if(user.getEmail().equals(Email)){
+                            userID = ds.getKey();
+                            database = FirebaseDatabase.getInstance().getReference().child("QuanAn");
+                            database.child(userID).setValue(null);
+                            waiting.dismiss();
+                            Toast.makeText(XoaQuanActivity.this, "Bạn đã xóa thành công", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(XoaQuanActivity.this,AdminActivity.class));
+                            return;
+                        }
+                    }
                 }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                waiting.dismiss();
+                Toast.makeText(XoaQuanActivity.this, "Email quán không tồn tại", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-       });
-
-       }
-
+        });
+    }
 }

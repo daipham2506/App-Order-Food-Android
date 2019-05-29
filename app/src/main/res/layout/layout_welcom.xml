@@ -24,11 +24,12 @@
         android:textStyle="bold"
        android:fontFamily="@font/nabila"/>
     <TextView
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:orientation="vertical"
-        android:text="Chào mừng bạn đến với app đặt món ăn của chúng tôi. "
+        android:text="Chào mừng bạn đến với ứng dụng đặt món ăn."
         android:textColor="@color/colorWhite"
         android:textSize="25sp"
         android:textStyle="bold"
