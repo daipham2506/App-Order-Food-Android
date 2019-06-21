@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -54,7 +55,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
         initRecyclerView();
 
-        //databaseReference = FirebaseDatabase.getInstance().getReference().child("Favorite").child(userID);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Favorite").child(userID);
 
         //delete vs Undo Favorite food
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
@@ -84,7 +85,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 final int position = viewHolder.getAdapterPosition();
                 final Favorite mRecentlyDeletedItem = arrFavorite.get(position);
 
-                //databaseReference.child(mRecentlyDeletedItem.getFoodID()).child("check").setValue(0);
+                databaseReference.child(mRecentlyDeletedItem.getFoodID()).child("check").setValue(0);
                 final int mRecentlyDeletedItemPosition = position;
                 arrFavorite.remove(position);
                 favoriteAdapter.notifyDataSetChanged();
@@ -97,7 +98,7 @@ public class FavoriteActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
                                 Snackbar snackbar1 = Snackbar.make(coordinatorLayout, "Đã khôi phục "+mRecentlyDeletedItem.getFoodID(), Snackbar.LENGTH_LONG);
-                                //databaseReference.child(mRecentlyDeletedItem.getFoodID()).child("check").setValue(1);
+                                databaseReference.child(mRecentlyDeletedItem.getFoodID()).child("check").setValue(1);
                                 arrFavorite.add(mRecentlyDeletedItemPosition,mRecentlyDeletedItem);
                                 favoriteAdapter.notifyDataSetChanged();
                                 snackbar1.show();
@@ -167,7 +168,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
 
         database = FirebaseDatabase.getInstance().getReference().child("Favorite").child(userID);
-        database.addValueEventListener(new ValueEventListener() {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){

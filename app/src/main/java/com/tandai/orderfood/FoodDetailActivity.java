@@ -284,7 +284,7 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
                 .setHint("Viết cảm nhận của bạn tại đây...")
                 .setHintTextColor(R.color.colorAccent)
                 .setCommentTextColor(R.color.colorWhite)
-                .setCommentBackgroundColor(R.color.colorPrimaryDark)
+                .setCommentBackgroundColor(R.color.colorPrimary_Dark)
                 .setWindowAnimation(R.style.RatingDialogFadeAnim)
                 .create(FoodDetailActivity.this)
                 .show();

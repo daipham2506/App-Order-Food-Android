@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="345dp" android:layout_height="200dp"
+    android:layout_width="match_parent"
+    android:layout_height="190dp"
     android:background="@color/colorWhite"
     android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="@dimen/size20dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
     android:paddingTop="10dp"
     >
 
@@ -12,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:src="@drawable/donhang"/>
         <TextView
             android:paddingLeft="10dp"
@@ -50,7 +51,7 @@
         android:layout_height="wrap_content"
         android:text="Xác nhận"
         android:textColor="#134934"
-        android:textSize="20sp"
+        android:textSize="17sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="10dp"
@@ -65,7 +66,7 @@
         android:layout_alignParentBottom="true"
         android:text="Hủy"
         android:textColor="#134934"
-        android:textSize="20sp"
+        android:textSize="17sp"
         android:layout_marginBottom="10dp"
         android:textStyle="bold"
         />

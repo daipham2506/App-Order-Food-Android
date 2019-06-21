@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_centerVertical="false"
-        android:background="#43A047"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
         android:paddingTop="5dp">
 
@@ -116,16 +116,16 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btndoipassKhachhang"
-        android:layout_width="160dp"
+        android:id="@+id/btnUpdateInfo"
+        android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="300dp"
-        android:background="#43A047"
-        android:text="Thay đổi mật khẩu"
+        android:background="#17881B"
+        android:text="Cập nhật thông tin"
         android:textColor="@color/colorWhite"
         android:textAllCaps="false"
-        android:textSize="15sp"/>
+        android:textSize="16sp"/>
 
 
 

@@ -103,7 +103,7 @@ public class QuanAnActivity extends AppCompatActivity {
     }
 
     private void DangXuat(){
-        final Dialog dialogLogOut = new Dialog(QuanAnActivity.this);
+        final Dialog dialogLogOut = new Dialog(QuanAnActivity.this,R.style.Theme_Dialog);
         dialogLogOut.setContentView(R.layout.dialog_dang_xuat);
         dialogLogOut.show();
         Button khong=(Button) dialogLogOut.findViewById(R.id.btnKhongDialogDangXuat);

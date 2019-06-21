@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="370dp"
+    android:layout_width="match_parent"
     android:layout_height="280dp"
     android:paddingTop="@dimen/size10dp"
     android:background="@color/colorWhite"
@@ -10,7 +10,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingLeft="@dimen/size10dp"
         android:text="Không có kết nối Internet"
         android:textColor="#FF9100"
@@ -26,7 +26,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
         android:paddingLeft="@dimen/size10dp"
         android:text="Bạn cần có kết nối Internet để tiếp tục chương trình"
@@ -48,7 +48,7 @@
 
         <Button
             android:id="@+id/btnBatWifi"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:background="#43A047"
             android:text="Bật wifi"
@@ -58,7 +58,7 @@
 
         <Button
             android:id="@+id/btnThoatDiaLogInternet"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginLeft="30dp"
             android:background="#FF9100"

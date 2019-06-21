@@ -89,7 +89,7 @@ public class CartActivity extends AppCompatActivity {
                 if (arrCart.size() > 0) {
 
                     //open dialog_confirmCart
-                    final Dialog dialogConfirm = new Dialog(CartActivity.this);
+                    final Dialog dialogConfirm = new Dialog(CartActivity.this,R.style.Theme_Dialog);
                     dialogConfirm.setContentView(R.layout.dialog_confirmcart);
                     //anh xa
                     final EditText diaChi = (EditText) dialogConfirm.findViewById(R.id.diachigiaohang);

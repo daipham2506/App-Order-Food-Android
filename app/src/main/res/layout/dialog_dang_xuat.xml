@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="345dp"
+    android:layout_width="match_parent"
     android:layout_height="280dp"
     android:paddingTop="@dimen/size10dp"
     android:background="@color/colorWhite"
@@ -10,11 +10,11 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingLeft="@dimen/size10dp"
         android:text="Thông báo"
         android:textColor="#FF9100"
-        android:textSize="16sp" />
+        android:textSize="17sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
         android:paddingLeft="@dimen/size10dp"
         android:text="Bạn thực sự muốn đăng xuất."
@@ -42,7 +42,7 @@
 
     <LinearLayout
         android:gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="false"
         android:layout_centerHorizontal="true"

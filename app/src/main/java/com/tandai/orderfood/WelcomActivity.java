@@ -1,8 +1,8 @@
 package com.tandai.orderfood;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -13,12 +13,13 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -28,7 +29,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,8 +40,6 @@ import java.security.NoSuchAlgorithmException;
 
 import dmax.dialog.SpotsDialog;
 import io.paperdb.Paper;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static java.lang.Thread.sleep;
 
@@ -95,8 +93,8 @@ public class WelcomActivity extends AppCompatActivity {
             Xuli();
         }
         else {
-            final Dialog dialog   = new Dialog(this);
-            dialog.setContentView(R.layout.layout_internet);
+            final Dialog dialog   = new Dialog(this,R.style.Theme_Dialog);
+            dialog.setContentView(R.layout.dialog_internet);
             Button btnThoat =   (Button) dialog.findViewById(R.id.btnThoatDiaLogInternet);
             Button btnConnect= (Button) dialog.findViewById(R.id.btnBatWifi);
             dialog.show();

@@ -89,10 +89,6 @@ public class OrderActivity extends AppCompatActivity {
 
                 final  OrderAdapter orderAdapter = new OrderAdapter(arrOrder,getApplicationContext());
                 recyclerView.setAdapter(orderAdapter);
-                if(arrOrder.size() == 0){
-                    Toast.makeText(OrderActivity.this, "Không có đơn hàng trong ngày hôm nay", Toast.LENGTH_SHORT).show();
-
-                }
 
                 //set anim
                 runAnimation(recyclerView);

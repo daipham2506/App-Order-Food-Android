@@ -57,7 +57,7 @@ public class AdminActivity extends AppCompatActivity {
 
 
     private void DangXuat(){
-        final Dialog dialogLogOut = new Dialog(AdminActivity.this);
+        final Dialog dialogLogOut = new Dialog(AdminActivity.this,R.style.Theme_Dialog);
         dialogLogOut.setContentView(R.layout.dialog_dang_xuat);
         dialogLogOut.show();
         Button khong=(Button) dialogLogOut.findViewById(R.id.btnKhongDialogDangXuat);

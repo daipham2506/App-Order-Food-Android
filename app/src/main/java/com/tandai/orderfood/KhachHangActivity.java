@@ -8,10 +8,12 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,10 +27,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,9 +77,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     ListView lvFood;
     ArrayList<Food> arrFood;
     FoodAdapter1 adapter = null;
-    //   RecyclerView recyclerView;
 
-    //DatabaseReference database;
 
 
     //Slider
@@ -81,13 +85,14 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     SliderLayout mSlider;
 
     // Refresh Layout
-    SwipeRefreshLayout swipeRefreshLayout;
+//    SwipeRefreshLayout swipeRefreshLayout;
 
 
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
     DatabaseReference mDatabase;
+    DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
 
 
@@ -102,6 +107,12 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        //set color status bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
 
         //Note  add this code before setcontentView
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
@@ -302,7 +313,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
 
             }
         };
-        mDatabase.addListenerForSingleValueEvent(eventListener);
+        mDatabase.addValueEventListener(eventListener);
     }
 
 
@@ -329,7 +340,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
 
             }
         };
-        mDatabase.addListenerForSingleValueEvent(eventListener);
+        mDatabase.addValueEventListener(eventListener);
 
     }
 
@@ -392,24 +403,84 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             startActivity(new Intent(KhachHangActivity.this, SearchFoodActivity.class));
         }
         else if (id == R.id.nav_donhang) {
+            //get date-time
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy   hh:mm:ss aa");
+            final String currDateTime = dateFormat.format(c.getTime());
 
-            startActivity(new Intent(KhachHangActivity.this,OrderActivity.class));
+
+            db.child("Orders").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    boolean check = false;
+                    for(DataSnapshot ds: dataSnapshot.getChildren()){
+                        for(DataSnapshot ds1: ds.getChildren()){
+                            if(ds1.getKey().equals(userID)) {
+                                for (DataSnapshot ds2 : ds1.getChildren()) {
+                                    Order order = ds2.getValue(Order.class);
+                                    if (getDate(order.getDateTime()) == getDate(currDateTime) ) {
+                                        check = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if(check) break;
+                        }
+                        if(check) break;
+                    }
+                    if (check)
+                        startActivity(new Intent(KhachHangActivity.this, OrderActivity.class));
+                    else
+                        Toast.makeText(KhachHangActivity.this, "Chưa có đơn hàng ngày hôm nay.", Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
         }
         else if (id == R.id.nav_giohang) {
             startActivity(new Intent(KhachHangActivity.this, CartActivity.class));
         }
         else if(id == R.id.nav_fav){
-            startActivity(new Intent(KhachHangActivity.this, FavoriteActivity.class));
+            db.child("Favorite").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    boolean check =false;
+                    for(DataSnapshot ds:dataSnapshot.getChildren()){
+                        if(dataSnapshot.getValue() != null){
+                            Favorite favorite = ds.getValue(Favorite.class);
+                            if(favorite.getCheck() == 1){
+                                check =true;
+                                break;
+                            }
+                        }
+                    }
+                    if (check)
+                        startActivity(new Intent(KhachHangActivity.this, FavoriteActivity.class));
+                    else
+                        Toast.makeText(KhachHangActivity.this, "Chưa có món ăn yêu thích", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
         }
         else if (id == R.id.nav_doimk) {
             startActivity(new Intent(KhachHangActivity.this,ChangePassActivity.class));
         }
         else if(id == R.id.nav_dangxuat) {
             // open dialog
-            final Dialog dialogLogOut = new Dialog(KhachHangActivity.this);
+            final Dialog dialogLogOut = new Dialog(KhachHangActivity.this,R.style.Theme_Dialog);
             dialogLogOut.setContentView(R.layout.dialog_dang_xuat);
             dialogLogOut.show();
+
             Button khong=(Button) dialogLogOut.findViewById(R.id.btnKhongDialogDangXuat);
             Button thoat=(Button) dialogLogOut.findViewById((R.id.btnDialogDangXuat));
             khong.setOnClickListener(new View.OnClickListener() {
@@ -430,60 +501,14 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             });
         }
 
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
     }
 
-    private Integer getDayTime(String date){
+    private Integer getDate(String date){
         return Integer.parseInt(date.substring(0,2));
     }
-
-
-
-    //    private void initRecyclerView(final String foodID,final String RestaurentID){
-//        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewFood);
-//        arrFood = new ArrayList<>();
-//
-//        recyclerView.setHasFixedSize(true);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false);
-//        recyclerView.setLayoutManager(layoutManager);
-//
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
-//        recyclerView.addItemDecoration(dividerItemDecoration);
-//
-//        mDatabase = FirebaseDatabase.getInstance().getReference().child("QuanAn");
-//        ValueEventListener eventListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    int i= 0;
-//                    for(DataSnapshot ds1: ds.getChildren()){
-//                        MonAn mon = ds1.getValue(MonAn.class);
-//                        arrFood.add(new Food(mon.getTenMon(),mon.getTenQuan(),mon.getLinkAnh(),mon.getIdQuan(),mon.getGiaMon(),mon.getTinhTrang()));
-//
-//                        ++i;
-//                        if(i==3) break; // moi quan 3 mon
-//                    }
-//                }
-//                FoodAdapter1 foodAdapter1 = new FoodAdapter1(arrFood,getApplicationContext());
-//                recyclerView.setAdapter(foodAdapter1);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        };
-//        mDatabase.addListenerForSingleValueEvent(eventListener);
-//
-//
-//
-//
-//    }
-
 
 }

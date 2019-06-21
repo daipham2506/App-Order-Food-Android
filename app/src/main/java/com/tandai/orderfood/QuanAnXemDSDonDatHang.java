@@ -77,15 +77,15 @@ public class QuanAnXemDSDonDatHang extends AppCompatActivity {
                 //get date-time
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy   hh:mm:ss aa");
-                final String dateCurent = dateFormat.format(c.getTime());
+                final String dateCurrent = dateFormat.format(c.getTime());
 
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     for( DataSnapshot ds1 : ds.getChildren()){
                         if( ds1.getValue() != null){
                             Order order = ds1.getValue(Order.class);
                             int dayOrder = getDayTime(order.getDateTime());
-                            int dayCurent = getDayTime(dateCurent);
-                            if (dayCurent == dayOrder) {
+                            int dayCurrent = getDayTime(dateCurrent);
+                            if (dayCurrent == dayOrder) {
                                 if (order.getCheck() == 0) {  // if not confirm then add listview
                                     arrOrder.add(order);
                                     adapter.notifyDataSetChanged();
