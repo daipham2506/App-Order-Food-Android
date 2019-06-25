@@ -1,7 +1,9 @@
 package com.tandai.orderfood;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +24,12 @@ public class ForgotPassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_forgot_pass);
+
+        //set color status bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
+
         //anh xa
         email = (EditText) findViewById(R.id.EmailForgotPass);
         btnGetPass = (FButton) findViewById(R.id.btnGetPass);

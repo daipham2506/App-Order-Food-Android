@@ -1,9 +1,20 @@
 package com.tandai.orderfood;
 
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.tandai.orderfood.Helper.NotificationHelper;
 
 import info.hoang8f.widget.FButton;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -70,24 +82,30 @@ public class DetailOrder extends AppCompatActivity {
         xacnhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dagiao.isChecked()) {
+                if( dagiao.isChecked() || danggiao.isChecked() || hethang.isChecked()){
                     Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
-                    mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(1);
+                    String status="";
+                    Bitmap bitmap = Common.getBitmapFromURL(order.getLinkAnh());
+                    Intent intent = new Intent(getApplicationContext(),OrderActivity.class);
+
+                    if (dagiao.isChecked()) {
+                        status = "đã giao";
+                        mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(1);
+                    }
+                    else if (danggiao.isChecked()) {
+                        status ="đang giao";
+                        mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(2);
+                    }
+                    else if (hethang.isChecked()) {
+                        status = "hết hàng";
+                        mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(3);
+                    }
+                    //show Notification
+                    NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
+                    notificationHelper.sendNotification("Kiểm tra đơn hàng",order.getTenMon()+" được xác nhận "+status,intent,bitmap);
                 }
-                else if (danggiao.isChecked()) {
-
-                    Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
-                    mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(2);
-                }
-                else if (hethang.isChecked()) {
-
-                    Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
-                    mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(3);
-
-                } else {
+                else {
                     Toast.makeText(DetailOrder.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
                 }
 
@@ -97,7 +115,6 @@ public class DetailOrder extends AppCompatActivity {
 
 
     }
-
 
     private void AnhXa() {
         radioGroup = (RadioGroup) findViewById(R.id.radioGroupShip);

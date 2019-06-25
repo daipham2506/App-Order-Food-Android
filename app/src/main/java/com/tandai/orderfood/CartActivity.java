@@ -38,6 +38,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tandai.orderfood.Helper.NotificationHelper;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -85,7 +86,6 @@ public class CartActivity extends AppCompatActivity {
         btnDatHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (arrCart.size() > 0) {
 
                     //open dialog_confirmCart

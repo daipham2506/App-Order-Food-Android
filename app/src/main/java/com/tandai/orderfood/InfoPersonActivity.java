@@ -1,7 +1,6 @@
 package com.tandai.orderfood;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -15,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,8 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class InfoPersonActivity extends AppCompatActivity {
     private Button updateInfo;
@@ -50,66 +49,9 @@ public class InfoPersonActivity extends AppCompatActivity {
         updateInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog   = new Dialog(InfoPersonActivity.this,R.style.Theme_Dialog);
-                dialog.setContentView(R.layout.dialog_update_info);
-                dialog.show();
-                final EditText name = (EditText) dialog.findViewById(R.id.updateName);
-                final EditText address = (EditText) dialog.findViewById(R.id.updateAddress);
-                final EditText phone = (EditText) dialog.findViewById(R.id.updatePhone);
-                Button update = (Button) dialog.findViewById(R.id.btnUpdate);
-                Button cancel = (Button) dialog.findViewById(R.id.btnCancel);
-
-                mDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.getValue(User.class);
-                        name.setText(user.getName());
-                        address.setText(user.getAddress());
-                        phone.setText(user.getPhone());
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.cancel();
-                    }
-                });
-
-                update.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final String Name = name.getText().toString();
-                        final String Address = address.getText().toString();
-                        final String Phone = phone.getText().toString();
-                        if(Name.isEmpty() || Address.isEmpty() || Phone.isEmpty()){
-                            Toast.makeText(InfoPersonActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(InfoPersonActivity.this, "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
-                            dialog.cancel();
-                            mDatabase.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    mDatabase.child("name").setValue(Name);
-                                    mDatabase.child("address").setValue(Address);
-                                    mDatabase.child("phone").setValue(Phone);
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-                    }
-                });
+                showDialogUpdate();
             }
+
         });
 
 
@@ -120,6 +62,68 @@ public class InfoPersonActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showDialogUpdate(){
+        final Dialog dialog   = new Dialog(InfoPersonActivity.this,R.style.Theme_Dialog);
+        dialog.setContentView(R.layout.dialog_update_info);
+        dialog.show();
+        final EditText name = (EditText) dialog.findViewById(R.id.updateName);
+        final EditText address = (EditText) dialog.findViewById(R.id.updateAddress);
+        final EditText phone = (EditText) dialog.findViewById(R.id.updatePhone);
+        Button update = (Button) dialog.findViewById(R.id.btnUpdate);
+        Button cancel = (Button) dialog.findViewById(R.id.btnCancel);
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                name.setText(user.getName());
+                address.setText(user.getAddress());
+                phone.setText(user.getPhone());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String Name = name.getText().toString();
+                final String Address = address.getText().toString();
+                final String Phone = phone.getText().toString();
+                if(Name.isEmpty() || Address.isEmpty() || Phone.isEmpty()){
+                    Toast.makeText(InfoPersonActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(InfoPersonActivity.this, "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+                    mDatabase.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            mDatabase.child("name").setValue(Name);
+                            mDatabase.child("address").setValue(Address);
+                            mDatabase.child("phone").setValue(Phone);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void AnhXa(){

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -396,7 +397,6 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-
                     Rating rating = ds.getValue(Rating.class);
                     if(rating.getFoodID().equals(foodID) && rating.getRestaurentID().equals(RestaurentID))
                         arrRating.add(rating);
@@ -409,6 +409,26 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
                     cacdanhgia.setText("Các đánh giá về món ăn");
                     cacdanhgia.setTextColor(Color.parseColor("#1A554E"));
                 }
+                //sort dateTime
+                for(int i=0;i<arrRating.size()-1;i++){
+                    int day_i   =  Integer.parseInt(arrRating.get(i).getDateTime().substring(0,2));
+                    int month_i =  Integer.parseInt(arrRating.get(i).getDateTime().substring(3,5));
+                    int year_i  =  Integer.parseInt(arrRating.get(i).getDateTime().substring(6,10));
+
+                    for(int j= i+1 ;j<arrRating.size(); j++){
+                        int day_j   =  Integer.parseInt(arrRating.get(j).getDateTime().substring(0,2));
+                        int month_j =  Integer.parseInt(arrRating.get(j).getDateTime().substring(3,5));
+                        int year_j  =  Integer.parseInt(arrRating.get(j).getDateTime().substring(6,10));
+                        if(year_i == year_j){
+                            if(month_i == month_j){
+                                if(day_i < day_j) swap(arrRating,i,j);
+                            }
+                            else if( month_i < month_j) swap(arrRating,i,j);
+                        }
+                        else if(year_i < year_j) swap(arrRating,i,j);
+                    }
+
+                }
                 RatingAdapter ratingAdapter = new RatingAdapter(arrRating,getApplicationContext());
                 recyclerView.setAdapter(ratingAdapter);
             }
@@ -418,12 +438,13 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
 
             }
         });
-
-
-
-
     }
 
+    static void swap( ArrayList<Rating> arr , int i ,int j){
+        Rating temp = arr.get(i);
+        arr.set(i,arr.get(j));
+        arr.set(j,temp);
+    }
 
 }
 
