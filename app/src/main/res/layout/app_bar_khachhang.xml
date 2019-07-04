@@ -31,7 +31,6 @@
         app:backgroundTint="@color/colorWhite"
         app:srcCompat="@drawable/cartplus"
         app:pressedTranslationZ="12dp"
-        android:backgroundTint="@color/colorText"
         app:elevation="5dp"
         />
 

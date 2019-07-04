@@ -95,38 +95,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
 
             }
         });
-        //setAlphaAnimation(viewHolder.itemView);
-        //setAnimation(viewHolder.itemView,i);
 
 
     }
 
-//    // Allows to remember the last item shown on screen
-//    private int lastPosition = -1;
-//    private final static int DURATION = 2000; //FADE_DURATION in milliseconds
-//
-//    private void setAlphaAnimation(View view) {
-//        AlphaAnimation anim = new AlphaAnimation(0,1);
-//        anim.setDuration(DURATION);
-//        view.startAnimation(anim);
-//    }
-//
-//
-//    private void setAnimation(View viewToAnimate, int position)
-//    {
-//        // If the bound view wasn't previously displayed on screen, it's animated
-//        if (position > lastPosition)
-//        {
-//            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-//
-//            animation.setDuration(DURATION);
-//            viewToAnimate.startAnimation(animation);
-//            lastPosition = position;
-//
-//
-//
-//        }
-//    }
+
 
 
 

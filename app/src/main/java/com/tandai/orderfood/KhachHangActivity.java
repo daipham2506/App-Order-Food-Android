@@ -186,8 +186,6 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             }
         });
 
-        fab.setColorFilter(Color.parseColor("#00C853"));
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

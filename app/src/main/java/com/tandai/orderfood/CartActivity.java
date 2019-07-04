@@ -38,7 +38,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.tandai.orderfood.Helper.NotificationHelper;
+import com.tandai.orderfood.Notifications.APIService;
+import com.tandai.orderfood.Notifications.Client;
+import com.tandai.orderfood.Notifications.Token;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -65,12 +69,16 @@ public class CartActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RelativeLayout relativeLayout;
 
+    APIService apiService;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cart);
+
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         total       = (TextView) findViewById(R.id.total);
         btnDatHang  = (FButton) findViewById(R.id.btnPlaceOrder);
@@ -116,6 +124,7 @@ public class CartActivity extends AppCompatActivity {
                             if (diachigiaohang.isEmpty())
                                 Toast.makeText(CartActivity.this, "Vui lòng nhập địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
                             else {
+                                updateToken(FirebaseInstanceId.getInstance().getToken());
                                 mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
                                 ValueEventListener eventListener = new ValueEventListener() {
                                     @Override
@@ -347,6 +356,12 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.getAdapter().notifyDataSetChanged();
         recyclerView.scheduleLayoutAnimation();
 
+    }
+
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token);
+        reference.child(user.getUid()).setValue(token1);
     }
 
 

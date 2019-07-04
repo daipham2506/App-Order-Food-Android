@@ -21,7 +21,7 @@
         android:layout_height="1dp"
         android:textColor="#FF9100"
         android:paddingLeft="10dp"
-        android:background="#E41D1B1A"
+        android:background="@color/colorGray"
         android:layout_marginTop="35dp"/>
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_height="1dp"
         android:textColor="#FF9100"
         android:paddingLeft="10dp"
-        android:background="#E41D1B1A"
+        android:background="@color/colorGray"
         android:layout_marginTop="220dp"/>
 
     <LinearLayout

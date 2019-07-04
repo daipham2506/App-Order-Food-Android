@@ -31,11 +31,22 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 import com.tandai.orderfood.Helper.NotificationHelper;
+import com.tandai.orderfood.Notifications.APIService;
+import com.tandai.orderfood.Notifications.Client;
+import com.tandai.orderfood.Notifications.Data;
+import com.tandai.orderfood.Notifications.MyResponse;
+import com.tandai.orderfood.Notifications.Sender;
+import com.tandai.orderfood.Notifications.Token;
 
 import info.hoang8f.widget.FButton;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -54,8 +65,12 @@ public class DetailOrder extends AppCompatActivity {
     Order order;
     long quantity;
     long gia1mon;
+    String userid;
 
     DatabaseReference database;
+
+    APIService apiService;
+    boolean notify = false;
 
 
 
@@ -66,6 +81,8 @@ public class DetailOrder extends AppCompatActivity {
 
         setContentView(R.layout.layout_detail_order);
         AnhXa();
+
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
 
         //Nhận THông tin Order từ Intent gửi đến
@@ -86,8 +103,9 @@ public class DetailOrder extends AppCompatActivity {
                     Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
                     String status="";
-                    Bitmap bitmap = Common.getBitmapFromURL(order.getLinkAnh());
-                    Intent intent = new Intent(getApplicationContext(),OrderActivity.class);
+                    notify = true;
+                    //Bitmap bitmap = Common.getBitmapFromURL(order.getLinkAnh());
+                    //Intent intent = new Intent(getApplicationContext(),OrderActivity.class);
 
                     if (dagiao.isChecked()) {
                         status = "đã giao";
@@ -102,8 +120,16 @@ public class DetailOrder extends AppCompatActivity {
                         mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(3);
                     }
                     //show Notification
-                    NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
-                    notificationHelper.sendNotification("Kiểm tra đơn hàng",order.getTenMon()+" được xác nhận "+status,intent,bitmap);
+                    //NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
+                    //notificationHelper.sendNotification("Kiểm tra đơn hàng",order.getTenMon()+" được xác nhận "+status,intent,bitmap);
+
+                    if (notify) {
+                        sendNotification();
+                    }
+                    notify = false;
+
+
+
                 }
                 else {
                     Toast.makeText(DetailOrder.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
@@ -115,6 +141,46 @@ public class DetailOrder extends AppCompatActivity {
 
 
     }
+
+    private void sendNotification(){
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        tokens.child("I2OlsSoRMIfCES2CQt9gkbgb5Iw2").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Token token = dataSnapshot.getValue(Token.class);
+                Data data = new Data(user.getUid(), R.mipmap.ic_launcher, "đơn hàng đã xác nhận", "Kiểm tra đơn hàng",
+                        "I2OlsSoRMIfCES2CQt9gkbgb5Iw2");
+
+                Sender sender = new Sender(data, token.getToken());
+                Toast.makeText(DetailOrder.this, token.getToken(), Toast.LENGTH_SHORT).show();
+
+                apiService.sendNotification(sender)
+                        .enqueue(new Callback<MyResponse>() {
+                            @Override
+                            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                if (response.code() == 200){
+                                    if (response.body().success != 1){
+                                        Toast.makeText(DetailOrder.this, "Failed!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<MyResponse> call, Throwable t) {
+
+                            }
+                        });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
 
     private void AnhXa() {
         radioGroup = (RadioGroup) findViewById(R.id.radioGroupShip);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +22,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andremion.counterfab.CounterFab;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.facebook.CallbackManager;
 import com.facebook.share.model.SharePhoto;
@@ -52,7 +54,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class FoodDetailActivity extends AppCompatActivity implements RatingDialogListener {
     User quanAn;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    String name;
+    String name,phone;
     String foodId = "";
     String RestaurentID = "";
     FloatingActionButton btnCart,btnRating,btnShare;
@@ -67,6 +69,7 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
     long quantity = 1 , price = 0;
     String image="";
     RatingBar ratingBar;
+    CounterFab call;
 
 
     ArrayList<Rating> arrRating;
@@ -137,6 +140,7 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
         mota =(TextView) findViewById(R.id.food_description);
         cacdanhgia = (TextView) findViewById(R.id.cacdanhgia);
         fav = (ImageView) findViewById(R.id.fav);
+        call = (CounterFab) findViewById(R.id.call);
         collapsingToolbarLayout =(CollapsingToolbarLayout)findViewById(R.id.collapsing);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
@@ -185,6 +189,14 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
                 }
                 else
                     Toast.makeText(FoodDetailActivity.this, "Món ăn đã hết", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCall = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+                startActivity(intentCall);
             }
         });
 
@@ -300,7 +312,7 @@ public class FoodDetailActivity extends AppCompatActivity implements RatingDialo
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 quanAn = dataSnapshot.getValue(User.class);
-
+                phone = quanAn.getPhone();
                 //set data
                 mDatabase.child("QuanAn").child(restaurentID).child(foodId).addValueEventListener(new ValueEventListener() {
                     @Override

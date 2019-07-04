@@ -65,7 +65,10 @@ dependencies {
     //notification
     implementation "com.android.support:support-compat:28.0.0"
 
-    implementation 'com.google.firebase:firebase-messaging:17.0.0'
+    //add these libraries
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.google.firebase:firebase-messaging:17.3.1'
 
 }
 apply plugin: 'com.google.gms.google-services'
