@@ -1,13 +1,11 @@
 package com.tandai.orderfood;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,17 +20,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tandai.orderfood.Model.Common;
+import com.tandai.orderfood.Model.User;
 
 import dmax.dialog.SpotsDialog;
 import io.paperdb.Paper;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity {
     DatabaseReference mData;
@@ -114,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (user.getUserType().equals("admin")) {
                                         startActivity(new Intent(LoginActivity.this, AdminActivity.class));
                                     } else if (user.getUserType().equals("restaurent")) {
-                                        startActivity(new Intent(LoginActivity.this, QuanAnActivity.class));
+                                        startActivity(new Intent(LoginActivity.this, RestaurantActivity.class));
                                     } else if (user.getUserType().equals("customer")) {
 
                                         if (USER.isEmailVerified()) {

@@ -1,4 +1,4 @@
-package com.tandai.orderfood;
+package com.tandai.orderfood.Model;
 
 public class MonAn {
     private String tenQuan;

@@ -1,9 +1,6 @@
 package com.tandai.orderfood;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,7 +8,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,12 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,19 +30,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.tandai.orderfood.Helper.NotificationHelper;
+import com.tandai.orderfood.Adapter.CartAdapter;
+import com.tandai.orderfood.Model.Cart;
+import com.tandai.orderfood.Model.Common;
+import com.tandai.orderfood.Model.Order;
+import com.tandai.orderfood.Model.User;
 import com.tandai.orderfood.Notifications.APIService;
 import com.tandai.orderfood.Notifications.Client;
 import com.tandai.orderfood.Notifications.Token;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import info.hoang8f.widget.FButton;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class CartActivity extends AppCompatActivity {
@@ -239,7 +231,7 @@ public class CartActivity extends AppCompatActivity {
 
 
                 // set animation
-                runAnimation(recyclerView);
+                Common.runAnimation(recyclerView);
 
 
 
@@ -345,17 +337,6 @@ public class CartActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void runAnimation(RecyclerView recyclerView) {
-        LayoutAnimationController controller = null;
-
-        controller = AnimationUtils.loadLayoutAnimation(recyclerView.getContext(),R.anim.layout_slide_from_left);
-
-        recyclerView.setLayoutAnimation(controller);
-        recyclerView.getAdapter().notifyDataSetChanged();
-        recyclerView.scheduleLayoutAnimation();
-
     }
 
     private void updateToken(String token){

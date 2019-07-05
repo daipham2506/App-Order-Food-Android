@@ -7,7 +7,41 @@
     android:id="@+id/layoutOrder"
     tools:context=".OrderActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="false"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+
+
+        <ImageView
+            android:id="@+id/home_order"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_keyboard_backspace_black_24dp"
+            android:tint="@color/colorWhite"/>
+
+        <TextView
+            android:layout_marginRight="44dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đơn hàng trong ngày"
+            android:textSize="22sp"
+            android:textColor="@color/colorWhite"/>
+
+
+
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

@@ -4,7 +4,6 @@ package com.tandai.orderfood;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,22 +11,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tandai.orderfood.Model.User;
 
 import dmax.dialog.SpotsDialog;
 
-public class XoaQuanActivity extends AppCompatActivity {
+public class RemoveRestaurantActivity extends AppCompatActivity {
     DatabaseReference mData, database;
     Button xoaQuan;
     EditText emailXoa;
@@ -71,14 +64,14 @@ public class XoaQuanActivity extends AppCompatActivity {
                             database = FirebaseDatabase.getInstance().getReference().child("QuanAn");
                             database.child(userID).setValue(null);
                             waiting.dismiss();
-                            Toast.makeText(XoaQuanActivity.this, "Bạn đã xóa thành công", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(XoaQuanActivity.this,AdminActivity.class));
+                            Toast.makeText(RemoveRestaurantActivity.this, "Bạn đã xóa thành công", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RemoveRestaurantActivity.this,AdminActivity.class));
                             return;
                         }
                     }
                 }
                 waiting.dismiss();
-                Toast.makeText(XoaQuanActivity.this, "Email quán không tồn tại", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RemoveRestaurantActivity.this, "Email quán không tồn tại", Toast.LENGTH_SHORT).show();
             }
 
             @Override

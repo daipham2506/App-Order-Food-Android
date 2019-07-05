@@ -1,24 +1,17 @@
 package com.tandai.orderfood;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +20,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tandai.orderfood.Adapter.OrderAdapter;
+import com.tandai.orderfood.Model.Common;
+import com.tandai.orderfood.Model.Order;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +31,7 @@ import java.util.Calendar;
 public class OrderActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     CoordinatorLayout coordinatorLayout;
+    ImageView home;
 
     DatabaseReference database;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -44,6 +41,19 @@ public class OrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_order);
+
+        home = findViewById(R.id.home_order);
+        //set color status bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OrderActivity.this,KhachHangActivity.class));
+            }
+        });
 
         initRecyclerView();
     }
@@ -87,11 +97,11 @@ public class OrderActivity extends AppCompatActivity {
                     }
                 }
 
-                final  OrderAdapter orderAdapter = new OrderAdapter(arrOrder,getApplicationContext());
+                final OrderAdapter orderAdapter = new OrderAdapter(arrOrder,getApplicationContext());
                 recyclerView.setAdapter(orderAdapter);
 
                 //set anim
-                runAnimation(recyclerView);
+                Common.runAnimation(recyclerView);
 
 
             }
@@ -101,16 +111,6 @@ public class OrderActivity extends AppCompatActivity {
 
             }
         });
-
-    }
-
-    private void runAnimation(RecyclerView recyclerView) {
-        LayoutAnimationController controller = null;
-
-        controller = AnimationUtils.loadLayoutAnimation(recyclerView.getContext(),R.anim.layout_slide_from_left);
-        recyclerView.setLayoutAnimation(controller);
-        recyclerView.getAdapter().notifyDataSetChanged();
-        recyclerView.scheduleLayoutAnimation();
 
     }
 

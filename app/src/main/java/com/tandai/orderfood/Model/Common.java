@@ -1,10 +1,15 @@
-package com.tandai.orderfood;
+package com.tandai.orderfood.Model;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.widget.RecyclerView;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+
+import com.tandai.orderfood.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +35,16 @@ public class Common {
             // Log exception
             return null;
         }
+    }
+
+    public static void runAnimation(RecyclerView recyclerView) {
+        LayoutAnimationController controller = null;
+
+        controller = AnimationUtils.loadLayoutAnimation(recyclerView.getContext(), R.anim.layout_slide_from_left);
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
     }
 
 }

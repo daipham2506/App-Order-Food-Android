@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:id="@+id/cardView_food"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_margin="12dp"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:id="@+id/item_food_image_view"
+            android:scaleType="centerCrop"
+            />
+        <LinearLayout
+            android:paddingTop="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/item_food_name_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="name"
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
+                android:textAllCaps="true"
+                android:layout_marginLeft="4dp"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginTop="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:src="@drawable/ic_attach_money_black_24dp"/>
+
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
+                    android:id="@+id/item_food_price_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="giá"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/item_food_status_view"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
+                android:text="status"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

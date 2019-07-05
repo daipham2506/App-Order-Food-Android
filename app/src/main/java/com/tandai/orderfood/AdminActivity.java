@@ -30,14 +30,14 @@ public class AdminActivity extends AppCompatActivity {
         ThemQuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent screenThemQuan = new Intent(AdminActivity.this,ThemQuanActivity.class);
+                Intent screenThemQuan = new Intent(AdminActivity.this, AddRestaurantActivity.class);
                 startActivity(screenThemQuan);
             }
         });
         XoaQuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent screenXoaQuan = new Intent(AdminActivity.this,XoaQuanActivity.class);
+                Intent screenXoaQuan = new Intent(AdminActivity.this, RemoveRestaurantActivity.class);
                 startActivity(screenXoaQuan);
             }
         });

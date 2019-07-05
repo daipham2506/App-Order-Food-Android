@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="365dp"
+    android:paddingTop="@dimen/size10dp"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/size10dp"
+        android:text="Cập nhật món ăn"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:textColor="#FF9100"
+        android:paddingLeft="10dp"
+        android:background="#E41D1B1A"
+        android:layout_marginTop="35dp"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/updateNameFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:hint="Tên món"
+        android:text=""
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="@dimen/size15dp"
+        android:inputType="text"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:textSize="22sp"
+        app:met_baseColor="@color/colorPrimary"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/colorPrimary"
+        app:met_singleLineEllipsis="true"
+        />
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/updatePriceFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:hint="Giá món"
+        android:text=""
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:inputType="number"
+        android:textColor="@color/colorPrimary"
+        android:textColorHint="@color/colorPrimary"
+        android:textSize="22sp"
+        app:met_baseColor="@color/colorPrimary"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@color/colorPrimary"
+        app:met_singleLineEllipsis="true"
+        />
+
+
+    <android.support.v7.widget.CardView
+        app:cardBackgroundColor="@color/colorWhite"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="205dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
+
+        <RadioGroup
+            android:paddingBottom="10dp"
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:textColor="@color/colorPrimary"
+                android:layout_weight="5"
+                android:id="@+id/conhang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Còn hàng"
+                android:textSize="22sp"/>
+            <RadioButton
+                android:textColor="@color/colorPrimary"
+                android:layout_weight="5"
+                android:id="@+id/hethang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hết hàng"
+                android:textSize="22sp"/>
+        </RadioGroup>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="310dp">
+
+        <Button
+            android:id="@+id/btnUpdateFood"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="#43A047"
+            android:text="Cập nhật"
+            android:textSize="15sp"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/btnCancelFood"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="30dp"
+            android:background="#FF9100"
+            android:text="Đóng"
+            android:textSize="15sp"
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

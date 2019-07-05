@@ -1,6 +1,6 @@
 package com.tandai.orderfood;
 
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -14,15 +14,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.text.Layout;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +28,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tandai.orderfood.Adapter.FavoriteAdapter;
+import com.tandai.orderfood.Model.Common;
+import com.tandai.orderfood.Model.Favorite;
 
 import java.util.ArrayList;
 
@@ -42,10 +41,12 @@ public class FavoriteActivity extends AppCompatActivity {
     String userID = user.getUid();
 
     CoordinatorLayout coordinatorLayout;
+    ImageView home;
     RecyclerView recyclerView;
     Favorite favorite;
     ArrayList<Favorite> arrFavorite = new ArrayList<>();
     FavoriteAdapter favoriteAdapter;
+
 
 
     @Override
@@ -53,9 +54,22 @@ public class FavoriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_favorite);
 
+        //set color status bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        }
+
+        home = findViewById(R.id.home_favorite);
         initRecyclerView();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Favorite").child(userID);
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FavoriteActivity.this,KhachHangActivity.class));
+            }
+        });
 
         //delete vs Undo Favorite food
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT ) {
@@ -182,7 +196,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 recyclerView.setAdapter(favoriteAdapter);
 
                 //set animation
-                runAnimation(recyclerView);
+                Common.runAnimation(recyclerView);
 
             }
 
@@ -191,18 +205,6 @@ public class FavoriteActivity extends AppCompatActivity {
 
             }
         });
-
-    }
-
-
-    private void runAnimation(RecyclerView recyclerView) {
-        LayoutAnimationController controller = null;
-
-        controller = AnimationUtils.loadLayoutAnimation(recyclerView.getContext(),R.anim.layout_slide_from_left);
-
-        recyclerView.setLayoutAnimation(controller);
-        recyclerView.getAdapter().notifyDataSetChanged();
-        recyclerView.scheduleLayoutAnimation();
 
     }
 

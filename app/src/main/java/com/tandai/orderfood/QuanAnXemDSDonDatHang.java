@@ -15,6 +15,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tandai.orderfood.Adapter.RestaurentViewOrderAdapter;
+import com.tandai.orderfood.Model.Order;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class QuanAnXemDSDonDatHang extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_quan_an_xem_dsdon_dat_hang);
+        setContentView(R.layout.layout_restaurant_view_order);
 
         btnThoat =(FButton) findViewById(R.id.btnThoatXemdonhangQuanan);
         listOrder  =   (ListView) findViewById(R.id.listRestaurent_viewOrder);
@@ -47,7 +49,7 @@ public class QuanAnXemDSDonDatHang extends AppCompatActivity {
         btnThoat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QuanAnXemDSDonDatHang.this, QuanAnActivity.class));
+                startActivity(new Intent(QuanAnXemDSDonDatHang.this, RestaurantActivity.class));
             }
         });
 

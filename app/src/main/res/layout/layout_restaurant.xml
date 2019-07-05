@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true"
         android:text="Quán ăn"
         android:textColor="@color/colorWhite"
-        android:textSize="27sp"
+        android:textSize="28sp"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/nabila"/>
 
@@ -30,7 +30,7 @@
         android:layout_alignParentBottom="false"
         android:layout_marginTop="80dp"
         android:orientation="vertical"
-        android:padding="40dp"
+        android:padding="30dp"
         >
 
         <Button
@@ -39,9 +39,9 @@
             android:id="@+id/btnXemMon"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/duongvien_xanh"
-            android:text="Xem danh sách món ăn"
+            android:text="Danh sách món ăn"
             android:textSize="20sp"
             android:textAllCaps="false"/>
 
@@ -60,38 +60,40 @@
         <Button
             android:layout_gravity="center"
             android:textColor="@color/colorWhite"
-            android:id="@+id/btnSuaMon"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/duongvien_xanh"
-            android:text= "Sửa món ăn"
-            android:textSize= "20sp"
-            android:textAllCaps="false"/>
-
-        <Button
-            android:layout_gravity="center"
-            android:textColor="@color/colorWhite"
-            android:id="@+id/btnXoaMon"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/duongvien_xanh"
-            android:text="Xóa món ăn"
-            android:textSize="20sp"
-            android:textAllCaps="false"/>
-
-        <Button
-            android:layout_gravity="center"
-            android:textColor="@color/colorWhite"
             android:id="@+id/btnXemDonHang"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/duongvien_xanh"
-            android:text="Xem các đơn đặt hàng"
+            android:text="Các đơn đặt hàng"
             android:textSize="20sp"
             android:textAllCaps="false"/>
+
+        <Button
+            android:layout_gravity="center"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/btnUpdateInfoRestaurant"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/duongvien_xanh"
+            android:text="Cập nhật thông tin"
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:layout_gravity="center"
+            android:textColor="@color/colorWhite"
+            android:id="@+id/btnChangePassQuan"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/duongvien_xanh"
+            android:text="Đổi mật khẩu"
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
+
+
     </LinearLayout>
 
     <ImageView
@@ -102,18 +104,9 @@
         android:layout_alignParentEnd="true"
         android:src="@drawable/off"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="@dimen/size10dp"
+        android:layout_marginTop="20dp"
         />
-    <ImageView
-        android:tint="@color/colorWhite"
-        android:id="@+id/btnChangePassQuan"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/key"
-        android:layout_marginTop="75dp"
-        android:layout_marginRight="10dp"
-        />
+
 
 
 </RelativeLayout>

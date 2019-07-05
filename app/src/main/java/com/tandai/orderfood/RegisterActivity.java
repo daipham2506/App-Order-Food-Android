@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.tandai.orderfood.Model.User;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText email,pass,name,phone,address;

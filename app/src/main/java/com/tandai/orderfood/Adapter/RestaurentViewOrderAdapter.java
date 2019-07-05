@@ -1,4 +1,4 @@
-package com.tandai.orderfood;
+package com.tandai.orderfood.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.tandai.orderfood.Model.Order;
+import com.tandai.orderfood.R;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package com.tandai.orderfood;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -18,8 +17,6 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -34,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tandai.orderfood.Model.Common;
+import com.tandai.orderfood.Model.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -199,7 +198,7 @@ public class WelcomActivity extends AppCompatActivity {
                                     if (user.getUserType().equals("admin")) {
                                         startActivity(new Intent(WelcomActivity.this, AdminActivity.class));
                                     } else if (user.getUserType().equals("restaurent")) {
-                                        startActivity(new Intent(WelcomActivity.this, QuanAnActivity.class));
+                                        startActivity(new Intent(WelcomActivity.this, RestaurantActivity.class));
                                     } else if (user.getUserType().equals("customer")) {
 
                                         if (USER.isEmailVerified()) {

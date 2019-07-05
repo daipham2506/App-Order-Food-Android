@@ -1,4 +1,4 @@
-package com.tandai.orderfood;
+package com.tandai.orderfood.Model;
 
 public class Banner {
     private String id,idQuan,image;

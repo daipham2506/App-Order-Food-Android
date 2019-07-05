@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.tandai.orderfood.Model.MonAn;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -36,7 +37,7 @@ import java.util.Calendar;
 
 import dmax.dialog.SpotsDialog;
 
-public class ThemMonActivity extends AppCompatActivity {
+public class AddFoodActivity extends AppCompatActivity {
     private Button themMon,folder;
     private EditText tenMon,giaMon;
     private ImageView image;
@@ -48,7 +49,7 @@ public class ThemMonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_them_mon);
+        setContentView(R.layout.layout_add_food);
         final StorageReference storageRef = storage.getReferenceFromUrl("gs://databaseorderfood.appspot.com");
         AnhXa();
         waiting =  new SpotsDialog.Builder().setContext(this).setMessage("Vui lòng đợi").setCancelable(false).build();
@@ -66,12 +67,12 @@ public class ThemMonActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 waiting.show();
-                final String ten  =   tenMon.getText().toString().trim();
-                final String stringGia = giaMon.getText().toString().trim();
+                final String ten  =   tenMon.getText().toString();
+                final String stringGia = giaMon.getText().toString();
                 final long gia    =   Long.parseLong(stringGia);
                 if(ten.isEmpty()|| stringGia.isEmpty()){
                     waiting.dismiss();
-                    Toast.makeText(ThemMonActivity.this, "Vui lòng nhập đầy đủ thông tin ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddFoodActivity.this, "Vui lòng nhập đầy đủ thông tin ", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Calendar calendar = Calendar.getInstance();
@@ -116,11 +117,11 @@ public class ThemMonActivity extends AppCompatActivity {
                                         MonAn Mon= new MonAn(user.getDisplayName(),IDQuan,ten,link,gia,1);
                                         DatabaseReference refData = FirebaseDatabase.getInstance().getReference();
                                         refData.child("QuanAn").child(IDQuan).child(ten).setValue(Mon);
-                                        Toast.makeText(ThemMonActivity.this, "Thêm món ăn thành công", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(ThemMonActivity.this,QuanAnActivity.class));
+                                        Toast.makeText(AddFoodActivity.this, "Thêm món ăn thành công", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(AddFoodActivity.this, RestaurantActivity.class));
 
                                     } else {
-                                        Toast.makeText(ThemMonActivity.this, "Thêm không thành công", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AddFoodActivity.this, "Thêm không thành công", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -154,11 +155,11 @@ public class ThemMonActivity extends AppCompatActivity {
     }
 
     private void AnhXa(){
-        themMon =(Button) findViewById(R.id.btnThemMonLayoutThemMon);
-        folder  =(Button) findViewById(R.id.btnfolder);
-        tenMon  =(EditText) findViewById(R.id.edtTenMon);
-        giaMon  =(EditText) findViewById(R.id.edtGiaMon);
-        image   = (ImageView) findViewById(R.id.ivImage);
+        themMon = findViewById(R.id.btnThemMonLayoutThemMon);
+        folder  = findViewById(R.id.btnfolder);
+        tenMon  = findViewById(R.id.edtTenMon);
+        giaMon  = findViewById(R.id.edtGiaMon);
+        image   = findViewById(R.id.ivImage);
     }
 
 

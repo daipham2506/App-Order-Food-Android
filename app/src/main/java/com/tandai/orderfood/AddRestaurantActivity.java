@@ -2,7 +2,6 @@ package com.tandai.orderfood;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,10 +18,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.tandai.orderfood.Model.User;
 
 import dmax.dialog.SpotsDialog;
 
-public class ThemQuanActivity extends AppCompatActivity {
+public class AddRestaurantActivity extends AppCompatActivity {
     EditText email,pass,name,phone,address;
     Button btnThem;
     FirebaseAuth mAuthencation;
@@ -32,7 +32,7 @@ public class ThemQuanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_them_quan);
+        setContentView(R.layout.layout_add_restaurant);
         AnhXa();
         waiting =  new SpotsDialog.Builder().setContext(this).setMessage("Vui lòng đợi...").setCancelable(false).build();
         mAuthencation = FirebaseAuth.getInstance();
@@ -72,7 +72,7 @@ public class ThemQuanActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         waiting.dismiss();
-                        Toast.makeText(ThemQuanActivity.this, "Thêm tài khoản Quán ăn thành công.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddRestaurantActivity.this, "Thêm tài khoản Quán ăn thành công.", Toast.LENGTH_SHORT).show();
                         user    =   mAuthencation.getCurrentUser();
                         //set Name cho user
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -89,10 +89,10 @@ public class ThemQuanActivity extends AppCompatActivity {
                         String userID   =   user.getUid();
                         mData.child("Users").child(userID).setValue(QuanAn);
                         //chuyen ve man hinh Admin
-                        startActivity(new Intent(ThemQuanActivity.this,AdminActivity.class));
+                        startActivity(new Intent(AddRestaurantActivity.this,AdminActivity.class));
                     } else {
                         waiting.dismiss();
-                        Toast.makeText(ThemQuanActivity.this, "Tài khoản đã tồn tại.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddRestaurantActivity.this, "Tài khoản đã tồn tại.", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

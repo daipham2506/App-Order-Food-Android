@@ -22,7 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import com.tandai.orderfood.Model.User;
 
 
 public class InfoPersonActivity extends AppCompatActivity {
@@ -31,7 +31,7 @@ public class InfoPersonActivity extends AppCompatActivity {
     private TextView ten, tenTK, diachi, sdt;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
-    DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class InfoPersonActivity extends AppCompatActivity {
         Button update = (Button) dialog.findViewById(R.id.btnUpdate);
         Button cancel = (Button) dialog.findViewById(R.id.btnCancel);
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -103,24 +103,14 @@ public class InfoPersonActivity extends AppCompatActivity {
                 final String Address = address.getText().toString();
                 final String Phone = phone.getText().toString();
                 if(Name.isEmpty() || Address.isEmpty() || Phone.isEmpty()){
-                    Toast.makeText(InfoPersonActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InfoPersonActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Toast.makeText(InfoPersonActivity.this, "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
                     dialog.cancel();
-                    mDatabase.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            mDatabase.child("name").setValue(Name);
-                            mDatabase.child("address").setValue(Address);
-                            mDatabase.child("phone").setValue(Phone);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
+                    mDatabase.child("name").setValue(Name);
+                    mDatabase.child("address").setValue(Address);
+                    mDatabase.child("phone").setValue(Phone);
                 }
             }
         });

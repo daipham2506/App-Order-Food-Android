@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tandai.orderfood.Model.User;
 
 public class ChangePassActivity extends AppCompatActivity {
     private EditText NhapMK,NhapLaiMK , MKCu;
@@ -109,7 +110,7 @@ public class ChangePassActivity extends AppCompatActivity {
         dong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(type.equals("restaurent")) startActivity(new Intent(ChangePassActivity.this, QuanAnActivity.class));
+                if(type.equals("restaurent")) startActivity(new Intent(ChangePassActivity.this, RestaurantActivity.class));
 
                 else if(type.equals("admin")) startActivity(new Intent(ChangePassActivity.this,AdminActivity.class));
 

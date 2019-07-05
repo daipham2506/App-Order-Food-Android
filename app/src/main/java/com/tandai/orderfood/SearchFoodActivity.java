@@ -2,18 +2,14 @@ package com.tandai.orderfood;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,14 +19,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.tandai.orderfood.Adapter.FoodAdapter1;
+import com.tandai.orderfood.Model.Food;
+import com.tandai.orderfood.Model.MonAn;
 
 import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-import static android.graphics.Color.*;
 
 public class SearchFoodActivity extends AppCompatActivity {
     MaterialSearchBar materialSearchBar;

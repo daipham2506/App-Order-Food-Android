@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Xin chào quý khách"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textColor="@color/colorWhite"/>
 
 

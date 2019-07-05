@@ -16,11 +16,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sửa thông tin món"
+        android:text="Thêm món ăn"
         android:layout_centerHorizontal="true"
         android:textSize="35sp"
         android:textStyle="bold"
-        android:textColor="#2979FF"
+        android:textColor="@color/colorPrimary"
         />
 
     <LinearLayout
@@ -31,13 +31,13 @@
 
 
         <EditText
-            android:id="@+id/edtTenMonLayoutSua"
+            android:id="@+id/edtTenMon"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="@dimen/size15dp"
             android:background="@drawable/vienxanhla"
             android:hint="Tên món ăn"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:padding="@dimen/size10dp"
             android:singleLine="true"
             android:textColor="@color/colorBlack"
@@ -45,7 +45,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/edtGiaMonLayoutSua"
+            android:id="@+id/edtGiaMon"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_margin="@dimen/size15dp"
@@ -57,41 +57,52 @@
             android:textColor="@color/colorBlack"
             android:textColorHint="@color/colorGray"
             android:textSize="20sp" />
-        <EditText
-            android:id="@+id/edtStatusMonLayoutSua"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_margin="@dimen/size15dp"
-            android:background="@drawable/vienxanhla"
-            android:hint="Tình trạng món ăn ( 0 - 1 )"
-            android:inputType="numberDecimal"
-            android:padding="@dimen/size10dp"
-            android:singleLine="true"
-            android:textColor="@color/colorBlack"
-            android:textColorHint="@color/colorGray"
-            android:textSize="20sp" />
-
 
 
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:text="Thêm hình ảnh món ăn"
+        android:layout_marginTop="250dp"
+        android:textSize="20sp"
+        android:paddingLeft="15dp"/>
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="170dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/image"/>
+    <Button
+        android:id="@+id/btnfolder"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/folder"
+        android:layout_marginTop="300dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"/>
 
     <LinearLayout
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="350dp">
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="490dp">
 
         <Button
+            android:layout_gravity="center"
             android:textColor="@color/colorWhite"
-            android:id="@+id/btnSuaMonLayoutSua"
-            android:layout_width="wrap_content"
+            android:id="@+id/btnThemMonLayoutThemMon"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/size10dp"
             android:layout_weight="1"
             android:background="@drawable/duongvien_xanh"
-            android:text="Cập nhật"
+            android:text="Thêm"
             android:textAllCaps="false"
             android:textSize="20sp" />
 

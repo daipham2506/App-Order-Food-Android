@@ -1,20 +1,8 @@
 package com.tandai.orderfood;
 
-import android.annotation.TargetApi;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,18 +12,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
-import com.tandai.orderfood.Helper.NotificationHelper;
+import com.tandai.orderfood.Model.Order;
 import com.tandai.orderfood.Notifications.APIService;
 import com.tandai.orderfood.Notifications.Client;
 import com.tandai.orderfood.Notifications.Data;
@@ -47,8 +32,6 @@ import info.hoang8f.widget.FButton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DetailOrder extends AppCompatActivity {
     String foodID = "";
@@ -101,7 +84,7 @@ public class DetailOrder extends AppCompatActivity {
             public void onClick(View v) {
                 if( dagiao.isChecked() || danggiao.isChecked() || hethang.isChecked()){
                     Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(DetailOrder.this, QuanAnActivity.class));
+                    startActivity(new Intent(DetailOrder.this, RestaurantActivity.class));
                     String status="";
                     notify = true;
                     //Bitmap bitmap = Common.getBitmapFromURL(order.getLinkAnh());
