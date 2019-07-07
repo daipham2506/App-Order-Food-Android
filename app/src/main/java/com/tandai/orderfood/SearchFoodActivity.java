@@ -62,9 +62,9 @@ public class SearchFoodActivity extends AppCompatActivity {
         // end tiem kiem
         lvFood  =   (ListView) findViewById(R.id.listview_food);
         arrFood = new ArrayList<>();
-        adapter = new FoodAdapter1(this, R.layout.line_food, arrFood);
+        adapter = new FoodAdapter1(this, R.layout.item_food, arrFood);
         arrFoodSearch = new ArrayList<>();
-        adapterSearch = new FoodAdapter1(this, R.layout.line_food, arrFoodSearch);
+        adapterSearch = new FoodAdapter1(this, R.layout.item_food, arrFoodSearch);
 
         loadDataAllFood();
         loadSuggest();

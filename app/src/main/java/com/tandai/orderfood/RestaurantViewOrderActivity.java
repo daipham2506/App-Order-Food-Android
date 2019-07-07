@@ -24,7 +24,7 @@ import java.util.Calendar;
 
 import info.hoang8f.widget.FButton;
 
-public class QuanAnXemDSDonDatHang extends AppCompatActivity {
+public class RestaurantViewOrderActivity extends AppCompatActivity {
 
     ListView listOrder;
     ArrayList<Order> arrOrder;
@@ -42,14 +42,14 @@ public class QuanAnXemDSDonDatHang extends AppCompatActivity {
         btnThoat =(FButton) findViewById(R.id.btnThoatXemdonhangQuanan);
         listOrder  =   (ListView) findViewById(R.id.listRestaurent_viewOrder);
         arrOrder = new ArrayList<>();
-        adapter = new RestaurentViewOrderAdapter(this, R.layout.line_restaurent_view_order, arrOrder);
+        adapter = new RestaurentViewOrderAdapter(this, R.layout.item_restaurent_view_order, arrOrder);
         listOrder.setAdapter(adapter);
         getInfoOrder();
 
         btnThoat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QuanAnXemDSDonDatHang.this, RestaurantActivity.class));
+                startActivity(new Intent(RestaurantViewOrderActivity.this, RestaurantActivity.class));
             }
         });
 
@@ -59,7 +59,7 @@ public class QuanAnXemDSDonDatHang extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Order order = arrOrder.get(position);
 
-                Intent OrderDetail = new Intent(QuanAnXemDSDonDatHang.this,DetailOrder.class);
+                Intent OrderDetail = new Intent(RestaurantViewOrderActivity.this, DetailOrderActivity.class);
                 //gửi FoodId (ten của Food) và id quán đến activity FoodDetail
                 OrderDetail.putExtra("FoodID",order.getTenMon());
                 OrderDetail.putExtra("CustomerID",order.getUserID());

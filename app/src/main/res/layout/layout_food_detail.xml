@@ -143,7 +143,7 @@
                     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
                         android:id="@+id/number_button"
                         android:layout_width="100dp"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="18dp"
@@ -151,7 +151,7 @@
                         app:finalNumber="50"
                         app:initialNumber="1"
                         app:textColor="@color/colorWhite"
-                        app:textSize="12sp">
+                        app:textSize="10sp">
                     </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
                 </LinearLayout>
@@ -160,7 +160,7 @@
                 android:background="@color/colorWhite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="5dp"
+                app:cardElevation="8dp"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout

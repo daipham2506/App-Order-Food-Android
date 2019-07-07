@@ -76,8 +76,6 @@ public class CartActivity extends AppCompatActivity {
         btnDatHang  = (FButton) findViewById(R.id.btnPlaceOrder);
         arrCart = new ArrayList<>();
         arrOrder = new ArrayList<>();
-        //adapter = new CartAdapter(this, R.layout.line_cart, arrCart);
-
 
 
         initRecyclerView();

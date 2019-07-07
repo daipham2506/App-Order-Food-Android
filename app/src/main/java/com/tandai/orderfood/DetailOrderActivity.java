@@ -33,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailOrder extends AppCompatActivity {
+public class DetailOrderActivity extends AppCompatActivity {
     String foodID = "";
     String CustomerID = "";
     RadioGroup radioGroup;
@@ -83,8 +83,8 @@ public class DetailOrder extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if( dagiao.isChecked() || danggiao.isChecked() || hethang.isChecked()){
-                    Toast.makeText(DetailOrder.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(DetailOrder.this, RestaurantActivity.class));
+                    Toast.makeText(DetailOrderActivity.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(DetailOrderActivity.this, RestaurantActivity.class));
                     String status="";
                     notify = true;
                     //Bitmap bitmap = Common.getBitmapFromURL(order.getLinkAnh());
@@ -115,7 +115,7 @@ public class DetailOrder extends AppCompatActivity {
 
                 }
                 else {
-                    Toast.makeText(DetailOrder.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailOrderActivity.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -135,7 +135,7 @@ public class DetailOrder extends AppCompatActivity {
                         "I2OlsSoRMIfCES2CQt9gkbgb5Iw2");
 
                 Sender sender = new Sender(data, token.getToken());
-                Toast.makeText(DetailOrder.this, token.getToken(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailOrderActivity.this, token.getToken(), Toast.LENGTH_SHORT).show();
 
                 apiService.sendNotification(sender)
                         .enqueue(new Callback<MyResponse>() {
@@ -143,7 +143,7 @@ public class DetailOrder extends AppCompatActivity {
                             public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                                 if (response.code() == 200){
                                     if (response.body().success != 1){
-                                        Toast.makeText(DetailOrder.this, "Failed!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(DetailOrderActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }

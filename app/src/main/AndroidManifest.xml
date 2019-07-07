@@ -23,10 +23,10 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".DetailOrder" />
+        <activity android:name=".DetailOrderActivity" />
 
         <activity android:name=".ForgotPassActivity" />
-        <activity android:name=".QuanAnXemDSDonDatHang" />
+        <activity android:name=".RestaurantViewOrderActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".FoodDetailActivity" />
         <activity

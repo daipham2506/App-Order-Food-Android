@@ -22,52 +22,9 @@ public class FoodAdapter1 extends BaseAdapter {
     private int layout;
     private List<Food> ListFood;
 
-//
-//    public FoodAdapter1(ArrayList<Food> arrFood, Context context) {
-//        this.arrFood = arrFood;
-//        this.context = context;
-//    }
-//
-//    @NonNull
-//    @Override
-//    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-//        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-//        View itemView = layoutInflater.inflate(R.layout.line_food,viewGroup,false);
-//
-//        return new FoodAdapter1.ViewHolder(itemView);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-//        Food food = arrFood.get(i);
-//        viewHolder.tenMon.setText(food.getTenMon()+" - ");
-//        viewHolder.tenQuan.setText(food.getTenQuan());
-//        Picasso.with(context).load(food.getLinkAnh()).into(viewHolder.hinh);
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return arrFood.size();
-//    }
-//
-//    public class ViewHolder extends  RecyclerView.ViewHolder{
-//        TextView tenMon,tenQuan;
-//        ImageView hinh;
-//        public ViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//            tenMon = (TextView) itemView.findViewById(R.id.tvtenMon2);
-//            tenQuan = (TextView) itemView.findViewById(R.id.tvtenQuan2);
-//            hinh = (ImageView) itemView.findViewById(R.id.ivHinh2);
-//
-//
-//        }
-//    }
-
 
     TextView tenMon,tenQuan;
-    ImageView hinh,fav;
-    Favorite favor;
-    int check = 0;
+    ImageView hinh;
 
     public FoodAdapter1(Context context, int layout, List<Food> listFood) {
         this.context = context;

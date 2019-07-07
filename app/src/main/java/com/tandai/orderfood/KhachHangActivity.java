@@ -75,6 +75,9 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     DatabaseReference mDatabase;
     DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
+    private static final int TIME_DELAY = 2500;
+    private static long back_pressed = 0;
+
 
 
     @Override
@@ -95,13 +98,13 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
         }
 
-        //Note  add this code before setcontentView
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Rubik.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build());
+//        //Note  add this code before setcontentView
+//        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+//                .setDefaultFontPath("fonts/Rubik.ttf")
+//                .setFontAttrId(R.attr.fontPath)
+//                .build());
 
-        setContentView(R.layout.activity_khachhang);
+        setContentView(R.layout.activity_customer);
 
 
 //        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
@@ -187,7 +190,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
 
         lvFood  =   (ListView) findViewById(R.id.lvFood);
         arrFood = new ArrayList<>();
-        adapter = new FoodAdapter1(this, R.layout.line_food, arrFood);
+        adapter = new FoodAdapter1(this, R.layout.item_food, arrFood);
         lvFood.setAdapter(adapter);
 
 
@@ -303,13 +306,13 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                   // int i= 0;
+                    int i= 0;
                     for(DataSnapshot ds1: ds.getChildren()){
                         MonAn mon = ds1.getValue(MonAn.class);
                         arrFood.add(new Food(mon.getTenMon(),mon.getTenQuan(),mon.getLinkAnh(),mon.getIdQuan(),mon.getGiaMon(),mon.getTinhTrang()));
                         adapter.notifyDataSetChanged();
-                        //++i;
-                        //if(i==3) break; // moi quan 3 mon
+                        ++i;
+                        if(i==3) break; // moi quan 3 mon
                     }
                 }
             }
@@ -343,9 +346,19 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
+
+        if(back_pressed + TIME_DELAY > System.currentTimeMillis()){
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            Toast.makeText(this, "Nhấn lần nữa để thoát", Toast.LENGTH_SHORT).show();
+        }
+        back_pressed = System.currentTimeMillis();
     }
 
     @Override

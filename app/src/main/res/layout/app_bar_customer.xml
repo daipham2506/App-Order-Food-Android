@@ -20,7 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_khachhang" />
+    <include layout="@layout/content_customer" />
 
     <com.andremion.counterfab.CounterFab
         android:id="@+id/fab"

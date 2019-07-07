@@ -9,6 +9,7 @@
     android:layout_marginBottom="10dp"
     android:layout_marginLeft="3dp"
     android:layout_marginRight="3dp"
+    app:cardElevation="8dp"
     android:id="@+id/cardView_food"
     >
 

@@ -7,7 +7,7 @@
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".KhachHangActivity"
-    tools:showIn="@layout/app_bar_khachhang">
+    tools:showIn="@layout/app_bar_customer">
 
     <LinearLayout
         android:orientation="vertical"

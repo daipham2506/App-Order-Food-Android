@@ -30,7 +30,7 @@ public class RemoveRestaurantActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_xoa_quan);
+        setContentView(R.layout.layout_remove_restaurant);
         AnhXa();
         waiting =  new SpotsDialog.Builder().setContext(this).setMessage("Vui lòng đợi").setCancelable(false).build();
         xoaQuan.setOnClickListener(new View.OnClickListener() {

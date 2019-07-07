@@ -69,7 +69,7 @@ public class RestaurantActivity extends AppCompatActivity {
         xemDonDatHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RestaurantActivity.this,QuanAnXemDSDonDatHang.class));
+                startActivity(new Intent(RestaurantActivity.this, RestaurantViewOrderActivity.class));
             }
         });
         update.setOnClickListener(new View.OnClickListener() {
