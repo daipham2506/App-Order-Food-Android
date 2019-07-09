@@ -19,7 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.tandai.orderfood.Model.User;
+import com.tandai.orderfood.Notifications.Token;
 
 import io.paperdb.Paper;
 
@@ -33,6 +35,8 @@ public class RestaurantActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_restaurant);
+
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
         // Paper init
         Paper.init(this);
@@ -167,6 +171,12 @@ public class RestaurantActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token,true);
+        reference.child(user.getUid()).setValue(token1);
     }
 
 

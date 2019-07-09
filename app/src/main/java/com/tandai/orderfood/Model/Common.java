@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
+import com.tandai.orderfood.Notifications.APIService;
+import com.tandai.orderfood.Notifications.RetrofitClient;
 import com.tandai.orderfood.R;
 
 import java.io.IOException;
@@ -19,23 +21,14 @@ import java.net.URL;
 import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class Common {
+
+    private static final String FCM_URL = "https://fcm.googleapis.com/";
+    public static APIService getFCMService(){
+        return RetrofitClient.getClient(FCM_URL).create(APIService.class);
+    }
+
     public static final String USER_KEY = "User";
     public static final String PWD_KEY = "Password";
-
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            // Log exception
-            return null;
-        }
-    }
 
     public static void runAnimation(RecyclerView recyclerView) {
         LayoutAnimationController controller = null;

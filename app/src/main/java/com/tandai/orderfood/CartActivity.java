@@ -16,6 +16,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -28,15 +29,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.tandai.orderfood.Adapter.CartAdapter;
 import com.tandai.orderfood.Model.Cart;
 import com.tandai.orderfood.Model.Common;
 import com.tandai.orderfood.Model.Order;
 import com.tandai.orderfood.Model.User;
 import com.tandai.orderfood.Notifications.APIService;
-import com.tandai.orderfood.Notifications.Client;
+import com.tandai.orderfood.Notifications.MyResponse;
+import com.tandai.orderfood.Notifications.Notification;
+import com.tandai.orderfood.Notifications.RetrofitClient;
+import com.tandai.orderfood.Notifications.Sender;
 import com.tandai.orderfood.Notifications.Token;
 
 import java.text.SimpleDateFormat;
@@ -44,6 +48,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import info.hoang8f.widget.FButton;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class CartActivity extends AppCompatActivity {
@@ -56,21 +63,22 @@ public class CartActivity extends AppCompatActivity {
     String sdt ="",tenKH="";
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
+    User uInfo;
     DatabaseReference mDatabase, mDatabase1;
 
     RecyclerView recyclerView;
     RelativeLayout relativeLayout;
 
-    APIService apiService;
+    APIService mService;
 
-
+    ArrayList<String> arrID = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cart);
 
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        mService = Common.getFCMService();
 
         total       = (TextView) findViewById(R.id.total);
         btnDatHang  = (FButton) findViewById(R.id.btnPlaceOrder);
@@ -114,12 +122,11 @@ public class CartActivity extends AppCompatActivity {
                             if (diachigiaohang.isEmpty())
                                 Toast.makeText(CartActivity.this, "Vui lòng nhập địa chỉ giao hàng", Toast.LENGTH_SHORT).show();
                             else {
-                                updateToken(FirebaseInstanceId.getInstance().getToken());
                                 mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
                                 ValueEventListener eventListener = new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
-                                        User uInfo = dataSnapshot.getValue(User.class);
+                                        uInfo = dataSnapshot.getValue(User.class);
                                         // get sdt + ten khach hang
                                         sdt = uInfo.getPhone();
                                         tenKH = uInfo.getName();
@@ -129,7 +136,13 @@ public class CartActivity extends AppCompatActivity {
                                                     tenKH, arrCart.get(i).getTenQuan(), arrCart.get(i).getIDQuan(),
                                                     arrCart.get(i).getTenMon(), arrCart.get(i).getGiaMon(),
                                                     arrCart.get(i).getSoluong(), arrCart.get(i).getLinkAnh(),0));
+                                            if(!arrID.contains(arrCart.get(i).getIDQuan())){
+                                                arrID.add(arrCart.get(i).getIDQuan());
+                                            }
                                         }
+
+                                        //Send notification
+                                        sendNotification(tenKH,arrID);
                                     }
 
                                     @Override
@@ -160,7 +173,7 @@ public class CartActivity extends AppCompatActivity {
 
                                 // đóng dialog
                                 dialogConfirm.dismiss();
-                                Toast.makeText(CartActivity.this, "Bạn đã đặt hàng thành công", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CartActivity.this, "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
 
                                 // xóa db Cart của user sau khi đặt hàng thành công
                                 mDatabase1 = FirebaseDatabase.getInstance().getReference().child("Carts").child(userID);
@@ -179,7 +192,6 @@ public class CartActivity extends AppCompatActivity {
 
 
                                 startActivity(new Intent(CartActivity.this, KhachHangActivity.class));
-
 
                             }
 
@@ -337,11 +349,51 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
-    private void updateToken(String token){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token1 = new Token(token);
-        reference.child(user.getUid()).setValue(token1);
+
+    private void sendNotification(final String nameCustomer, final ArrayList<String> arrId){
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query data = tokens.orderByChild("checkToken").equalTo(true); // get all node isServerToken is true
+        data.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    Token serverToken = ds.getValue(Token.class);
+                    for(int i=0;i<arrId.size();i++){
+                        if(arrId.get(i).equals(ds.getKey())) {
+                            Notification notification = new Notification(nameCustomer + " vừa đặt món ăn từ quán của bạn","Có đơn hàng mới");
+                            Sender content = new Sender(serverToken.getToken(), notification);
+
+                            mService.sendNotification(content).enqueue(new Callback<MyResponse>() {
+                                @Override
+                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                    if (response.code() == 200) {
+                                        if (response.body().success == 1) {
+                                            //Toast.makeText(CartActivity.this, "thành công", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            //Toast.makeText(CartActivity.this, "Thất bại", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<MyResponse> call, Throwable t) {
+                                    Log.e("Error", t.getMessage());
+                                }
+                            });
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
+
+
 
 
 }

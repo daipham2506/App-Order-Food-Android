@@ -7,8 +7,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 
 public class OreoNotification extends ContextWrapper {
 
@@ -27,13 +30,11 @@ public class OreoNotification extends ContextWrapper {
 
     @TargetApi(Build.VERSION_CODES.O)
     private void createChannel() {
-
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT);
-        channel.enableLights(false);
+        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+        channel.enableLights(true);
         channel.enableVibration(true);
-        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        channel.setLightColor(Color.GREEN);
+        channel.setImportance(NotificationManager.IMPORTANCE_HIGH);
 
         getManager().createNotificationChannel(channel);
     }
@@ -47,14 +48,15 @@ public class OreoNotification extends ContextWrapper {
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    public  Notification.Builder getOreoNotification(String title, String body,
-                                                     PendingIntent pendingIntent, Uri soundUri, String icon){
+    public  Notification.Builder getOreoNotification(String title, String body, PendingIntent pendingIntent, Uri soundUri, int icon){
         return new Notification.Builder(getApplicationContext(), CHANNEL_ID)
                 .setContentIntent(pendingIntent)
                 .setContentTitle(title)
                 .setContentText(body)
-                .setSmallIcon(Integer.parseInt(icon))
+                .setSmallIcon(icon)
                 .setSound(soundUri)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setShowWhen(true)
+                .setColor(Color.GREEN);
     }
 }

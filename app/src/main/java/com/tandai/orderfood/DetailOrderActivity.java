@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -18,15 +19,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.tandai.orderfood.Model.Common;
 import com.tandai.orderfood.Model.Order;
 import com.tandai.orderfood.Notifications.APIService;
-import com.tandai.orderfood.Notifications.Client;
-import com.tandai.orderfood.Notifications.Data;
+import com.tandai.orderfood.Notifications.Notification;
+import com.tandai.orderfood.Notifications.RetrofitClient;
 import com.tandai.orderfood.Notifications.MyResponse;
 import com.tandai.orderfood.Notifications.Sender;
 import com.tandai.orderfood.Notifications.Token;
+
+import java.util.ArrayList;
 
 import info.hoang8f.widget.FButton;
 import retrofit2.Call;
@@ -52,21 +57,15 @@ public class DetailOrderActivity extends AppCompatActivity {
 
     DatabaseReference database;
 
-    APIService apiService;
-    boolean notify = false;
-
-
+    APIService mService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.layout_detail_order);
+
         AnhXa();
-
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
-
+        mService = Common.getFCMService();
 
         //Nhận THông tin Order từ Intent gửi đến
         Intent intent = getIntent();
@@ -83,13 +82,7 @@ public class DetailOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if( dagiao.isChecked() || danggiao.isChecked() || hethang.isChecked()){
-                    Toast.makeText(DetailOrderActivity.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(DetailOrderActivity.this, RestaurantActivity.class));
                     String status="";
-                    notify = true;
-                    //Bitmap bitmap = Common.getBitmapFromURL(order.getLinkAnh());
-                    //Intent intent = new Intent(getApplicationContext(),OrderActivity.class);
-
                     if (dagiao.isChecked()) {
                         status = "đã giao";
                         mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(1);
@@ -102,17 +95,12 @@ public class DetailOrderActivity extends AppCompatActivity {
                         status = "hết hàng";
                         mDatabase.child("Orders").child(userID).child(CustomerID).child(foodID).child("check").setValue(3);
                     }
-                    //show Notification
-                    //NotificationHelper notificationHelper = new NotificationHelper(getApplicationContext());
-                    //notificationHelper.sendNotification("Kiểm tra đơn hàng",order.getTenMon()+" được xác nhận "+status,intent,bitmap);
 
-                    if (notify) {
-                        sendNotification();
-                    }
-                    notify = false;
+                    //send notification
+                    sendNotification(order.getTenMon(),order.getTenkhachhang(),status,order.getUserID());
 
-
-
+                    Toast.makeText(DetailOrderActivity.this, "Đã xác nhận đơn hàng", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(DetailOrderActivity.this, RestaurantActivity.class));
                 }
                 else {
                     Toast.makeText(DetailOrderActivity.this, "Vui lòng chọn tình trạng giao hàng", Toast.LENGTH_SHORT).show();
@@ -120,49 +108,7 @@ public class DetailOrderActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
-
-    private void sendNotification(){
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        tokens.child("I2OlsSoRMIfCES2CQt9gkbgb5Iw2").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Token token = dataSnapshot.getValue(Token.class);
-                Data data = new Data(user.getUid(), R.mipmap.ic_launcher, "đơn hàng đã xác nhận", "Kiểm tra đơn hàng",
-                        "I2OlsSoRMIfCES2CQt9gkbgb5Iw2");
-
-                Sender sender = new Sender(data, token.getToken());
-                Toast.makeText(DetailOrderActivity.this, token.getToken(), Toast.LENGTH_SHORT).show();
-
-                apiService.sendNotification(sender)
-                        .enqueue(new Callback<MyResponse>() {
-                            @Override
-                            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                                if (response.code() == 200){
-                                    if (response.body().success != 1){
-                                        Toast.makeText(DetailOrderActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<MyResponse> call, Throwable t) {
-
-                            }
-                        });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
 
 
     private void AnhXa() {
@@ -213,7 +159,47 @@ public class DetailOrderActivity extends AppCompatActivity {
         });
     }
 
+    private void sendNotification(final String nameFood, final String nameCustomer,final String status, final String ID){
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query data = tokens.orderByChild("checkToken").equalTo(false); // get all node isServerToken is false
+        data.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                    if (ID.equals(ds.getKey())) {
+                        Token customerToken = ds.getValue(Token.class);
+                        Notification notification = new Notification(nameFood + " được xác nhận " + status, "Chào! " + nameCustomer);
+                        Sender content = new Sender(customerToken.getToken(), notification);
 
+                        mService.sendNotification(content).enqueue(new Callback<MyResponse>() {
+                            @Override
+                            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                                if (response.code() == 200) {
+                                    if (response.body().success == 1) {
+                                        //Toast.makeText(CartActivity.this, "thành công", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        //Toast.makeText(CartActivity.this, "Thất bại", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<MyResponse> call, Throwable t) {
+                                Log.e("Error", t.getMessage());
+                            }
+                        });
+                        break;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
 

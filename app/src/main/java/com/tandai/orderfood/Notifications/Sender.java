@@ -1,11 +1,14 @@
 package com.tandai.orderfood.Notifications;
 
 public class Sender {
-    public Data data;
+    public Notification notification;
     public String to;
 
-    public Sender(Data data, String to) {
-        this.data = data;
+    public Sender(String to,Notification notification) {
+        this.notification = notification;
         this.to = to;
+    }
+
+    public Sender() {
     }
 }

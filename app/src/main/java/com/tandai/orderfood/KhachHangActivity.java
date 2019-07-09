@@ -36,6 +36,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.tandai.orderfood.Adapter.FoodAdapter1;
 import com.tandai.orderfood.Model.Banner;
 import com.tandai.orderfood.Model.Favorite;
@@ -43,6 +44,7 @@ import com.tandai.orderfood.Model.Food;
 import com.tandai.orderfood.Model.MonAn;
 import com.tandai.orderfood.Model.Order;
 import com.tandai.orderfood.Model.User;
+import com.tandai.orderfood.Notifications.Token;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -92,6 +94,8 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        updateToken(FirebaseInstanceId.getInstance().getToken());
 
         //set color status bar
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -493,10 +497,17 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
             });
         }
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
+    }
+
+    private void updateToken(String token){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1 = new Token(token,false);
+        reference.child(user.getUid()).setValue(token1);
     }
 
     private Integer getDate(String date){
