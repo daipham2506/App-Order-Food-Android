@@ -7,12 +7,12 @@ public class User {
     private String phone;
     private String address;
     private  String userType;
+    private  String image;
     public User(){
         //default
     }
 
     public User(String email, String pass, String name, String phone, String address, String type) {
-
         this.email = email;
         this.pass = pass;
         this.name = name;
@@ -67,6 +67,14 @@ public class User {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
 

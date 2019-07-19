@@ -34,7 +34,6 @@ public class OreoNotification extends ContextWrapper {
         channel.enableLights(true);
         channel.enableVibration(true);
         channel.setLightColor(Color.GREEN);
-        channel.setImportance(NotificationManager.IMPORTANCE_HIGH);
 
         getManager().createNotificationChannel(channel);
     }

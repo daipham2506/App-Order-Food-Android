@@ -33,8 +33,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.android.support:design:28.0.0'
-    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
     // button số lượng
+    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
+
     implementation 'com.firebaseui:firebase-ui-database:1.2.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
@@ -44,6 +45,7 @@ dependencies {
     implementation 'com.github.rey5137:material:1.2.4'
     implementation 'com.github.mancj:materialSearchBar:0.7.1'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+    // rating
     implementation 'com.stepstone.apprating:app-rating:2.0.0'
 
 
@@ -64,11 +66,12 @@ dependencies {
 
     //notification
     implementation "com.android.support:support-compat:28.0.0"
-
-    //add these libraries
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.google.firebase:firebase-messaging:17.3.1'
+
+    // circle image
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 
 }
 apply plugin: 'com.google.gms.google-services'
