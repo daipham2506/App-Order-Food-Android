@@ -8,9 +8,7 @@
     android:paddingBottom="16dp"
     android:paddingTop="40dp"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-
-    android:background="@drawable/food3">
+    android:paddingRight="16dp">
 
 
     <TextView
@@ -19,7 +17,7 @@
         android:text="Thêm tài khoản Quán"
         android:layout_centerHorizontal="true"
         android:textSize="30sp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorPrimary"
         android:fontFamily="@font/nabila"
         />
 
@@ -36,14 +34,14 @@
             android:hint="Email"
             android:textColorHint="#FAF8F8"
             android:id="@+id/edtEmailQuan"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:inputType="textEmailAddress"
-            app:met_baseColor="#FFFFFF"
+            app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            app:met_primaryColor="#FFFFFF"
+            app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/mail1"
+            android:drawableLeft="@drawable/ic_email_black_36dp"
             android:drawablePadding="@dimen/size10dp"
             />
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -52,15 +50,15 @@
             android:hint="Mật khẩu"
             android:textColorHint="#FAF8F8"
             android:id="@+id/edtPassQuan"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:inputType="textPassword"
-            app:met_baseColor="#FFFFFF"
+            app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            app:met_primaryColor="#FFFFFF"
+            app:met_primaryColor="@color/colorPrimary"
             app:met_minCharacters="6"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/pass1"
+            android:drawableLeft="@drawable/ic_lock_black_36dp"
             android:drawablePadding="@dimen/size10dp"
             />
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -69,14 +67,14 @@
             android:hint="Tên quán"
             android:textColorHint="#FAF8F8"
             android:id="@+id/edtTenQuan"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:inputType="text"
-            app:met_baseColor="#FFFFFF"
+            app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            app:met_primaryColor="#FFFFFF"
+            app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/name1"
+            android:drawableLeft="@drawable/ic_create_black_24dp"
             android:drawablePadding="@dimen/size10dp"
             />
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -85,14 +83,14 @@
             android:hint="Số điện thoại"
             android:textColorHint="#FAF8F8"
             android:id="@+id/edtPhoneQuan"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:inputType="phone"
-            app:met_baseColor="#FFFFFF"
+            app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            app:met_primaryColor="#FFFFFF"
+            app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/phone1"
+            android:drawableLeft="@drawable/ic_phone_android_black_24dp"
             android:drawablePadding="@dimen/size10dp"
             app:met_maxCharacters="11"
             />
@@ -103,23 +101,21 @@
             android:hint="Địa chỉ"
             android:textColorHint="#FAF8F8"
             android:id="@+id/edtAddressQuan"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimary"
             android:textSize="25sp"
             android:inputType="text"
-            app:met_baseColor="#FFFFFF"
+            app:met_baseColor="@color/colorPrimary"
             app:met_floatingLabel="highlight"
-            app:met_primaryColor="#FFFFFF"
+            app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/address1"
+            android:drawableLeft="@drawable/ic_place_red_24dp"
             android:drawablePadding="@dimen/size10dp"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp">
+            android:orientation="horizontal">
 
             <Button
                 android:layout_gravity="center"

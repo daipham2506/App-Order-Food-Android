@@ -1,6 +1,8 @@
 package com.tandai.orderfood;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -104,12 +106,26 @@ public class ViewListFoodActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        int pos = item.getGroupId();
+        final int pos = item.getGroupId();
         final String name = arrFood.get(pos).getTenMon();
         switch (item.getItemId()){
             case 121:
-                displayMessage("Đã xóa thành công " + name);
-                viewFoodAdapter.removeItem(pos,name);
+                new AlertDialog.Builder(this)
+                        .setTitle("Xóa món ăn")
+                        .setMessage("Bạn muốn xóa "+name+" ?")
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Continue with delete operation
+                                displayMessage("Đã xóa thành công " + name);
+                                viewFoodAdapter.removeItem(pos,name);
+                            }
+                        })
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton("Hủy", null)
+                        .setIcon(R.drawable.ic_delete_red_24dp)
+                        .show();
                 return true;
             case 122:
                 DialogUpdate(name);

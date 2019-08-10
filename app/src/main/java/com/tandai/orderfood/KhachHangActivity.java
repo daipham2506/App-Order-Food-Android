@@ -393,7 +393,9 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_xemthongtin) {
-            startActivity(new Intent(KhachHangActivity.this,InfoPersonActivity.class));
+            Intent info = new Intent(KhachHangActivity.this,InfoPersonActivity.class);
+            info.putExtra("userID",userID);//gửi UserID đến activity mới
+            startActivity(info);
         }
         else if (id == R.id.nav_timkiem) {
             startActivity(new Intent(KhachHangActivity.this, SearchFoodActivity.class));
@@ -506,7 +508,7 @@ public class KhachHangActivity extends AppCompatActivity implements NavigationVi
 
     private void updateToken(String token){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token1 = new Token(token,false);
+        Token token1 = new Token(token,1);
         reference.child(user.getUid()).setValue(token1);
     }
 

@@ -37,7 +37,7 @@
             android:id="@+id/edtEmailLog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/mail1"
+            android:drawableLeft="@drawable/ic_email_black_36dp"
             android:drawablePadding="@dimen/size10dp"
             android:hint="Email"
             android:inputType="textEmailAddress"
@@ -63,7 +63,7 @@
             app:met_primaryColor="#FFFFFF"
             app:met_minCharacters="6"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/pass1"
+            android:drawableLeft="@drawable/ic_lock_black_36dp"
             android:drawablePadding="@dimen/size10dp"
             />
 

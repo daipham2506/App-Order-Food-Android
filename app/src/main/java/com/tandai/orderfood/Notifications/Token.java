@@ -2,12 +2,12 @@ package com.tandai.orderfood.Notifications;
 
 public class Token {
     private String token;
-    private boolean checkToken;
+    private int checkToken;
 
     public Token() {
     }
 
-    public Token(String token, boolean checkToken) {
+    public Token(String token, int checkToken) {
         this.token = token;
         this.checkToken = checkToken;
     }
@@ -20,11 +20,11 @@ public class Token {
         this.token = token;
     }
 
-    public boolean isCheckToken() {
+    public int getCheckToken() {
         return checkToken;
     }
 
-    public void setCheckToken(boolean checkToken) {
+    public void setCheckToken(int checkToken) {
         this.checkToken = checkToken;
     }
 }

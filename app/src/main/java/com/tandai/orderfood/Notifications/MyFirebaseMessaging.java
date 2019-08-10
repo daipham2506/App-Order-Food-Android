@@ -30,6 +30,7 @@ import com.tandai.orderfood.Model.User;
 import com.tandai.orderfood.OrderActivity;
 import com.tandai.orderfood.R;
 import com.tandai.orderfood.RestaurantViewOrderActivity;
+import com.tandai.orderfood.ViewUserActivity;
 
 public class MyFirebaseMessaging extends FirebaseMessagingService {
 
@@ -71,7 +72,10 @@ public class MyFirebaseMessaging extends FirebaseMessagingService {
         Intent intent = new Intent(this, OrderActivity.class);
         if(type.equals("restaurent")) {
             intent =new Intent(this, RestaurantViewOrderActivity.class);
+        } else if (type.equals("admin")) {
+            intent =new Intent(this, ViewUserActivity.class);
         }
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

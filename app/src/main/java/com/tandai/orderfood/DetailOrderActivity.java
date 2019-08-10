@@ -161,7 +161,7 @@ public class DetailOrderActivity extends AppCompatActivity {
 
     private void sendNotification(final String nameFood, final String nameCustomer,final String status, final String ID){
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query data = tokens.orderByChild("checkToken").equalTo(false); // get all node isServerToken is false
+        Query data = tokens.orderByChild("checkToken").equalTo(1); // get all node isServerToken is false
         data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

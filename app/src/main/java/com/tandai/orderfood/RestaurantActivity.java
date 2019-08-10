@@ -175,7 +175,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
     private void updateToken(String token){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token1 = new Token(token,true);
+        Token token1 = new Token(token,2);
         reference.child(user.getUid()).setValue(token1);
     }
 

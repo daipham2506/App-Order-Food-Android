@@ -352,7 +352,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void sendNotification(final String nameCustomer, final ArrayList<String> arrId){
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query data = tokens.orderByChild("checkToken").equalTo(true); // get all node isServerToken is true
+        Query data = tokens.orderByChild("checkToken").equalTo(2); // get all node isServerToken is 2
         data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,9 +17,23 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.tandai.orderfood.Model.Common;
 import com.tandai.orderfood.Model.User;
+import com.tandai.orderfood.Notifications.APIService;
+import com.tandai.orderfood.Notifications.MyResponse;
+import com.tandai.orderfood.Notifications.Notification;
+import com.tandai.orderfood.Notifications.Sender;
+import com.tandai.orderfood.Notifications.Token;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText email,pass,name,phone,address;
@@ -27,10 +42,12 @@ public class RegisterActivity extends AppCompatActivity {
     DatabaseReference mData;
     FirebaseUser user;
     ProgressDialog process;
+    APIService mService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_register);
+        mService = Common.getFCMService();
         process = new ProgressDialog(RegisterActivity.this);
         process.setMessage("Vui lòng đợi");
         AnhXa();
@@ -86,6 +103,9 @@ public class RegisterActivity extends AppCompatActivity {
                                             process.dismiss();
                                             Toast.makeText(RegisterActivity.this, "Đăng ký thành công. Vui lòng xác thực Email", Toast.LENGTH_SHORT).show();
 
+                                            // send notification to Admin
+                                            sendNotification(Name);
+
                                             //set Name cho user
                                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                     .setDisplayName(Name)
@@ -120,6 +140,47 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+
+
+    private void sendNotification(final String name){
+        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
+        Query data = tokens.orderByChild("checkToken").equalTo(3); // get node isServerToken is 3
+        data.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds: dataSnapshot.getChildren()) {
+                    Token token = ds.getValue(Token.class);
+                    Notification notification = new Notification(name+" vừa tạo tài khoản trên ứng dụng", "Có tài khoản mới");
+                    Sender content = new Sender(token.getToken(), notification);
+
+                    mService.sendNotification(content).enqueue(new Callback<MyResponse>() {
+                        @Override
+                        public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+                            if (response.code() == 200) {
+                                if (response.body().success == 1) {
+                                }
+                                else {
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MyResponse> call, Throwable t) {
+                            Log.e("Error", t.getMessage());
+                        }
+                    });
+                    break;
+                    }
+
+                }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

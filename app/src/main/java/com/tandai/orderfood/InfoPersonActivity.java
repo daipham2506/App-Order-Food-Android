@@ -54,9 +54,9 @@ public class InfoPersonActivity extends AppCompatActivity {
     CircleImageView image;
     ImageView change_image;
     TextView ten, tenTK, diachi, sdt;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String userID = user.getUid();
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+    //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userID;
+    DatabaseReference mDatabase;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReferenceFromUrl("gs://databaseorderfood.appspot.com");
     int REQUEST_CODE_FOLDER = 123;
@@ -68,6 +68,10 @@ public class InfoPersonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_info_person);
 
+        Intent intent = getIntent();
+        userID       = intent.getStringExtra("userID");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
         AnhXa();
         LoadData();
 

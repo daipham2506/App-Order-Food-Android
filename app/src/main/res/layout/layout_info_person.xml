@@ -22,7 +22,7 @@
                 android:layout_marginTop="45dp"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/ic_person_black_24dp"
+                android:src="@drawable/ic_person_white_24dp"
                 android:tint="@color/colorWhite"
                 app:civ_border_color="@color/colorWhite"
                 app:civ_border_width="2dp"/>
@@ -65,7 +65,7 @@
                 android:tint="#11DCFA"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/ic_email_black_24dp"/>
+                android:src="@drawable/ic_email_black_36dp"/>
             <TextView
                 android:id="@+id/tvtentaikhoan"
                 android:textStyle="bold"

@@ -25,13 +25,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     ArrayList<Cart> arrCart;
     Context context;
 
-    DatabaseReference databaseReference;
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String userID = user.getUid();
-
-
-
     public CartAdapter(ArrayList<Cart> arrCart, Context context) {
         this.arrCart = arrCart;
         this.context = context;

@@ -43,7 +43,7 @@
             app:met_floatingLabel="highlight"
             app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/mail1"
+            android:drawableLeft="@drawable/ic_email_black_36dp"
             android:drawablePadding="@dimen/size10dp"
             />
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -60,7 +60,7 @@
             app:met_primaryColor="@color/colorPrimary"
             app:met_minCharacters="6"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/pass1"
+            android:drawableLeft="@drawable/ic_lock_black_36dp"
             android:drawablePadding="@dimen/size10dp"
             />
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -76,7 +76,7 @@
             app:met_floatingLabel="highlight"
             app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/name1"
+            android:drawableLeft="@drawable/ic_create_black_24dp"
             android:drawablePadding="@dimen/size10dp"
             />
         <com.rengwuxian.materialedittext.MaterialEditText
@@ -92,7 +92,7 @@
             app:met_floatingLabel="highlight"
             app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/phone1"
+            android:drawableLeft="@drawable/ic_phone_android_black_24dp"
             android:drawablePadding="@dimen/size10dp"
             app:met_maxCharacters="11"
             />
@@ -110,7 +110,7 @@
             app:met_floatingLabel="highlight"
             app:met_primaryColor="@color/colorPrimary"
             app:met_singleLineEllipsis="true"
-            android:drawableLeft="@drawable/address1"
+            android:drawableLeft="@drawable/ic_place_red_24dp"
             android:drawablePadding="@dimen/size10dp"
             />
 
@@ -128,8 +128,8 @@
                 android:id="@+id/btnReg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/duongvien_xanh"
                 android:text="@string/dangky"

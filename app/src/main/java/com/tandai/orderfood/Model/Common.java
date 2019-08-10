@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
@@ -26,6 +27,7 @@ public class Common {
     public static APIService getFCMService(){
         return RetrofitClient.getClient(FCM_URL).create(APIService.class);
     }
+
 
     public static final String USER_KEY = "User";
     public static final String PWD_KEY = "Password";

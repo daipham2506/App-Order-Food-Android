@@ -24,7 +24,7 @@ public class MyFirebaseIdService extends FirebaseInstanceIdService {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token = new Token(refreshToken,false);
+        Token token = new Token(refreshToken,1);
         reference.child(firebaseUser.getUid()).setValue(token);
     }
 }
