@@ -1,6 +1,3 @@
-# App-Order-Food-Android
-Practice of Engineering Software - HCMUT (K17)
-
 <h1> Order Food App </h1>
 <br>
 <h3>Authentication</h3>
