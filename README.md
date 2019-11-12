@@ -30,4 +30,4 @@
 
 <h3>Screenshots</h3>
 <br>
-![welcom](https://github.com/daipham2506/App-Order-Food-Android/blob/master/screenshot/welcom.PNG)
+![wel com](https://github.com/daipham2506/App-Order-Food-Android/blob/master/screenshot/welcom.PNG)
