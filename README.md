@@ -30,4 +30,4 @@
 
 <h3>Screenshots</h3>
 <br>
-<img src="https://icdn.dantri.com.vn/thumb_w/640/2018/5/23/net-cuoi-be-gai-9-1527053440039156820618.jpg" alt="">
+<img src="\screenshot\welcom.PNG" alt="">
