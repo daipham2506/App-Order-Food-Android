@@ -30,4 +30,4 @@
 
 <h3>Screenshots</h3>
 <br>
-<img src="\screenshot\welcom.PNG" alt="">
+<img src="/screenshot/welcom.PNG" alt="">
